@@ -1,0 +1,1169 @@
+{
+  "_createdAt": "2025-11-11T23:45:58Z",
+  "_id": "779cb420-3262-49ec-9967-3a47e69bc77a",
+  "_rev": "ZDaHS4lCmyLn3Q2Whwn7Mx",
+  "_type": "articles",
+  "_updatedAt": "2026-02-02T05:59:06Z",
+  "body": [
+    {
+      "_key": "2f07b719bce7",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "5209d565e710",
+          "_type": "span",
+          "marks": [],
+          "text": "How We Test"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "9abf5aedf617",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b50caabf42d0",
+          "_type": "span",
+          "marks": [],
+          "text": "To test which laptop lasts the longest on battery, we use an industry standard benchmark from Procyon that runs until the laptop dies. Specifically, we run the Office Productivity scenario which pushes the laptop a bit harder by emulating real world use of the Microsoft Office Suite— Word, Excel, PowerPoint, and Outlook. This is something we feel people are likely to do on battery."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "d8e68ea45147",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "9ba023fe3477",
+          "_type": "span",
+          "marks": [],
+          "text": "Before starting the test, we measure the screen brightness and set it to 200 nits. This is a bit less realistic unless you're in a dimmer room or don't run your screen very bright. We are looking to change this to 300 nits in the near future. We also make sure it's in the lowest performance mode available as long as it doesn't perform poorly. We disable the dedicated GPU if it has one that can be disabled, then disable all background processes other than Wi-Fi, and disable the included battery saver feature in Windows. Lastly, we like to turn off the keyboard backlight, although we don't think this has a large impact."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "7652de604f15",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b0624023b381",
+          "_type": "span",
+          "marks": [],
+          "text": "With all that out of the way, let's see which laptops come out on top!"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b4a182db754d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b9a0c77fe9d0",
+          "_type": "span",
+          "marks": [],
+          "text": "#20 - Zenbook DUO"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "a4f3d9faaf92",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "86cea3ba5e22",
+          "_type": "span",
+          "marks": [],
+          "text": "A super unique laptop that offers two screens, we run this one in it's normal \"clamshell\" mode where the keyboard sits on the second screen and that one is off. Regardless, it still does very well considering its better performing Core Ultra 9 285H processor. "
+        },
+        {
+          "_key": "660970b63500",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "12 hours and 40 minutes."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "a04feceb8efa",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "e9bb8874ae38",
+          "key": "40",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 1
+        }
+      ]
+    },
+    {
+      "_key": "574034c2cc20",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "e23add43ddba",
+          "_type": "span",
+          "marks": [],
+          "text": "#19 - Dell XPS 13"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "c537ef134bbd",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "bfa32dbaaf2a",
+          "_type": "span",
+          "marks": [],
+          "text": "Lasting a whopping "
+        },
+        {
+          "_key": "0666600b2d81",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "12 hours and 41 minutes"
+        },
+        {
+          "_key": "ea7e323a63e6",
+          "_type": "span",
+          "marks": [],
+          "text": ", the Dell XPS 13 with the Core Ultra 7 258V processor takes our next spot on this list."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "dee72cf8d224",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "3047c96a1813",
+          "key": "\t335",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 2
+        }
+      ]
+    },
+    {
+      "_key": "4b4b67c19817",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "dc7eb607d3e0",
+          "_type": "span",
+          "marks": [],
+          "text": "#18 - Framework 13"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "92fde5177485",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "f39a6dfef447",
+          "_type": "span",
+          "marks": [],
+          "text": "Lasting "
+        },
+        {
+          "_key": "2381e477447d",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "13 hours"
+        },
+        {
+          "_key": "1691737eae2d",
+          "_type": "span",
+          "marks": [],
+          "text": " on the dot, we have a surprising entry on this list, the Framework with the older Core Ultra 7 155H processor. This is mostly surprising because this is an older, less efficient processor and it has a somewhat smaller battery."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "f109a13ee291",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "fb045df0daa5",
+          "key": "\t88",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 3
+        }
+      ]
+    },
+    {
+      "_key": "1d43a06079b0",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "dd90750f4f62",
+          "_type": "span",
+          "marks": [],
+          "text": "#17 - Zenbook 14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "b2b9217f75a9",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "69882fd763aa",
+          "_type": "span",
+          "marks": [],
+          "text": "Lasting only 2 minutes longer than the Framework at "
+        },
+        {
+          "_key": "5acee602777e",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "13:02,"
+        },
+        {
+          "_key": "6d367db28382",
+          "_type": "span",
+          "marks": [],
+          "text": " we have ASUS's Zenbook with an updated Arrow Lake H processor. The Core Ultra 7 255H."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "61f82e53c0b9",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "66e501c8127c",
+          "key": "\t351",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 4
+        }
+      ]
+    },
+    {
+      "_key": "a5a9999116aa",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d9041c3d8f20",
+          "_type": "span",
+          "marks": [],
+          "text": "#16 - Omen Slim 16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "868ea47c9c08",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "285cafbbf41f",
+          "_type": "span",
+          "marks": [],
+          "text": "Surprisingly, the Omen Slim 16 does very well for a gaming laptop thanks to its included iGPU mode which disables the dedicated graphics card. "
+        },
+        {
+          "_key": "fce5b9acdb53",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "13 hours and 3 minutes."
+        },
+        {
+          "_key": "c3b1072fda69",
+          "_type": "span",
+          "marks": [],
+          "text": " In gaming, it performs a little worse than other laptops with this hardware because its GPU is fed less wattage. For the average gamer, though, they probably won't notice a difference and will appreciate the extra battery life."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "0945d099f657",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "3bad3777f5ee",
+          "key": "\t485",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 5
+        }
+      ]
+    },
+    {
+      "_key": "63eb8f0c1362",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "20c85c544ed9",
+          "_type": "span",
+          "marks": [],
+          "text": "#15 - Zenbook A14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "eb1bf21aea7c",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "4503f2fe6e7c",
+          "_type": "span",
+          "marks": [],
+          "text": "A super lightweight laptop under 1 kilo, the Zenbook A14 has a pretty low performing Snapdragon X processor. This helps it last "
+        },
+        {
+          "_key": "4ad6c0a5a43d",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "13 hours and 4 minutes."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "a62e27c619ef",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "4efa48704686",
+          "key": "\t528",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 6
+        }
+      ]
+    },
+    {
+      "_key": "dad48365be38",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "ef73764c0db4",
+          "_type": "span",
+          "marks": [],
+          "text": "#14 - ThinkPad X9 15"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "2ccea62f062c",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "a825e263662a",
+          "_type": "span",
+          "marks": [],
+          "text": "One of our favorite laptops (and Seth's daily driver) lasted "
+        },
+        {
+          "_key": "874883474958",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "13 hours and 20 minutes"
+        },
+        {
+          "_key": "cef328afece2",
+          "_type": "span",
+          "marks": [],
+          "text": " with its larger battery and Core Ultra 7 258V processor. This is a great pick for anyone looking for a basic laptop for home, school or office use."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "0c2aa87752e0",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "e08479073771",
+          "key": "\t421",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 7
+        }
+      ]
+    },
+    {
+      "_key": "a02460f4fe21",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "61d0d934fc02",
+          "_type": "span",
+          "marks": [],
+          "text": "#13 - TUF A14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "e9efa74d63e2",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "33a2447d6443",
+          "_type": "span",
+          "marks": [],
+          "text": "This laptop died after "
+        },
+        {
+          "_key": "89ba34e7f739",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "13 hours and 25 minutes"
+        },
+        {
+          "_key": "4f636db4e257",
+          "_type": "span",
+          "marks": [],
+          "text": " running Office tasks in its iGPU mode with the dedicated GPU disabled. This little gaming laptop is super portable and packs a lot of power on the go. One of our top picks this year."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "c48cb3a48a80",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "47d0f74ab97e",
+          "key": "\t461",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 8
+        }
+      ]
+    },
+    {
+      "_key": "bf43d496a0d6",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "2cbc47df8356",
+          "_type": "span",
+          "marks": [],
+          "text": "#12 - MacBook Air 15"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "88e1525055e8",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "399bf58730c7",
+          "_type": "span",
+          "marks": [],
+          "text": "With the latest M4 chip and its larger battery than the 13-inch, the MacBook Air 15 lasts "
+        },
+        {
+          "_key": "8ca906a6f040",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "almost 14 hours, 13:56"
+        },
+        {
+          "_key": "1d6ccb106869",
+          "_type": "span",
+          "marks": [],
+          "text": ". Like the ThinkPad X9, this laptop gets all the little things right, making it a super premium pick for most users."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "26433929864f",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "55b4323d2381",
+          "key": "\t271",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 9
+        }
+      ]
+    },
+    {
+      "_key": "a4829fe6a3e0",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "837442245910",
+          "_type": "span",
+          "marks": [],
+          "text": "#11 - Yoga 7i 16 2-in-1"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "754f9489acff",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "edd57362feed",
+          "_type": "span",
+          "marks": [],
+          "text": "Lasting "
+        },
+        {
+          "_key": "d79e0374f4e3",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "14 hours and 13 minutes"
+        },
+        {
+          "_key": "3a49bc736bd2",
+          "_type": "span",
+          "marks": [],
+          "text": ", this budget pick makes use of its Lunar Lake Core Ultra 7 processor and its lower resolution screen to go the long-haul."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "03fefd9776fd",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "e746296632d7",
+          "key": "\t402",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 10
+        }
+      ]
+    },
+    {
+      "_key": "0bb893951d1a",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "1b6669c91de0",
+          "_type": "span",
+          "marks": [],
+          "text": "#10 - Vivobook S 14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "94a990d906fe",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "8294d8d89b91",
+          "_type": "span",
+          "marks": [],
+          "text": "Our first Core Ultra 5 226V CPU on this list, the Vivobook has a lower powered Lunar Lake processor with worse integrated graphics than the Ultra 7 chips. This helps it last "
+        },
+        {
+          "_key": "2956cc9d3fc0",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "14 hours and 18 minutes"
+        },
+        {
+          "_key": "ff0daaff50a7",
+          "_type": "span",
+          "marks": [],
+          "text": ". As long as you're not doing any light gaming, it would still be a solid pick."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "be7d87d3a2f1",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "32a2867ed7d5",
+          "key": "269",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 11
+        }
+      ]
+    },
+    {
+      "_key": "4a81f8f15120",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "5d2df4aa598d",
+          "_type": "span",
+          "marks": [],
+          "text": "#9 - MacBook Pro 14 (M5)"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "727d8c9f313d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0747bc2fff0c",
+          "_type": "span",
+          "marks": [],
+          "text": "This laptop is in the running for laptop of the year, and remains one of the team's favorites. Super premium, but pretty pricy, this one lasts "
+        },
+        {
+          "_key": "fcf8b88de6c2",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "14 hours, 26 minutes "
+        },
+        {
+          "_key": "7c692be5055f",
+          "_type": "span",
+          "marks": [],
+          "text": "on battery."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "bb263a493d22",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "cf279839b314",
+          "key": "504",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 12
+        }
+      ]
+    },
+    {
+      "_key": "3c7bbafc1e20",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c6108ad969d6",
+          "_type": "span",
+          "marks": [],
+          "text": "#8 - Dell 14 Plus"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "38b30c105369",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "cbed122e1e17",
+          "_type": "span",
+          "marks": [],
+          "text": "Another Lunar Lake laptop, this one lasts "
+        },
+        {
+          "_key": "3eb9db7658dc",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "14 hours and 41 minutes"
+        },
+        {
+          "_key": "40eefe7ac7d1",
+          "_type": "span",
+          "marks": [],
+          "text": " on battery. This was not one of our favorites when we reviewed it, but if it's on a decent sale it might be worth considering."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "8c22314bda81",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "aeb0ecf5a6bc",
+          "key": "430",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 13
+        }
+      ]
+    },
+    {
+      "_key": "6427df882f2f",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "1a3815fca5fc",
+          "_type": "span",
+          "marks": [],
+          "text": "#7 - Surface Laptop 13"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "62ed58866777",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d32bc78cb09e",
+          "_type": "span",
+          "marks": [],
+          "text": "This is the new budget version of the Surface Laptop 7 with a lower powered Snapdragon X Plus processor. It's not quite as premium as the 7, but it's still a nice little laptop. This one lasted "
+        },
+        {
+          "_key": "0b3fc7ce8690",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "14 hours and 51 minutes."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "0bb446de3f3f",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "4eacbcc940f3",
+          "key": "547",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 14
+        }
+      ]
+    },
+    {
+      "_key": "386ce43d4d21",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "a21fa7f033bf",
+          "_type": "span",
+          "marks": [],
+          "text": "#6 - Aspire 14 AI"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "efcceb2bbb11",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "1a392b702b49",
+          "_type": "span",
+          "marks": [],
+          "text": "Our first entry from Acer, but not our last, we have a super affordable laptop under $600. Sporting a Core Ultra 5 Lunar Lake processor, it lasts "
+        },
+        {
+          "_key": "933f77735368",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "15 hours and 13 minutes"
+        },
+        {
+          "_key": "d88194166b6a",
+          "_type": "span",
+          "marks": [],
+          "text": " on battery."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "96c26cb6112d",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "e8d5dbb29229",
+          "key": "550",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 15
+        }
+      ]
+    },
+    {
+      "_key": "26dd428de725",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "39e64eabe406",
+          "_type": "span",
+          "marks": [],
+          "text": "#5 - Swift Go 14 AI"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "711af085b5e8",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "4fbad82b93ce",
+          "_type": "span",
+          "marks": [],
+          "text": "Next we have another laptop from Acer, the Swift Go 14 AI. Silly name, but great battery life jumping all the way up to "
+        },
+        {
+          "_key": "ae727dedb150",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "17 hours and 21 minutes. "
+        },
+        {
+          "_key": "1ff8c5a8ba6c",
+          "_type": "span",
+          "marks": [],
+          "text": "This is less of a budget option than the previous one, but it does feel more premium because of it."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "439508b2a33a",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "cf9fcc0155a1",
+          "key": "549",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 16
+        }
+      ]
+    },
+    {
+      "_key": "6910b7822200",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "098d5c437196",
+          "_type": "span",
+          "marks": [],
+          "text": "#4 - MacBook Pro 16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "381d20d084df",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "03fccf4f8533",
+          "_type": "span",
+          "marks": [],
+          "text": "Another MacBook, shocking no one, but this one has the highest end M4 Max 16-core chip, which is an interesting result. It last 1"
+        },
+        {
+          "_key": "95aa572460df",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "7 hours and 40 minutes"
+        },
+        {
+          "_key": "a2eaee1c1def",
+          "_type": "span",
+          "marks": [],
+          "text": " on battery, proving that it's one of the only performance laptops with fantastic battery life."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "8fc166b2e3d1",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "ae4474ac9c37",
+          "key": "209",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 17
+        }
+      ]
+    },
+    {
+      "_key": "f7ae0cf55a2d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "94de14fd51c6",
+          "_type": "span",
+          "marks": [],
+          "text": "#3 - Yoga Slim 7i 14 Aura Edition"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "8138d07ea0c3",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b082cda610ad",
+          "_type": "span",
+          "marks": [],
+          "text": "This is a wonderful little laptop for anyone doing simple tasks. In ideal conditions, it can last multiple workdays on battery— "
+        },
+        {
+          "_key": "6cbf6dd2a48d",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "18 hours, 10 minutes "
+        },
+        {
+          "_key": "1c6b9b81384e",
+          "_type": "span",
+          "marks": [],
+          "text": "in our test."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "079fdeba26a4",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "69216d06a5a8",
+          "key": "393",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 18
+        }
+      ]
+    },
+    {
+      "_key": "2053facf49e6",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "44f6e33d9100",
+          "_type": "span",
+          "marks": [],
+          "text": "#2 - Prestige 16 AI Evo"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "080ec36ada7e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d838a56715a4",
+          "_type": "span",
+          "marks": [],
+          "text": "A higher performing Windows laptop, we actually don't recommend this one often because it gets very warm. If you're sticking to light tasks though, it could last up to "
+        },
+        {
+          "_key": "dad9dfb54ccf",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "18 hours, 39 minutes"
+        },
+        {
+          "_key": "f06caa4f7e7a",
+          "_type": "span",
+          "marks": [],
+          "text": ". That's all we would suggest it for anyways. Due to current availability, we're showing the Ultra 7 config even though the Ultra 9 was the one that did well in our tests. This one might even last longer."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "c98a909a188f",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "2f74e62e5226",
+          "key": "541",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 19
+        }
+      ]
+    },
+    {
+      "_key": "f4fa402405eb",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "33da442f7af6",
+          "_type": "span",
+          "marks": [],
+          "text": "#1 - ThinkPad X1 2-in-1 Gen 10"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "bb721a9b202b",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d598f51b01fc",
+          "_type": "span",
+          "marks": [],
+          "text": "Taking our top spot, another Lunar Lake laptop, but this time a ThinkPad 2-in-1. Our version came with the pen which magnetizes to the chassis very conveniently. We originally didn't plan to get this one in this year, but we ordered it for our 2-in-1 video and it took the top spot at the last minute. A crazy "
+        },
+        {
+          "_key": "2d45b940ed8c",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "21 hour and 29 minute"
+        },
+        {
+          "_key": "d9a51900e67e",
+          "_type": "span",
+          "marks": [],
+          "text": " record that's going to be tough to beat."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "02c3bca2c2ce",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "730063c37ddc",
+          "key": "536",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 20
+        }
+      ]
+    }
+  ],
+  "category": "laptops",
+  "mainImage": {
+    "AltText": "Stack of laptops with text reading \"Battery Life Champs 2025\"",
+    "_type": "image",
+    "asset": {
+      "_ref": "image-75abee8c70ac80b31e3b5618cc5d1115c435d89a-1920x1080-jpg",
+      "_type": "reference"
+    },
+    "caption": "Battery Life Champs 2025"
+  },
+  "metaDescription": "These 20 laptops offer some of the best battery life you can currently get out of a laptop. Some of them even last multiple workdays which is INSANE.",
+  "metaTitle": "Top 20 Laptops for Battery Life",
+  "publishedAt": "2025-11-11T23:54:05.274Z",
+  "readCount": 16881,
+  "relatedVideos": [
+    "EYIzDHbxtK8"
+  ],
+  "slug": {
+    "_type": "slug",
+    "current": "top-20-laptops-for-battery-life"
+  },
+  "title": "Top 20 Laptops for Battery Life"
+}

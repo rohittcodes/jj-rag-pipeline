@@ -1,0 +1,52 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+venv/
+env/
+
+# Environment variables
+.env
+
+# uv
+.python-version
+uv.lock
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes (if using local bind mounts)
+postgres_data/
+redis_data/
+
+# Logs
+*.log
+logs/
+
+# Test outputs
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Model cache (sentence-transformers downloads models)
+.cache/
+models/
+
+# Data (if you want to keep raw data out of git)
+# Uncomment if needed:
+# data/
+# raw/

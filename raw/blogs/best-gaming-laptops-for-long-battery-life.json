@@ -1,0 +1,596 @@
+{
+  "_createdAt": "2025-11-12T21:19:34Z",
+  "_id": "66caad27-69f0-43a0-bf0b-d7b9602bb04d",
+  "_rev": "ZDaHS4lCmyLn3Q2WhwmsYd",
+  "_type": "articles",
+  "_updatedAt": "2026-02-02T05:47:03Z",
+  "body": [
+    {
+      "_key": "636bdff677ea",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "f52742815ba0",
+          "_type": "span",
+          "marks": [],
+          "text": "How We Test"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "3a9e944f6e3f",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "2bfcf73b3266",
+          "_type": "span",
+          "marks": [],
+          "text": "To test which laptop lasts the longest on battery, we use an industry standard benchmark from Procyon that runs until the laptop dies. Specifically, we run the Office Productivity scenario which pushes the laptop a bit harder by emulating real world use of the Microsoft Office Suite— Word, Excel, PowerPoint, and Outlook. This is something we feel people are likely to do on battery."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "a3a8def7c3af",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "095b295c67b2",
+          "_type": "span",
+          "marks": [],
+          "text": "Before starting the test, we measure the screen brightness and set it to 200 nits. This is a bit less realistic unless you're in a dimmer room or don't run your screen very bright. We are looking to change this to 300 nits in the near future. We also make sure it's in the lowest performance mode available as long as it doesn't perform poorly. We disable the dedicated GPU if it has one that can be disabled, set the screen to 60Hz if possible, disable all background processes other than Wi-Fi, and disable the included battery saver feature in Windows. Lastly, turn off the keyboard backlight, although we don't think this has a large impact."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "29d068a14205",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "ce58a3c07ba5",
+          "_type": "span",
+          "marks": [],
+          "text": "With all that out of the way, let's see which gaming laptops come out on top!"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "2c5b623bf2fc",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c50c914ad2cb",
+          "_type": "span",
+          "marks": [],
+          "text": "#10 - ASUS ProArt P16 & MSI Stealth A16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "f030271f7c9d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "3ddfd14ea4ec",
+          "_type": "span",
+          "marks": [],
+          "text": "Shockingly enough, these laptops both last exactly "
+        },
+        {
+          "_key": "c4b1b6544cf2",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "9 hours and 28 minutes"
+        },
+        {
+          "_key": "1e8613bdf66e",
+          "_type": "span",
+          "marks": [],
+          "text": " in their respective integrated GPU modes. The difference between them, however, is massive. The ProArt P16 from ASUS is a laptop we recommend very highly with its much improved 5090 version. It's one of our top laptops this year due to its high performance in a super portable package, but it's quite expensive. The Stealth on the other hand is a bit more affordable, but very uncomfortable to use for gaming for a number of reasons listed below. We'd suggest the ProArt P16 of the two. It's much more premium."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "ec997d409b73",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "3d928ffbf82f",
+          "key": "498",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 1
+        },
+        {
+          "_key": "2a0108b5d62e",
+          "key": "494",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 2
+        }
+      ]
+    },
+    {
+      "_key": "7c3db391faaf",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "42141174c8c0",
+          "_type": "span",
+          "marks": [],
+          "text": "#9 - Gigabyte Aero X16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "b22ff4298c84",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "100fc84e4189",
+          "_type": "span",
+          "marks": [],
+          "text": "A more affordable pick than either of the last two, the Aero X16 offers a lot of value and performance for its price. It's not perfect, namely its screen is a bit disappointing, but having decent battery life might just make it up to you. It lasts "
+        },
+        {
+          "_key": "96a71448b811",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "9 hours and 32 minutes"
+        },
+        {
+          "_key": "26e2fc93f16a",
+          "_type": "span",
+          "marks": [],
+          "text": " in this test."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "8f90afb982dc",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "903071f6df8e",
+          "key": "426",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 3
+        }
+      ]
+    },
+    {
+      "_key": "cb78335e7810",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "e8f783642857",
+          "_type": "span",
+          "marks": [],
+          "text": "#8 - Gigabyte Gaming A16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "f71d86308fef",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "cbef43033b08",
+          "_type": "span",
+          "marks": [],
+          "text": "Lasting "
+        },
+        {
+          "_key": "d477dbf10deb",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "9 hours and 37 minutes"
+        },
+        {
+          "_key": "73b960abd176",
+          "_type": "span",
+          "marks": [],
+          "text": ", Gigabyte takes another spot on the list just barely beating out its more premium offering. The A16 is more budget, certainly, but still offers some solid value. Just be aware of its cons before buying. We'd recommend the 4050 version as our 5060 one had performance issues we were never able to resolve with Gigabyte."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "3f56737c9426",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "1293964d7e9e",
+          "key": "428",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 4
+        }
+      ]
+    },
+    {
+      "_key": "90f0e2ddffff",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6e1c7a5a0445",
+          "_type": "span",
+          "marks": [],
+          "text": "#7 - 2024 ASUS TUF A14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "516321c30f46",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "8a7168f7e6e2",
+          "_type": "span",
+          "marks": [],
+          "text": "Snatching another spot on the list, ASUS excels at minimizing power draw on battery when the dedicated GPU is disabled. This is last year's version of the TUF A14 that lasted "
+        },
+        {
+          "_key": "9bbd7bbb738d",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "9 hours and 43 minutes"
+        },
+        {
+          "_key": "d508bce8a966",
+          "_type": "span",
+          "marks": [],
+          "text": ", but it's still a good buy on sale."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "4be1477b7405",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "635ac8ecbe3b",
+          "key": "36",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 5
+        }
+      ]
+    },
+    {
+      "_key": "77ac8a1eb064",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "4fd01e7ace85",
+          "_type": "span",
+          "marks": [],
+          "text": "#6 & #5 - ASUS Zephyrus G16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "8e60fbe7e86b",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "906b0c6ae3dc",
+          "_type": "span",
+          "marks": [],
+          "text": "Taking the next two spots on our list we have the Zephyrus G16 from ASUS, both last year's version with a 4070 "
+        },
+        {
+          "_key": "0cafd4f0f5dc",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "(9:57)"
+        },
+        {
+          "_key": "e59b8c1fa3d0",
+          "_type": "span",
+          "marks": [],
+          "text": " and this year's with a 5080 "
+        },
+        {
+          "_key": "2efb27c75f91",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "(9:45)"
+        },
+        {
+          "_key": "325a841a82ba",
+          "_type": "span",
+          "marks": [],
+          "text": ". Both feature an Ultra 9 H processor from Intel, but one is their older Meteor Lake while the other is their updated Arrow Lake. As you may have seen in our top 20 list, Arrow Lake seems to conserve battery pretty well, but we were surprised to see a last gen chip here too. ASUS just kills it with gaming laptop battery life."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "70f4e2cf9fd7",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "433612b27637",
+          "key": "196",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 6
+        },
+        {
+          "_key": "fa5ee5efebbd",
+          "key": "58",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 7
+        }
+      ]
+    },
+    {
+      "_key": "18eab36895c0",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "acb469255174",
+          "_type": "span",
+          "marks": [],
+          "text": "#4 - ASUS Strix G18"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "76321cf20c75",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "1d2e4376ce49",
+          "_type": "span",
+          "marks": [],
+          "text": "We don't really see a scenario where someone is taking their 18-inch laptop with them to travel or for school, but if that's you? You're in luck. The only 18-inch to make our list lasts 10 hours and 5 minutes on battery. It also has the most powerful processor on this list, so its win is a bit shocking in many regards."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "7b88adc38fc7",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "b8b35dcc0bc4",
+          "key": "542",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 8
+        }
+      ]
+    },
+    {
+      "_key": "58865d6e9b9d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "55e335a9bf1f",
+          "_type": "span",
+          "marks": [],
+          "text": "#3 - HP Omen Transcend 14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "62915ac29519",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "9ee4c94a2087",
+          "_type": "span",
+          "marks": [],
+          "text": "Like ASUS, HP offers a pretty effective iGPU mode. It's especially useful in smaller, more premium laptops like this one that we could see a student carrying around. In light use, this laptop lasts "
+        },
+        {
+          "_key": "80482cd8391d",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "11 hours and 21 minutes "
+        },
+        {
+          "_key": "ed0063057c68",
+          "_type": "span",
+          "marks": [],
+          "text": "on battery. Just be aware of its lower wattage GPU which means in gaming it doesn't perform as well as its specs might suggest."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "009bfb6976f3",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "966ffc03c6e9",
+          "key": "408",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 9
+        }
+      ]
+    },
+    {
+      "_key": "82d5321e61b1",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b7545069ed32",
+          "_type": "span",
+          "marks": [],
+          "text": "#2 - HP Omen 16 Slim"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "e0aea141da0f",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "083206916681",
+          "_type": "span",
+          "marks": [],
+          "text": "This is a great laptop at a great price, and the fact that it lasts "
+        },
+        {
+          "_key": "9f3f752b74c8",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "13 hours and 3 minutes"
+        },
+        {
+          "_key": "b5929f057123",
+          "_type": "span",
+          "marks": [],
+          "text": " on battery is awesome. Its GPU is still fed less wattage like the last one, but if you don't mind lowering your settings sometimes, it's a solid pick. Heck, a friend of ours bought one last week!"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "ca0709b74eae",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "f19c958101de",
+          "key": "485",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 10
+        }
+      ]
+    },
+    {
+      "_key": "d2985dfd9452",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "fdd6c3bd6504",
+          "_type": "span",
+          "marks": [],
+          "text": "#1 - 2025 ASUS Tuf A14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "55a06dc50966",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "5e560d74f856",
+          "_type": "span",
+          "marks": [],
+          "text": "Now sporting a less powerful Ryzen 7 processor, we initially felt like this year's TUF was a downgrade from the Ryzen 9 one last year, until we saw its battery life! It lasts "
+        },
+        {
+          "_key": "fe6f811af29b",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "13 hours and 25 minutes"
+        },
+        {
+          "_key": "5e0b0fc20a91",
+          "_type": "span",
+          "marks": [],
+          "text": " on battery for Office tasks. This is a great laptop, super portable, actually stays decently cool during gaming. It definitely deserves the win, even if it is a little pricier for a worse CPU this year. Also major props to ASUS for taking 6 of these top 10 spots!"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "ba301849cd49",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "ca6c44577659",
+          "key": "461",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 11
+        }
+      ]
+    }
+  ],
+  "category": "laptops",
+  "mainImage": {
+    "AltText": "Best Gaming Laptops for Battery Life",
+    "_type": "image",
+    "asset": {
+      "_ref": "image-67fb58c03c7fdc7ee52622521c6b4ffb360a205b-720x405-jpg",
+      "_type": "reference"
+    },
+    "caption": "Best Gaming Laptops for Battery Life"
+  },
+  "metaDescription": "If you're more than just a gamer, you probably want a laptop that can do both— game at home and last for a full day of work or school. Here's our top 10 picks!",
+  "metaTitle": "Best Gaming Laptops for Long Battery Life: Our Top 10 Picks",
+  "publishedAt": "2025-11-12T22:30:46.362Z",
+  "readCount": 10979,
+  "relatedVideos": [
+    "EYIzDHbxtK8"
+  ],
+  "slug": {
+    "_type": "slug",
+    "current": "top-10-best-gaming-laptops-for-long-battery-life"
+  },
+  "title": "Best Gaming Laptops for Long Battery Life: Our Top 10 Picks"
+}

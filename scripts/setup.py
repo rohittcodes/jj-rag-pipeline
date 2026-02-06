@@ -1,0 +1,293 @@
+"""
+Unified database setup script.
+Handles all schema creation and initialization.
+
+Usage:
+    python scripts/setup.py --all                    # Setup everything
+    python scripts/setup.py --database               # Setup main database schema
+    python scripts/setup.py --youtube                # Setup YouTube schema
+    python scripts/setup.py --indexes                # Create vector indexes
+"""
+import os
+import sys
+import argparse
+from pathlib import Path
+
+# Add project root to path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
+import psycopg2
+from dotenv import load_dotenv
+
+load_dotenv()
+
+DB_CONFIG = {
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'port': os.getenv('DB_PORT', '5432'),
+    'database': os.getenv('DB_NAME', 'josh_rag'),
+    'user': os.getenv('DB_USER', 'postgres'),
+    'password': os.getenv('DB_PASSWORD', 'postgres')
+}
+
+
+def setup_main_database():
+    """Setup main database schema for blog content and configs."""
+    print("\n[*] Setting up main database schema...")
+    
+    conn = psycopg2.connect(**DB_CONFIG)
+    cursor = conn.cursor()
+    
+    try:
+        # Enable pgvector extension
+        print("[*] Enabling pgvector extension...")
+        cursor.execute("CREATE EXTENSION IF NOT EXISTS vector;")
+        
+        # Create josh_content table
+        print("[*] Creating josh_content table...")
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS josh_content (
+                id SERIAL PRIMARY KEY,
+                sanity_id VARCHAR(255) UNIQUE,
+                title TEXT NOT NULL,
+                content_type VARCHAR(50),
+                raw_content TEXT NOT NULL,
+                url TEXT,
+                publish_date DATE,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                tags TEXT[],
+                metadata JSONB
+            );
+        """)
+        
+        # Create content_chunks table
+        print("[*] Creating content_chunks table...")
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS content_chunks (
+                id SERIAL PRIMARY KEY,
+                content_id INTEGER REFERENCES josh_content(id) ON DELETE CASCADE,
+                chunk_text TEXT NOT NULL,
+                chunk_index INTEGER NOT NULL,
+                section_title TEXT,
+                metadata JSONB,
+                embedding vector(768),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+        
+        # Create configs table (local product data)
+        print("[*] Creating configs table...")
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS configs (
+                id SERIAL PRIMARY KEY,
+                config_id INTEGER UNIQUE NOT NULL,
+                product_id INTEGER,
+                product_name TEXT NOT NULL,
+                brand TEXT,
+                model TEXT,
+                price DECIMAL(10, 2),
+                specs JSONB,
+                test_data JSONB,
+                rating DECIMAL(3, 2),
+                josh_context TEXT,
+                last_synced TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+        
+        # Create rag_query_logs table
+        print("[*] Creating rag_query_logs table...")
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS rag_query_logs (
+                id SERIAL PRIMARY KEY,
+                query_text TEXT NOT NULL,
+                quiz_response JSONB,
+                top_results JSONB,
+                confidence_score FLOAT,
+                recommendation_source VARCHAR(50),
+                latency_ms INTEGER,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+        
+        # Create indexes
+        print("[*] Creating indexes...")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_josh_content_sanity_id ON josh_content(sanity_id);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_josh_content_publish_date ON josh_content(publish_date);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_josh_content_updated_at ON josh_content(updated_at);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_content_chunks_content_id ON content_chunks(content_id);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_configs_config_id ON configs(config_id);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_configs_product_id ON configs(product_id);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_rag_query_logs_created_at ON rag_query_logs(created_at);")
+        
+        conn.commit()
+        print("[+] Main database schema created successfully!")
+        
+    except Exception as e:
+        print(f"[-] Error setting up main database: {e}")
+        conn.rollback()
+        return False
+    finally:
+        cursor.close()
+        conn.close()
+    
+    return True
+
+
+def setup_youtube_schema():
+    """Setup YouTube-specific schema."""
+    print("\n[*] Setting up YouTube schema...")
+    
+    conn = psycopg2.connect(**DB_CONFIG)
+    cursor = conn.cursor()
+    
+    try:
+        # Create youtube_content table
+        print("[*] Creating youtube_content table...")
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS youtube_content (
+                id SERIAL PRIMARY KEY,
+                video_id VARCHAR(255) UNIQUE NOT NULL,
+                title TEXT NOT NULL,
+                url TEXT NOT NULL,
+                description TEXT,
+                publish_date DATE,
+                thumbnail_url TEXT,
+                transcript_type VARCHAR(50),
+                language VARCHAR(100),
+                full_transcript TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+        
+        # Create youtube_chunks table
+        print("[*] Creating youtube_chunks table...")
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS youtube_chunks (
+                id SERIAL PRIMARY KEY,
+                youtube_content_id INTEGER REFERENCES youtube_content(id) ON DELETE CASCADE,
+                chunk_text TEXT NOT NULL,
+                chunk_index INTEGER NOT NULL,
+                start_time FLOAT,
+                end_time FLOAT,
+                metadata JSONB,
+                embedding vector(768),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+        
+        # Create indexes
+        print("[*] Creating YouTube indexes...")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_youtube_content_video_id ON youtube_content(video_id);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_youtube_content_publish_date ON youtube_content(publish_date);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_youtube_chunks_content_id ON youtube_chunks(youtube_content_id);")
+        
+        conn.commit()
+        print("[+] YouTube schema created successfully!")
+        
+    except Exception as e:
+        print(f"[-] Error setting up YouTube schema: {e}")
+        conn.rollback()
+        return False
+    finally:
+        cursor.close()
+        conn.close()
+    
+    return True
+
+
+def create_vector_indexes():
+    """Create HNSW indexes for vector similarity search."""
+    print("\n[*] Creating vector indexes...")
+    
+    conn = psycopg2.connect(**DB_CONFIG)
+    cursor = conn.cursor()
+    
+    try:
+        # Check if we have embeddings
+        cursor.execute("SELECT COUNT(*) FROM content_chunks WHERE embedding IS NOT NULL;")
+        blog_count = cursor.fetchone()[0]
+        
+        cursor.execute("SELECT COUNT(*) FROM youtube_chunks WHERE embedding IS NOT NULL;")
+        youtube_count = cursor.fetchone()[0]
+        
+        if blog_count == 0 and youtube_count == 0:
+            print("[!] No embeddings found. Generate embeddings first using: python scripts/ingest.py --embeddings")
+            return False
+        
+        # Create HNSW index for blog chunks
+        if blog_count > 0:
+            print(f"[*] Creating HNSW index for {blog_count} blog chunks...")
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_content_chunks_embedding 
+                ON content_chunks 
+                USING hnsw (embedding vector_cosine_ops)
+                WITH (m = 16, ef_construction = 64);
+            """)
+        
+        # Create HNSW index for YouTube chunks
+        if youtube_count > 0:
+            print(f"[*] Creating HNSW index for {youtube_count} YouTube chunks...")
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_youtube_chunks_embedding 
+                ON youtube_chunks 
+                USING hnsw (embedding vector_cosine_ops)
+                WITH (m = 16, ef_construction = 64);
+            """)
+        
+        conn.commit()
+        print("[+] Vector indexes created successfully!")
+        
+    except Exception as e:
+        print(f"[-] Error creating vector indexes: {e}")
+        conn.rollback()
+        return False
+    finally:
+        cursor.close()
+        conn.close()
+    
+    return True
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Setup database schema')
+    parser.add_argument('--all', action='store_true', help='Setup everything')
+    parser.add_argument('--database', action='store_true', help='Setup main database schema')
+    parser.add_argument('--youtube', action='store_true', help='Setup YouTube schema')
+    parser.add_argument('--indexes', action='store_true', help='Create vector indexes')
+    
+    args = parser.parse_args()
+    
+    # If no args, show help
+    if not any(vars(args).values()):
+        parser.print_help()
+        return
+    
+    print("="*60)
+    print("Database Setup")
+    print("="*60)
+    
+    success = True
+    
+    if args.all or args.database:
+        if not setup_main_database():
+            success = False
+    
+    if args.all or args.youtube:
+        if not setup_youtube_schema():
+            success = False
+    
+    if args.all or args.indexes:
+        if not create_vector_indexes():
+            success = False
+    
+    print("\n" + "="*60)
+    if success:
+        print("[+] Setup completed successfully!")
+    else:
+        print("[-] Setup completed with errors")
+    print("="*60)
+
+
+if __name__ == "__main__":
+    main()

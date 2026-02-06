@@ -1,0 +1,205 @@
+{
+  "total_tests": 6,
+  "passed": 6,
+  "failed": 0,
+  "test_results": [
+    {
+      "test_name": "Budget Student (Programming)",
+      "passed": true,
+      "issues": [],
+      "recommendations": [
+        {
+          "name": "MacBook Air 13 Apple",
+          "confidence": 0.7522435446580251,
+          "config_id": 641
+        },
+        {
+          "name": "Thinkpad X1 Carbon 14 Lenovo",
+          "confidence": 0.7345014570156733,
+          "config_id": 73
+        },
+        {
+          "name": "Yoga 7 2-in-1 14 Lenovo",
+          "confidence": 0.7073953226333485,
+          "config_id": 534
+        },
+        {
+          "name": "Surface Laptop 13 Microsoft",
+          "confidence": 0.7073953226333485,
+          "config_id": 547
+        },
+        {
+          "name": "XPS 13 Dell",
+          "confidence": 0.7068401054437896,
+          "config_id": 545
+        }
+      ],
+      "source_stats": {
+        "blog": 15,
+        "youtube": 0
+      }
+    },
+    {
+      "test_name": "Professional Video Editor (Premium)",
+      "passed": true,
+      "issues": [],
+      "recommendations": [
+        {
+          "name": "MacBook Pro 14 Apple",
+          "confidence": 0.8307336043258672,
+          "config_id": 186
+        },
+        {
+          "name": "Blade 16 Razer",
+          "confidence": 0.7415669376592006,
+          "config_id": 526
+        },
+        {
+          "name": "MacBook Pro 16 Apple",
+          "confidence": 0.7262743457158406,
+          "config_id": 209
+        },
+        {
+          "name": "MacBook Air 15 Refurbished Apple",
+          "confidence": 0.7145376340548197,
+          "config_id": 156
+        },
+        {
+          "name": "ThinkPad X9 15 Aura Edition Lenovo",
+          "confidence": 0.7145376340548197,
+          "config_id": 170
+        }
+      ],
+      "source_stats": {
+        "blog": 15,
+        "youtube": 0
+      }
+    },
+    {
+      "test_name": "Hardcore Gamer (Performance)",
+      "passed": true,
+      "issues": [],
+      "recommendations": [
+        {
+          "name": "Blade 16 Razer",
+          "confidence": 0.7858903872041368,
+          "config_id": 526
+        },
+        {
+          "name": "Nitro V 15 Acer",
+          "confidence": 0.7365250996664229,
+          "config_id": 250
+        },
+        {
+          "name": "Thin 15.6 MSI",
+          "confidence": 0.7365250996664229,
+          "config_id": 479
+        },
+        {
+          "name": "Aero X16 Gigabyte",
+          "confidence": 0.7363100329822325,
+          "config_id": 426
+        },
+        {
+          "name": "Hydroc 16 Eluktronics",
+          "confidence": 0.7355720123663357,
+          "config_id": 567
+        }
+      ],
+      "source_stats": {
+        "blog": 15,
+        "youtube": 0
+      }
+    },
+    {
+      "test_name": "Business Professional (Portability)",
+      "passed": true,
+      "issues": [],
+      "recommendations": [
+        {
+          "name": "MacBook Pro 14 Apple",
+          "confidence": 0.6642328328966497,
+          "config_id": 186
+        },
+        {
+          "name": "Surface Laptop 7 13 Microsoft",
+          "confidence": 0.6642328328966497,
+          "config_id": 84
+        },
+        {
+          "name": "Zenbook S 14 (Lunar Lake) Asus",
+          "confidence": 0.6633874271313361,
+          "config_id": 11
+        },
+        {
+          "name": "XPS 13 Dell",
+          "confidence": 0.6633874271313361,
+          "config_id": 168
+        },
+        {
+          "name": "ThinkPad X1 Carbon 14 Lenovo",
+          "confidence": 0.6616153595814326,
+          "config_id": 1
+        }
+      ],
+      "source_stats": {
+        "blog": 15,
+        "youtube": 0
+      }
+    },
+    {
+      "test_name": "Data Science Student (Balanced)",
+      "passed": true,
+      "issues": [],
+      "recommendations": [
+        {
+          "name": "MacBook Pro 14 Apple",
+          "confidence": 0.7527784714268728,
+          "config_id": 186
+        },
+        {
+          "name": "Blade 16 Razer",
+          "confidence": 0.7386118047602063,
+          "config_id": 526
+        },
+        {
+          "name": "MacBook Air 15 Apple",
+          "confidence": 0.7358923057715098,
+          "config_id": 109
+        },
+        {
+          "name": "Aero X16 Gigabyte",
+          "confidence": 0.7358727078589562,
+          "config_id": 425
+        },
+        {
+          "name": "MacBook Pro 16 Apple",
+          "confidence": 0.6391812882820764,
+          "config_id": 209
+        }
+      ],
+      "source_stats": {
+        "blog": 15,
+        "youtube": 0
+      }
+    },
+    {
+      "test_name": "Intel Panther Lake User (YouTube Content Test)",
+      "passed": true,
+      "issues": [],
+      "recommendations": [
+        {
+          "name": "Thinkpad X1 Carbon 14 Lenovo",
+          "confidence": 0.5356905821959178,
+          "config_id": 491
+        }
+      ],
+      "source_stats": {
+        "blog": 11,
+        "youtube": 4
+      }
+    }
+  ],
+  "total_blog_chunks": 86,
+  "total_youtube_chunks": 4
+}

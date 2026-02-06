@@ -1,0 +1,581 @@
+{
+  "_createdAt": "2025-11-25T23:45:58Z",
+  "_id": "5ab518b4-08dc-4fa9-9766-a400ac71a03e",
+  "_rev": "F0A8XDEl3Rl4mdGWIM76zQ",
+  "_type": "articles",
+  "_updatedAt": "2026-02-02T05:54:36Z",
+  "body": [
+    {
+      "_key": "53ee27b2069d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "cf4d61d8c01d",
+          "_type": "span",
+          "marks": [],
+          "text": "Scoring"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "8aa4f2005437",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "17130485e60a",
+          "_type": "span",
+          "marks": [],
+          "text": "We scored 9 laptops from 1 to 5 stars in 10 different categories shown here:"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "AltText": "CPU Performance, Gaming, Creator Tasks, Portability, Heat & Fan Noise, Battery Life, Build Quality, Display, Keyboard & Trackpad, Creature Comforts",
+      "_key": "07be46063e05",
+      "_type": "image",
+      "asset": {
+        "_ref": "image-c9b689055fa11877abfd81368c7a4a240a9986dc-4000x2250-jpg",
+        "_type": "reference"
+      },
+      "caption": "Scoring Categories"
+    },
+    {
+      "_key": "1ee7c5f86f40",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "63d4b48d50280",
+          "_type": "span",
+          "marks": [],
+          "text": "As we count down from worst to best, we’ll highlight their pros, cons, and who should buy it."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "5adf76687cf8",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d7dcfa44247c",
+          "_type": "span",
+          "marks": [],
+          "text": "#8 (Tie) - Yoga Pro 7 & Predator Helios Neo 14 AI"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "da8b93dde7fe",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6a1033bca691",
+          "_type": "span",
+          "marks": [],
+          "text": "Predator Helios Neo 14 AI"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "a049deea3586",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b1da473a038c",
+          "_type": "span",
+          "marks": [],
+          "text": "This one is great for people who want solid CPU performance and a large 14.5\" OLED display, but it's a bit loud in performance tasks, heavy and pricy which is why it's at the bottom of this list."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "AltText": "Scoring Sheet with 1-5 stars in each category",
+      "_key": "4efee4098aa6",
+      "_type": "image",
+      "asset": {
+        "_ref": "image-018a91d8ebc25769a2b7cb3cf11562fa09fa2735-10240x5760-jpg",
+        "_type": "reference"
+      },
+      "caption": "Predator Helios Neo 14 AI Scoring"
+    },
+    {
+      "_key": "109ec3f2f890",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "af0f50e3149b",
+          "_type": "span",
+          "marks": [],
+          "text": "Yoga Pro 7"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "aea79cbe11b3",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d5e052894839",
+          "_type": "span",
+          "marks": [],
+          "text": "This one isn't available in the U.S., but it can come with up to a 5050 overseas. Even with a 5050, this one would likely perform at the lower end in gaming and creator tasks. But, it has a great 14.5\" OLED display, and is nice and light to carry around with you. Its keyboard is also pretty great."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "AltText": "Scoring Sheet with 1-5 stars in each category",
+      "_key": "1ffb375c1de4",
+      "_type": "image",
+      "asset": {
+        "_ref": "image-12c9b066c50fece37805437070116481ff6fbd56-10240x5760-jpg",
+        "_type": "reference"
+      },
+      "caption": "Yoga Pro 7 Scoring"
+    },
+    {
+      "_key": "573039d3b510",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "ba7a069c49c4",
+          "key": "568",
+          "showProsAndCons": false,
+          "showTitle": true,
+          "sortOrder": 1
+        }
+      ]
+    },
+    {
+      "_key": "7426255b7116",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "92406fbec327",
+          "_type": "span",
+          "marks": [],
+          "text": "#7 - Predator Triton 14 AI"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "166368a01ede",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "82e64f84b644",
+          "_type": "span",
+          "marks": [],
+          "text": "This is an extremely premium feeling laptop with a major con- its Lunar Lake CPU. It holds back performance significantly and it doesn't even pay off in great battery life like we'd hoped. It has a nice trackpad and a great screen, but this one is hard for us to recommend."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "AltText": "Scoring Sheet with 1-5 stars in each category",
+      "_key": "625f20ba7490",
+      "_type": "image",
+      "asset": {
+        "_ref": "image-c202263809760697617219f9ffa89e858e052a56-10240x5760-jpg",
+        "_type": "reference"
+      },
+      "caption": "Predator Triton 14 AI Scoring"
+    },
+    {
+      "_key": "84495b4aac63",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "25235bbd25eb",
+          "key": "569",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 2
+        }
+      ]
+    },
+    {
+      "_key": "479e56cb6821",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "1da827e98cf9",
+          "_type": "span",
+          "marks": [],
+          "text": "#6 - Dell 14 Premium"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "98a0b985627f",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "77da75900f30",
+          "_type": "span",
+          "marks": [],
+          "text": "Another very premium feeling laptop, even more so than the last one, with similarly low end performance. This one is only offered with up to a 4050 that is fed low wattage, so it's not the best for gamers. Probably better for those who just do some light gaming on the side. Also, be aware it has a touchbar instead of a function row."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "AltText": "Stars 1-5 representing different categories",
+      "_key": "64791d039c15",
+      "_type": "image",
+      "asset": {
+        "_ref": "image-85e77a6130976894e8b4e737f77bb1511a237542-10240x5760-jpg",
+        "_type": "reference"
+      },
+      "caption": "Dell 14 Premium Scoring"
+    },
+    {
+      "_key": "be38eca2daee",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "4aae85c8c5aa",
+          "key": "462",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 3
+        }
+      ]
+    },
+    {
+      "_key": "bcbc5ebb9f0b",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "8a92213b3643",
+          "_type": "span",
+          "marks": [],
+          "text": "#5 - TUF A14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "3f49625e74be",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "315bc439d9f6",
+          "_type": "span",
+          "marks": [],
+          "text": "We really love this laptop for a lot of reasons, great battery life, super lightweight and portable, and decent gaming performance. It just doesn't feel as premium or well built as some others on the list if that matters to you."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "AltText": "Stars 1-5 representing different categories",
+      "_key": "21773f95a017",
+      "_type": "image",
+      "asset": {
+        "_ref": "image-6047ef2f0afecc66691e57d6f13e8b86c6936e60-10240x5760-jpg",
+        "_type": "reference"
+      },
+      "caption": "TUF A14 Scoring"
+    },
+    {
+      "_key": "274681445a9c",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "dd99bafd5665",
+          "key": "461",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 4
+        }
+      ]
+    },
+    {
+      "_key": "b87eb348cac5",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b465f9a51fc0",
+          "_type": "span",
+          "marks": [],
+          "text": "#4 - OMEN Transcend 14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "5e3b19b21f2e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "8fccf5c4053a",
+          "_type": "span",
+          "marks": [],
+          "text": "This laptop is very well-rounded. Good at a lot of things, but not great at anything in particular. Performance is middle of the pack due to its lower wattage GPUs, but it does feel premium and have decent battery life."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "AltText": "1-5 stars in different categories",
+      "_key": "0dde6782f72e",
+      "_type": "image",
+      "asset": {
+        "_ref": "image-873aa8209ae07cc92f703721fbb91e7373288d66-10240x5760-jpg",
+        "_type": "reference"
+      },
+      "caption": "OMEN Transcend 14 Scoring"
+    },
+    {
+      "_key": "3733033b83b2",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "257fa8b25e7e",
+          "key": "408",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 5
+        }
+      ]
+    },
+    {
+      "_key": "cc9adaff72fd",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "a71d92a02c25",
+          "_type": "span",
+          "marks": [],
+          "text": "#3 - Blade 14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "80e906a1d424",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "f6162df05081",
+          "_type": "span",
+          "marks": [],
+          "text": "This one is super premium and performs very well. Its battery life is poor and the razer synapse software kind of sucks, though. Regardless, this is still one of Josh's favorites and he says it's a joy to use as a daily driver."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "AltText": "1-5 stars in different categories",
+      "_key": "6769ef58a52a",
+      "_type": "image",
+      "asset": {
+        "_ref": "image-03a83e03e6af68741810c246f95d638f335631e7-10240x5760-jpg",
+        "_type": "reference"
+      },
+      "caption": "Blade 14 Scoring"
+    },
+    {
+      "_key": "ede8fc3eb909",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "58d718d825e4",
+          "key": "476",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 6
+        }
+      ]
+    },
+    {
+      "_key": "8dcc655e4381",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0705eecfd516",
+          "_type": "span",
+          "marks": [],
+          "text": "#2 - Zephyrus G14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "7725d388297a",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "924a608548ca",
+          "_type": "span",
+          "marks": [],
+          "text": "This one is great in almost every way. Great performance, well built, looks sleek, nice screen, but it almost always feels warm. Even in light use. Some people may not mind that trade-off."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "AltText": "1-5 stars in different categories",
+      "_key": "59ecc13d4e3e",
+      "_type": "image",
+      "asset": {
+        "_ref": "image-cff02a97737cbeacd8520fe3ad2e724fb37e448a-10240x5760-jpg",
+        "_type": "reference"
+      },
+      "caption": "Zephyrus G14 Scoring"
+    },
+    {
+      "_key": "20f11733b15b",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "4519079340f4",
+          "key": "94",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 7
+        }
+      ]
+    },
+    {
+      "_key": "4ed7bdbca769",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "364ebcd409a8",
+          "_type": "span",
+          "marks": [],
+          "text": "#1 - MacBook Pro 14"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "d394ec1c66ed",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "e9f9d70c16b5",
+          "_type": "span",
+          "marks": [],
+          "text": "Fantastic for most people in most categories. Its only big con is that it can't play most modern games. Plus, it's a bit heavy. Otherwise, this is our favorite for a reason, look at all those 5 stars!"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "AltText": "1-5 stars in different categories",
+      "_key": "27606186c68c",
+      "_type": "image",
+      "asset": {
+        "_ref": "image-a845d51288e011779e28cad465e7f1f2996eb4bb-10240x5760-jpg",
+        "_type": "reference"
+      },
+      "caption": "MacBook Pro 14 Scoring"
+    },
+    {
+      "_key": "74d1f90d570f",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "f88b40295c64",
+          "key": "186",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 8
+        }
+      ]
+    },
+    {
+      "_key": "53e1ac810a9c",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6aa427455fd4",
+          "_type": "span",
+          "marks": [],
+          "text": "Final Ranking"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "6bc694b1a1f0",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "df70566113bd",
+          "_type": "span",
+          "marks": [],
+          "text": "Here's where they all ended up. There's not really a bad laptop on this list, but each one is right for different people. Make sure to check out our deals section to see if you can catch one of these great laptops on sale."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "AltText": "Laptops scored in order from best to worst by star value",
+      "_key": "f0e50335ed1c",
+      "_type": "image",
+      "asset": {
+        "_ref": "image-3956ea603f7d0764600093f79359d8849d814b61-4000x2250-jpg",
+        "_type": "reference"
+      },
+      "caption": "Final Ranking"
+    }
+  ],
+  "category": "laptops",
+  "mainImage": {
+    "AltText": "Josh and Cierra holding stacks of the 14-inch performance laptops",
+    "_type": "image",
+    "asset": {
+      "_ref": "image-08a47c42fdaffb1c98c42f1c01c3d049b008bca4-1920x1080-jpg",
+      "_type": "reference"
+    },
+    "caption": "Best 14-inch Laptops of 2025!"
+  },
+  "metaDescription": "Unlike most 14-inch laptops, these ones pack some serious performance under the hood. We've scored them in 10 categories, so which one comes out on top?",
+  "metaTitle": "Best 14-Inch Performance Laptop of 2025 - Our Final Scores",
+  "publishedAt": "2025-11-26T18:59:50.655Z",
+  "readCount": 6601,
+  "relatedVideos": [
+    "p0v8fVwRYoE"
+  ],
+  "slug": {
+    "_type": "slug",
+    "current": "best-14-inch-performance-laptop"
+  },
+  "title": "Best 14-Inch Performance Laptop of 2025 - We Ranked Them All!"
+}

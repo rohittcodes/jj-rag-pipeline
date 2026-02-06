@@ -1,0 +1,295 @@
+{
+  "_createdAt": "2025-12-09T22:22:51Z",
+  "_id": "31283e70-e2c6-4de2-88b3-4bc552088c5d",
+  "_rev": "l1D2y2qp4sE0ZeetOORGGw",
+  "_type": "articles",
+  "_updatedAt": "2026-02-02T02:31:12Z",
+  "body": [
+    {
+      "_key": "d7c40ff46af3",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "90fdcf5e13e8",
+          "_type": "span",
+          "marks": [],
+          "text": "Lenovo IdeaPad Pro 5i"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "925c46e43754",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "8e28a240e6d8",
+          "_type": "span",
+          "marks": [],
+          "text": "When we were putting together our \"Best Laptop for Programmers\" list, this one stood out as it had 9 of the 10 traits we decided on for a great programming laptop. Bright, high pixel density screen, great keyboard, minimal distractions like heat and fan noise, good performance, and so on. This one also frequently comes in around $1200 or less which makes it one of the more affordable laptops packing this type of power in such a lightweight, portable package. Our biggest con on this one is that it is not always offered with 32GB of memory in the U.S., which is what we "
+        },
+        {
+          "_key": "48bb59e29bb3",
+          "_type": "span",
+          "marks": [
+            "em"
+          ],
+          "text": "usually"
+        },
+        {
+          "_key": "09a77ec99d39",
+          "_type": "span",
+          "marks": [],
+          "text": " recommend for programmers. Still, if you don't need that, it's a great pick in almost every other way."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "9a81a44086bb",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "f8e4837b93b9",
+          "key": "436",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 1
+        }
+      ]
+    },
+    {
+      "_key": "a2da4aee6303",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "ca64cd8122b5",
+          "_type": "span",
+          "marks": [],
+          "text": "ASUS Strix Scar 16 & 18"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "29626de4e1c9",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "1fb6849ac7c40",
+          "_type": "span",
+          "marks": [],
+          "text": "Next, we have Asus’s Strix Scar 16 and 18. These are ASUS’s premium gaming laptops that were redesigned this year. We actually got them in early 2025, right around the Nvidia 50 series launch, but the 16-inch was completely unusable due to driver issues surrounding the launch. 6 months later this is quickly becoming one of our favorite laptops for gaming and video editing. That's because it performs very well and stays very cool, a rare combination in a high powered laptop. It also has nice creature comforts like an attractive Mini-LED screen, good selection of ports, and a comfortable keyboard without a numpad. What's not to like?"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "2721259d6bdb",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "5a5100fb332c",
+          "key": "555",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 2
+        },
+        {
+          "_key": "313006bdb5c7",
+          "key": "37",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 3
+        }
+      ]
+    },
+    {
+      "_key": "818eb6df2755",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "355c015af9fe",
+          "_type": "span",
+          "marks": [],
+          "text": "HP OmniBook 7 Aero 13"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "92ed9b01ea1d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "ef9a199aa613",
+          "_type": "span",
+          "marks": [],
+          "text": "When found for under $600, this laptop provides immense value. It's super  compact and lightweight, while still looking stylish and offering a current gen AMD Zen 5 processor. This is a cheapy but a goody. If the price is $700 or more though, we'd recommend alternatives like the Surface Laptop 7."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "446763b61e55",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "defc79816d01",
+          "key": "427",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 4
+        }
+      ]
+    },
+    {
+      "_key": "7559444774f7",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "4861763e076a",
+          "_type": "span",
+          "marks": [],
+          "text": "ASUS Zenbook DUO"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "ba6acd842dc8",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "adb6f003bf270",
+          "_type": "span",
+          "marks": [],
+          "text": "If you are a coder or someone who wants a portable laptop that gives you maximum productivity, this is an absolutely awesome machine. What makes it so special is that it has two 14-inch displays. Unlike other dual screen laptops, the Duo can be used as a regular laptop too. Its keyboard deck can be placed on top of the bottom screen where it charges. It also performs very well with an Arrow Lake H processor. The main con of the duo is that its design does lead to a thicker and heavier laptop than the average 14-inch, but you are getting twice the screen real estate so we feel it's a fair tradeoff."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "bdeb7c53be39",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "08c9679ea300",
+          "key": "40",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 5
+        }
+      ]
+    },
+    {
+      "_key": "cc3300c0434e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "2133d73a5157",
+          "_type": "span",
+          "marks": [],
+          "text": "Lenovo ThinkPad X1 2-in-1"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "0d5d018a48cb",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "8c9a2c0bc56f",
+          "_type": "span",
+          "marks": [],
+          "text": "This laptop got onto our radar in the last minute when we were putting together our 2-in-1 video and we are glad it did. It might seem pretty basic on the surface, but it's got a couple standout features. Not only is it a well built ThinkPad with a great keyboard, it also has the option for a haptic trackpad and fantastic battery life. This one is certainly a hidden gem, we barely saw anyone talking about it this year!"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "1bbe5b76308d",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "2a1da609d634",
+          "key": "536",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 6
+        }
+      ]
+    },
+    {
+      "_key": "8a1f675effab",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "2e571fbbb10f",
+          "_type": "span",
+          "marks": [],
+          "text": "XMG Neo 16/ELUKTRONICS Hydroc 16 G2"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "b1d38828b8f3",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "161b0c4bee82",
+          "_type": "span",
+          "marks": [],
+          "text": "Depending on where you live, this laptop might be sold under a different name, but it performs very well regardless. Out of all the 16-inch laptops we've tested, these ones always make the best use of their components. Unlike other high performance laptops in this class, you also get the option of either an Intel Arrow Lake HX processor or an AMD HX3D one. Paired with a high end Nvidia 50 series graphics card, this is one of the best gaming experiences you can get in a laptop. The biggest con is its high price tag."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "4345f1919dd0",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "a1091ed2e8f1",
+          "key": "567",
+          "showProsAndCons": true,
+          "showTitle": true,
+          "sortOrder": 7
+        }
+      ]
+    }
+  ],
+  "category": "laptops",
+  "mainImage": {
+    "AltText": "Josh pointing to some of the most underrated laptops",
+    "_type": "image",
+    "asset": {
+      "_ref": "image-5accb5ac8e349759dc64a0ce90225037662ae2d8-1920x1080-jpg",
+      "_type": "reference"
+    },
+    "caption": "Most Underrated Laptops 2025"
+  },
+  "metaDescription": "These are the laptops we missed on our other \"Best Of 2025\" lists this year. So, which ones did we overlook and why?",
+  "metaTitle": "The 7 Most Underrated Laptops of 2025",
+  "publishedAt": "2025-12-09T21:43:06.796Z",
+  "readCount": 1363,
+  "slug": {
+    "_type": "slug",
+    "current": "the-7-most-underrated-laptops-of-2025"
+  },
+  "title": "The 7 Most Underrated Laptops of 2025"
+}

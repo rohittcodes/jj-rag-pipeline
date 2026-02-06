@@ -1,0 +1,2695 @@
+{
+  "video_id": "Xjkzb-j6nKI",
+  "transcript_type": "auto-generated",
+  "language": "English (auto-generated)",
+  "language_code": "en",
+  "segments": [
+    {
+      "text": "I am delighted to announce that Intel is",
+      "start": 0.08,
+      "duration": 6.88
+    },
+    {
+      "text": "back. Their brand new Ultra X9 CPU, it",
+      "start": 3.439,
+      "duration": 5.441
+    },
+    {
+      "text": "does live up to the hype. It is as",
+      "start": 6.96,
+      "duration": 3.92
+    },
+    {
+      "text": "powerful as Arrol Lake H. That's the",
+      "start": 8.88,
+      "duration": 3.679
+    },
+    {
+      "text": "chip that was found in high performance",
+      "start": 10.88,
+      "duration": 3.919
+    },
+    {
+      "text": "laptops last year like Asus's famous",
+      "start": 12.559,
+      "duration": 4.241
+    },
+    {
+      "text": "Sephus G16",
+      "start": 14.799,
+      "duration": 4.24
+    },
+    {
+      "text": "and it's able to do this at Luna Lake",
+      "start": 16.8,
+      "duration": 4.16
+    },
+    {
+      "text": "power draws, which was the chip found in",
+      "start": 19.039,
+      "duration": 3.441
+    },
+    {
+      "text": "thinner light laptops that gave you",
+      "start": 20.96,
+      "duration": 4.239
+    },
+    {
+      "text": "excellent battery life. This means you",
+      "start": 22.48,
+      "duration": 4.959
+    },
+    {
+      "text": "can finally have it all. Strong CPU",
+      "start": 25.199,
+      "duration": 4.08
+    },
+    {
+      "text": "performance and long battery life in an",
+      "start": 27.439,
+      "duration": 5.601
+    },
+    {
+      "text": "x86 Windows laptop. But there's more.",
+      "start": 29.279,
+      "duration": 6.481
+    },
+    {
+      "text": "This new integrated GPU is absolutely",
+      "start": 33.04,
+      "duration": 5.519
+    },
+    {
+      "text": "fantastic. Performance that rivals",
+      "start": 35.76,
+      "duration": 5.04
+    },
+    {
+      "text": "entry-level GPUs from Nvidia, at least",
+      "start": 38.559,
+      "duration": 4.241
+    },
+    {
+      "text": "at lower wattage. And because this",
+      "start": 40.8,
+      "duration": 4.079
+    },
+    {
+      "text": "processor is so power efficient, you can",
+      "start": 42.8,
+      "duration": 3.919
+    },
+    {
+      "text": "get all this performance in a super thin",
+      "start": 44.879,
+      "duration": 3.68
+    },
+    {
+      "text": "and light laptop that is silent and",
+      "start": 46.719,
+      "duration": 4.961
+    },
+    {
+      "text": "doesn't get that warm. Guys, the team",
+      "start": 48.559,
+      "duration": 5.041
+    },
+    {
+      "text": "has just worked super hard on today's",
+      "start": 51.68,
+      "duration": 4.0
+    },
+    {
+      "text": "video. Seriously, three people working",
+      "start": 53.6,
+      "duration": 3.76
+    },
+    {
+      "text": "round the clock testing a ton of",
+      "start": 55.68,
+      "duration": 3.6
+    },
+    {
+      "text": "laptops. I don't want to steal their",
+      "start": 57.36,
+      "duration": 3.44
+    },
+    {
+      "text": "thunder, so I'm going to hand over to",
+      "start": 59.28,
+      "duration": 3.36
+    },
+    {
+      "text": "Sierra to walk you through Panther Lake",
+      "start": 60.8,
+      "duration": 4.16
+    },
+    {
+      "text": "and specifically how this new Core Ultra",
+      "start": 62.64,
+      "duration": 4.88
+    },
+    {
+      "text": "X9 chip performs. I'll be back at the",
+      "start": 64.96,
+      "duration": 4.4
+    },
+    {
+      "text": "end, though, to wrap up on how it stacks",
+      "start": 67.52,
+      "duration": 4.16
+    },
+    {
+      "text": "up versus competitors and whether you",
+      "start": 69.36,
+      "duration": 4.72
+    },
+    {
+      "text": "should actually buy one. Intel released",
+      "start": 71.68,
+      "duration": 5.84
+    },
+    {
+      "text": "a whopping 14 CPUs, so there's a lot to",
+      "start": 74.08,
+      "duration": 5.52
+    },
+    {
+      "text": "sort through. In summary, there are",
+      "start": 77.52,
+      "duration": 3.76
+    },
+    {
+      "text": "three main types for three different",
+      "start": 79.6,
+      "duration": 4.0
+    },
+    {
+      "text": "types of users. First, we have the Core",
+      "start": 81.28,
+      "duration": 5.6
+    },
+    {
+      "text": "Ultra X7 and X9 processors that end with",
+      "start": 83.6,
+      "duration": 5.839
+    },
+    {
+      "text": "H. Those are your highest tier options,",
+      "start": 86.88,
+      "duration": 4.239
+    },
+    {
+      "text": "best for people looking for performance",
+      "start": 89.439,
+      "duration": 4.161
+    },
+    {
+      "text": "and who also want some performance in",
+      "start": 91.119,
+      "duration": 4.96
+    },
+    {
+      "text": "gaming and creative tasks. These have 16",
+      "start": 93.6,
+      "duration": 5.04
+    },
+    {
+      "text": "core CPUs and a special 12 core GPU",
+      "start": 96.079,
+      "duration": 5.521
+    },
+    {
+      "text": "called ARC B390. Next, we have the rest",
+      "start": 98.64,
+      "duration": 5.519
+    },
+    {
+      "text": "of the CPUs that end in H. These still",
+      "start": 101.6,
+      "duration": 4.4
+    },
+    {
+      "text": "have higher core count CPUs like the",
+      "start": 104.159,
+      "duration": 3.92
+    },
+    {
+      "text": "prior ones, but they only have a 4 core",
+      "start": 106.0,
+      "duration": 4.479
+    },
+    {
+      "text": "GPU. These are best suited for users",
+      "start": 108.079,
+      "duration": 4.481
+    },
+    {
+      "text": "like programmers, audio engineers, and",
+      "start": 110.479,
+      "duration": 4.32
+    },
+    {
+      "text": "even some students, all of whom don't",
+      "start": 112.56,
+      "duration": 4.08
+    },
+    {
+      "text": "plan to be gaming or creating on the",
+      "start": 114.799,
+      "duration": 4.401
+    },
+    {
+      "text": "side. Both these types of processors are",
+      "start": 116.64,
+      "duration": 4.32
+    },
+    {
+      "text": "a direct replacement of last year's",
+      "start": 119.2,
+      "duration": 4.48
+    },
+    {
+      "text": "Aerolake Hline. The Core Ultra Series 2",
+      "start": 120.96,
+      "duration": 5.519
+    },
+    {
+      "text": "chips, which also had an H at the end.",
+      "start": 123.68,
+      "duration": 4.88
+    },
+    {
+      "text": "These offered solid performance, but",
+      "start": 126.479,
+      "duration": 4.321
+    },
+    {
+      "text": "usually mediocre battery life, the",
+      "start": 128.56,
+      "duration": 4.48
+    },
+    {
+      "text": "latter of which series 3 does improve",
+      "start": 130.8,
+      "duration": 4.72
+    },
+    {
+      "text": "on. Lastly, we have the lower core count",
+      "start": 133.04,
+      "duration": 4.559
+    },
+    {
+      "text": "CPUs. These will not have a letter at",
+      "start": 135.52,
+      "duration": 3.439
+    },
+    {
+      "text": "the end of the name and will be best for",
+      "start": 137.599,
+      "duration": 3.441
+    },
+    {
+      "text": "folks who stick to simple stuff like web",
+      "start": 138.959,
+      "duration": 4.161
+    },
+    {
+      "text": "browsing, office work, and studying.",
+      "start": 141.04,
+      "duration": 4.24
+    },
+    {
+      "text": "They are a replacement for late 2024's",
+      "start": 143.12,
+      "duration": 4.24
+    },
+    {
+      "text": "Lunar Lake. You may know these as the",
+      "start": 145.28,
+      "duration": 4.56
+    },
+    {
+      "text": "series 2 chips that ended in V. They",
+      "start": 147.36,
+      "duration": 4.64
+    },
+    {
+      "text": "offered great battery life, but mediocre",
+      "start": 149.84,
+      "duration": 4.479
+    },
+    {
+      "text": "performance. Now that the basics are out",
+      "start": 152.0,
+      "duration": 3.599
+    },
+    {
+      "text": "of the way, I'm going to go over a",
+      "start": 154.319,
+      "duration": 3.441
+    },
+    {
+      "text": "couple gotchas to be aware of. As",
+      "start": 155.599,
+      "duration": 4.0
+    },
+    {
+      "text": "always, Intel just couldn't keep it",
+      "start": 157.76,
+      "duration": 3.839
+    },
+    {
+      "text": "simple. biggest thing is the fact that",
+      "start": 159.599,
+      "duration": 4.561
+    },
+    {
+      "text": "not all Core Ultra 7s will perform",
+      "start": 161.599,
+      "duration": 5.36
+    },
+    {
+      "text": "better than a Core Ultra 5. There are",
+      "start": 164.16,
+      "duration": 6.32
+    },
+    {
+      "text": "nonH7s and there are fives that end in",
+      "start": 166.959,
+      "duration": 5.841
+    },
+    {
+      "text": "H. That letter at the end will help you",
+      "start": 170.48,
+      "duration": 4.08
+    },
+    {
+      "text": "determine performance better than the",
+      "start": 172.8,
+      "duration": 4.159
+    },
+    {
+      "text": "number at the beginning. Secondly, there",
+      "start": 174.56,
+      "duration": 5.28
+    },
+    {
+      "text": "are many Ultra 5 chips. Two have 12",
+      "start": 176.959,
+      "duration": 4.801
+    },
+    {
+      "text": "cores and at the other end of the scale,",
+      "start": 179.84,
+      "duration": 4.64
+    },
+    {
+      "text": "two have six. So, be careful which Ultra",
+      "start": 181.76,
+      "duration": 4.88
+    },
+    {
+      "text": "5 you buy. Another thing, there is a",
+      "start": 184.48,
+      "duration": 4.32
+    },
+    {
+      "text": "third GPU option in one of the Ultra 5H",
+      "start": 186.64,
+      "duration": 5.2
+    },
+    {
+      "text": "chips. The Ultra 5 338HH seems to be a",
+      "start": 188.8,
+      "duration": 5.28
+    },
+    {
+      "text": "slightly cut down version of the X7 and",
+      "start": 191.84,
+      "duration": 5.119
+    },
+    {
+      "text": "X9 chips. It has a 10 core GPU instead",
+      "start": 194.08,
+      "duration": 5.12
+    },
+    {
+      "text": "of a 12-core one. We think this chip has",
+      "start": 196.959,
+      "duration": 4.0
+    },
+    {
+      "text": "the potential to offer really strong",
+      "start": 199.2,
+      "duration": 3.84
+    },
+    {
+      "text": "price for performance, so we're excited",
+      "start": 200.959,
+      "duration": 4.241
+    },
+    {
+      "text": "to get it in. As Josh mentioned in his",
+      "start": 203.04,
+      "duration": 5.04
+    },
+    {
+      "text": "outrage video, Intel's naming sucks.",
+      "start": 205.2,
+      "duration": 4.64
+    },
+    {
+      "text": "We're really confused why this one",
+      "start": 208.08,
+      "duration": 3.84
+    },
+    {
+      "text": "doesn't also start with X like the other",
+      "start": 209.84,
+      "duration": 4.399
+    },
+    {
+      "text": "three, plus all the other issues I",
+      "start": 211.92,
+      "duration": 4.08
+    },
+    {
+      "text": "already brought up. All right, I've kept",
+      "start": 214.239,
+      "duration": 4.161
+    },
+    {
+      "text": "you waiting long enough. In Geekbench,",
+      "start": 216.0,
+      "duration": 5.28
+    },
+    {
+      "text": "the X9 chip performs well in multi-core.",
+      "start": 218.4,
+      "duration": 4.96
+    },
+    {
+      "text": "It lands between the AeroLake H chips of",
+      "start": 221.28,
+      "duration": 4.4
+    },
+    {
+      "text": "last gen in the Idea Pad and the LG",
+      "start": 223.36,
+      "duration": 4.56
+    },
+    {
+      "text": "Graham Pro. It does better than AMD's",
+      "start": 225.68,
+      "duration": 3.919
+    },
+    {
+      "text": "Ryzen 9 chip in the Omnibook and",
+      "start": 227.92,
+      "duration": 4.0
+    },
+    {
+      "text": "Qualcomm Snapdragon chip in the Slim 7X",
+      "start": 229.599,
+      "duration": 4.64
+    },
+    {
+      "text": "as well. The MacBook Pro with the M4 Pro",
+      "start": 231.92,
+      "duration": 4.16
+    },
+    {
+      "text": "chip and the Flowzy 13 with stricks Halo",
+      "start": 234.239,
+      "duration": 4.0
+    },
+    {
+      "text": "have a very solid lead here. These are",
+      "start": 236.08,
+      "duration": 4.239
+    },
+    {
+      "text": "also laptops with powerful CPUs and",
+      "start": 238.239,
+      "duration": 4.72
+    },
+    {
+      "text": "great integrated graphics. The MacBooks",
+      "start": 240.319,
+      "duration": 4.721
+    },
+    {
+      "text": "also maintain a very large lead in terms",
+      "start": 242.959,
+      "duration": 4.881
+    },
+    {
+      "text": "of single core score in all our graphs.",
+      "start": 245.04,
+      "duration": 4.24
+    },
+    {
+      "text": "The reason we're comparing to expensive",
+      "start": 247.84,
+      "duration": 3.599
+    },
+    {
+      "text": "devices like the Max is because the X9",
+      "start": 249.28,
+      "duration": 4.4
+    },
+    {
+      "text": "is the highest end chip. We expect it to",
+      "start": 251.439,
+      "duration": 4.561
+    },
+    {
+      "text": "be found in laptops ranging from mid000s",
+      "start": 253.68,
+      "duration": 4.88
+    },
+    {
+      "text": "to mid2000s. We'd love to be wrong if",
+      "start": 256.0,
+      "duration": 4.479
+    },
+    {
+      "text": "it's cheaper, though. This is just how",
+      "start": 258.56,
+      "duration": 4.639
+    },
+    {
+      "text": "we decided which laptops to show. Now,",
+      "start": 260.479,
+      "duration": 4.241
+    },
+    {
+      "text": "on to Cinebench, which tests max",
+      "start": 263.199,
+      "duration": 3.121
+    },
+    {
+      "text": "performance. We're currently",
+      "start": 264.72,
+      "duration": 4.0
+    },
+    {
+      "text": "transitioning between Cinebench 24 and",
+      "start": 266.32,
+      "duration": 4.96
+    },
+    {
+      "text": "26 since it just came out. So, some of",
+      "start": 268.72,
+      "duration": 4.72
+    },
+    {
+      "text": "our graphs will be using the older 24",
+      "start": 271.28,
+      "duration": 3.68
+    },
+    {
+      "text": "version until we're completely done with",
+      "start": 273.44,
+      "duration": 4.56
+    },
+    {
+      "text": "the transition. In 24, the Duo keeps up",
+      "start": 274.96,
+      "duration": 5.44
+    },
+    {
+      "text": "with the M5 MacBook Pro in multi-core.",
+      "start": 278.0,
+      "duration": 4.479
+    },
+    {
+      "text": "It beats laptops with last gen chips,",
+      "start": 280.4,
+      "duration": 4.239
+    },
+    {
+      "text": "landing near the top of the graph, still",
+      "start": 282.479,
+      "duration": 4.321
+    },
+    {
+      "text": "lagging behind the M4 Pro Mac and the",
+      "start": 284.639,
+      "duration": 4.961
+    },
+    {
+      "text": "Flow with the Stricks Halo chip, aka AI",
+      "start": 286.8,
+      "duration": 6.32
+    },
+    {
+      "text": "Max 395. In 26 Cinebench, they renamed",
+      "start": 289.6,
+      "duration": 5.44
+    },
+    {
+      "text": "the tests to be more accurate as single",
+      "start": 293.12,
+      "duration": 4.32
+    },
+    {
+      "text": "and multi-thread. Here in single thread",
+      "start": 295.04,
+      "duration": 4.24
+    },
+    {
+      "text": "performance, we actually see a lift over",
+      "start": 297.44,
+      "duration": 5.199
+    },
+    {
+      "text": "last generation from the X9 388H instead",
+      "start": 299.28,
+      "duration": 6.32
+    },
+    {
+      "text": "of their tie in 2024. About an 8%",
+      "start": 302.639,
+      "duration": 5.361
+    },
+    {
+      "text": "improvement here. Clearly 26 Cinebench",
+      "start": 305.6,
+      "duration": 4.0
+    },
+    {
+      "text": "has some new optimizations for newer",
+      "start": 308.0,
+      "duration": 3.84
+    },
+    {
+      "text": "processors. Unsurprisingly, the Max keep",
+      "start": 309.6,
+      "duration": 4.319
+    },
+    {
+      "text": "their lead in 26 multi-threaded",
+      "start": 311.84,
+      "duration": 3.52
+    },
+    {
+      "text": "performance. It's a similar story to the",
+      "start": 313.919,
+      "duration": 3.601
+    },
+    {
+      "text": "other graphs. The X9 maintains great",
+      "start": 315.36,
+      "duration": 3.679
+    },
+    {
+      "text": "Aerolake H performance while still",
+      "start": 317.52,
+      "duration": 3.36
+    },
+    {
+      "text": "falling behind our two highest end chips",
+      "start": 319.039,
+      "duration": 4.16
+    },
+    {
+      "text": "on the graph. Now, what this performance",
+      "start": 320.88,
+      "duration": 4.64
+    },
+    {
+      "text": "doesn't show you is efficiency, which",
+      "start": 323.199,
+      "duration": 4.961
+    },
+    {
+      "text": "this new chip does quite well. In case",
+      "start": 325.52,
+      "duration": 4.16
+    },
+    {
+      "text": "you haven't seen this graph before on",
+      "start": 328.16,
+      "duration": 3.28
+    },
+    {
+      "text": "our channel, we plot Cinebench",
+      "start": 329.68,
+      "duration": 3.76
+    },
+    {
+      "text": "performance on the Y-axis and average",
+      "start": 331.44,
+      "duration": 4.88
+    },
+    {
+      "text": "power draw along the X. Lower power draw",
+      "start": 333.44,
+      "duration": 5.68
+    },
+    {
+      "text": "and higher performance is the goal here.",
+      "start": 336.32,
+      "duration": 4.719
+    },
+    {
+      "text": "This is important because in a laptop,",
+      "start": 339.12,
+      "duration": 3.519
+    },
+    {
+      "text": "more power consumption can make the",
+      "start": 341.039,
+      "duration": 3.841
+    },
+    {
+      "text": "laptop feel warmer, have louder fan",
+      "start": 342.639,
+      "duration": 5.12
+    },
+    {
+      "text": "noise, and shorter battery life. Unlike",
+      "start": 344.88,
+      "duration": 5.36
+    },
+    {
+      "text": "last gen, Intel is now ahead of AMD's",
+      "start": 347.759,
+      "duration": 5.761
+    },
+    {
+      "text": "Ryzen 9 HX370 stricks point chip. It",
+      "start": 350.24,
+      "duration": 5.04
+    },
+    {
+      "text": "delivers slightly better performance at",
+      "start": 353.52,
+      "duration": 4.399
+    },
+    {
+      "text": "similar power draws. We only just got a",
+      "start": 355.28,
+      "duration": 5.28
+    },
+    {
+      "text": "laptop with AMD's 2026 Gorgon point in",
+      "start": 357.919,
+      "duration": 4.961
+    },
+    {
+      "text": "and this Panther Lake X9 CPU appears",
+      "start": 360.56,
+      "duration": 4.16
+    },
+    {
+      "text": "much more efficient than that, too.",
+      "start": 362.88,
+      "duration": 4.0
+    },
+    {
+      "text": "Their Stricks Halo chip, which launched",
+      "start": 364.72,
+      "duration": 5.039
+    },
+    {
+      "text": "last year, however, was a big leap as",
+      "start": 366.88,
+      "duration": 4.879
+    },
+    {
+      "text": "you can see in pink on the graph. Where",
+      "start": 369.759,
+      "duration": 3.761
+    },
+    {
+      "text": "people might prefer Panther Lake is its",
+      "start": 371.759,
+      "duration": 3.601
+    },
+    {
+      "text": "lower power draw, which means it will be",
+      "start": 373.52,
+      "duration": 4.56
+    },
+    {
+      "text": "found in thinner and lighter laptops.",
+      "start": 375.36,
+      "duration": 5.04
+    },
+    {
+      "text": "Comparing the 16 core X9 to an 8 core",
+      "start": 378.08,
+      "duration": 4.239
+    },
+    {
+      "text": "Lunar Lake, it has the same power draw",
+      "start": 380.4,
+      "duration": 4.56
+    },
+    {
+      "text": "while delivering 60% more performance.",
+      "start": 382.319,
+      "duration": 5.201
+    },
+    {
+      "text": "This is fantastic. This doesn't surprise",
+      "start": 384.96,
+      "duration": 4.48
+    },
+    {
+      "text": "us though, as higher core count chips",
+      "start": 387.52,
+      "duration": 3.92
+    },
+    {
+      "text": "tend to be more efficient. We're not",
+      "start": 389.44,
+      "duration": 3.84
+    },
+    {
+      "text": "sure the 8 core Panther Lake versions",
+      "start": 391.44,
+      "duration": 4.08
+    },
+    {
+      "text": "will maintain this efficiency, but we'll",
+      "start": 393.28,
+      "duration": 3.44
+    },
+    {
+      "text": "get those numbers to you as soon as",
+      "start": 395.52,
+      "duration": 3.2
+    },
+    {
+      "text": "possible. Rounding out this graph,",
+      "start": 396.72,
+      "duration": 4.08
+    },
+    {
+      "text": "Apple's M510 core is still more",
+      "start": 398.72,
+      "duration": 4.64
+    },
+    {
+      "text": "efficient and the M4 Pro 14 core is even",
+      "start": 400.8,
+      "duration": 5.36
+    },
+    {
+      "text": "more impressive. Same hypothesis, the 14",
+      "start": 403.36,
+      "duration": 5.44
+    },
+    {
+      "text": "core M4 Pro has more cores. So, we",
+      "start": 406.16,
+      "duration": 4.479
+    },
+    {
+      "text": "believe that's one of the key reasons.",
+      "start": 408.8,
+      "duration": 3.6
+    },
+    {
+      "text": "One of the benefits of better efficiency",
+      "start": 410.639,
+      "duration": 4.0
+    },
+    {
+      "text": "is usually lower CPU temps and less",
+      "start": 412.4,
+      "duration": 3.84
+    },
+    {
+      "text": "resulting heat and fan noise, which",
+      "start": 414.639,
+      "duration": 3.361
+    },
+    {
+      "text": "holds partially true in the Duo's",
+      "start": 416.24,
+      "duration": 4.079
+    },
+    {
+      "text": "highest performance mode. Its CPU temps",
+      "start": 418.0,
+      "duration": 5.12
+    },
+    {
+      "text": "stay very reasonable under 90° C on",
+      "start": 420.319,
+      "duration": 5.28
+    },
+    {
+      "text": "average. internal CPU temps is more",
+      "start": 423.12,
+      "duration": 4.079
+    },
+    {
+      "text": "dependent on each laptop's specific",
+      "start": 425.599,
+      "duration": 3.841
+    },
+    {
+      "text": "cooling solution, so this may change on",
+      "start": 427.199,
+      "duration": 4.881
+    },
+    {
+      "text": "other models. Also, Josh wanted me to",
+      "start": 429.44,
+      "duration": 4.56
+    },
+    {
+      "text": "mention the MacBook Pro getting very hot",
+      "start": 432.08,
+      "duration": 4.48
+    },
+    {
+      "text": "here is not as bad as it seems. Compared",
+      "start": 434.0,
+      "duration": 4.56
+    },
+    {
+      "text": "to Windows manufacturers, Apple keeps",
+      "start": 436.56,
+      "duration": 4.32
+    },
+    {
+      "text": "their devices close to silent and lets",
+      "start": 438.56,
+      "duration": 5.12
+    },
+    {
+      "text": "them run hotter as a trade-off. He uses",
+      "start": 440.88,
+      "duration": 5.12
+    },
+    {
+      "text": "Mac's fan control on his to up the fan",
+      "start": 443.68,
+      "duration": 4.32
+    },
+    {
+      "text": "speed a little. Still inaudible to him,",
+      "start": 446.0,
+      "duration": 4.08
+    },
+    {
+      "text": "but it keeps his cooler. He hates that",
+      "start": 448.0,
+      "duration": 4.08
+    },
+    {
+      "text": "Apple makes him do this, but it does",
+      "start": 450.08,
+      "duration": 4.239
+    },
+    {
+      "text": "work. Regarding heat you feel during",
+      "start": 452.08,
+      "duration": 4.239
+    },
+    {
+      "text": "performance tasks, Panther Lake looks",
+      "start": 454.319,
+      "duration": 5.44
+    },
+    {
+      "text": "promising, but the Duo is a bit of a",
+      "start": 456.319,
+      "duration": 5.841
+    },
+    {
+      "text": "unique device. There is an additional",
+      "start": 459.759,
+      "duration": 4.16
+    },
+    {
+      "text": "layer between the components and the",
+      "start": 462.16,
+      "duration": 4.4
+    },
+    {
+      "text": "keyboard than a normal laptop has since",
+      "start": 463.919,
+      "duration": 4.801
+    },
+    {
+      "text": "the keyboard is detachable and sits on",
+      "start": 466.56,
+      "duration": 4.32
+    },
+    {
+      "text": "top of the second screen, so keep that",
+      "start": 468.72,
+      "duration": 4.72
+    },
+    {
+      "text": "in mind. The Flow also has a detachable",
+      "start": 470.88,
+      "duration": 4.4
+    },
+    {
+      "text": "keyboard, but it doesn't have any",
+      "start": 473.44,
+      "duration": 3.92
+    },
+    {
+      "text": "components underneath it, so its",
+      "start": 475.28,
+      "duration": 4.4
+    },
+    {
+      "text": "keyboard temps are irrelevant. Looking",
+      "start": 477.36,
+      "duration": 4.239
+    },
+    {
+      "text": "at fan noise, the Duo is on the upper",
+      "start": 479.68,
+      "duration": 4.16
+    },
+    {
+      "text": "end, but this doesn't tell the full",
+      "start": 481.599,
+      "duration": 4.241
+    },
+    {
+      "text": "story. We also test its different",
+      "start": 483.84,
+      "duration": 4.479
+    },
+    {
+      "text": "performance modes, and balanced is a",
+      "start": 485.84,
+      "duration": 4.479
+    },
+    {
+      "text": "much more reasonable option here. It",
+      "start": 488.319,
+      "duration": 5.361
+    },
+    {
+      "text": "performs 13% worse, sure, but we'd still",
+      "start": 490.319,
+      "duration": 5.361
+    },
+    {
+      "text": "recommend balanced since it maintains",
+      "start": 493.68,
+      "duration": 4.48
+    },
+    {
+      "text": "most of the performance. The fan noise",
+      "start": 495.68,
+      "duration": 5.84
+    },
+    {
+      "text": "is nearly dead silent. 42 dB is low",
+      "start": 498.16,
+      "duration": 5.439
+    },
+    {
+      "text": "enough that I have to turn off our AC,",
+      "start": 501.52,
+      "duration": 4.48
+    },
+    {
+      "text": "and my door has to be shut to actually",
+      "start": 503.599,
+      "duration": 4.88
+    },
+    {
+      "text": "read it properly. Ambient volume in my",
+      "start": 506.0,
+      "duration": 5.28
+    },
+    {
+      "text": "room is about 39. So, this was truly",
+      "start": 508.479,
+      "duration": 4.321
+    },
+    {
+      "text": "quiet for the performance it was",
+      "start": 511.28,
+      "duration": 4.319
+    },
+    {
+      "text": "getting. In your average room, it's",
+      "start": 512.8,
+      "duration": 5.28
+    },
+    {
+      "text": "completely silent in its lowest mode.",
+      "start": 515.599,
+      "duration": 4.24
+    },
+    {
+      "text": "After looking at this, we can see why",
+      "start": 518.08,
+      "duration": 3.12
+    },
+    {
+      "text": "manufacturers like Dell might be",
+      "start": 519.839,
+      "duration": 4.0
+    },
+    {
+      "text": "limiting the average TDP to 35 W in",
+      "start": 521.2,
+      "duration": 5.12
+    },
+    {
+      "text": "their XPS 16. They probably decided the",
+      "start": 523.839,
+      "duration": 3.68
+    },
+    {
+      "text": "performance was good enough for most",
+      "start": 526.32,
+      "duration": 2.48
+    },
+    {
+      "text": "people and they wanted to minimize",
+      "start": 527.519,
+      "duration": 3.681
+    },
+    {
+      "text": "distractions like fan noise. Anyway,",
+      "start": 528.8,
+      "duration": 4.0
+    },
+    {
+      "text": "this was about what we expected to see",
+      "start": 531.2,
+      "duration": 4.48
+    },
+    {
+      "text": "for CPU tasks. We were promised on par",
+      "start": 532.8,
+      "duration": 4.88
+    },
+    {
+      "text": "with the older AeroLake H with Lunar",
+      "start": 535.68,
+      "duration": 4.08
+    },
+    {
+      "text": "Lake power draws and that appears to be",
+      "start": 537.68,
+      "duration": 5.04
+    },
+    {
+      "text": "true. This is positive. But this chip",
+      "start": 539.76,
+      "duration": 6.4
+    },
+    {
+      "text": "honestly blew us away in GPU tasks. For",
+      "start": 542.72,
+      "duration": 5.44
+    },
+    {
+      "text": "example, in Time Spy, it lands between",
+      "start": 546.16,
+      "duration": 4.64
+    },
+    {
+      "text": "the lower wattage 4050 in the MSI Thin",
+      "start": 548.16,
+      "duration": 5.2
+    },
+    {
+      "text": "and the mid wattage 50/50 in the LG",
+      "start": 550.8,
+      "duration": 5.44
+    },
+    {
+      "text": "Graham. Very impressive. What it also",
+      "start": 553.36,
+      "duration": 4.96
+    },
+    {
+      "text": "does well here is CPU performance, and",
+      "start": 556.24,
+      "duration": 4.08
+    },
+    {
+      "text": "this is likely due to its efficiency.",
+      "start": 558.32,
+      "duration": 3.92
+    },
+    {
+      "text": "You'll notice the Flow's integrated GPU",
+      "start": 560.32,
+      "duration": 3.84
+    },
+    {
+      "text": "performs the best here, but it falls",
+      "start": 562.24,
+      "duration": 3.599
+    },
+    {
+      "text": "behind the Duo in terms of CPU",
+      "start": 564.16,
+      "duration": 3.6
+    },
+    {
+      "text": "performance even though it was beating",
+      "start": 565.839,
+      "duration": 4.161
+    },
+    {
+      "text": "it earlier. This is likely because the",
+      "start": 567.76,
+      "duration": 4.8
+    },
+    {
+      "text": "Flow pulls power away from its CPU cores",
+      "start": 570.0,
+      "duration": 5.12
+    },
+    {
+      "text": "to give to the GPU cores instead. Where",
+      "start": 572.56,
+      "duration": 4.56
+    },
+    {
+      "text": "the Panther Lake CPU is performing very",
+      "start": 575.12,
+      "duration": 4.56
+    },
+    {
+      "text": "well at low wattage. Continuing on GPU",
+      "start": 577.12,
+      "duration": 4.24
+    },
+    {
+      "text": "performance, we were also very impressed",
+      "start": 579.68,
+      "duration": 3.36
+    },
+    {
+      "text": "with the addition of ray tracing cores",
+      "start": 581.36,
+      "duration": 4.8
+    },
+    {
+      "text": "in the ARC B390. It makes it pull ahead",
+      "start": 583.04,
+      "duration": 5.2
+    },
+    {
+      "text": "of the thin again and compete with the",
+      "start": 586.16,
+      "duration": 4.799
+    },
+    {
+      "text": "50/50 in the Graham. Not to mention,",
+      "start": 588.24,
+      "duration": 6.24
+    },
+    {
+      "text": "it's an insane 86% uplift from Aerrowake",
+      "start": 590.959,
+      "duration": 5.841
+    },
+    {
+      "text": "H. Looking at Steel Nomad Light, which",
+      "start": 594.48,
+      "duration": 4.64
+    },
+    {
+      "text": "is a cross-platform 1440p benchmark that",
+      "start": 596.8,
+      "duration": 4.56
+    },
+    {
+      "text": "the Max can also run, it actually beats",
+      "start": 599.12,
+      "duration": 5.44
+    },
+    {
+      "text": "the M5 here by a bit. The dedicated GPUs",
+      "start": 601.36,
+      "duration": 6.24
+    },
+    {
+      "text": "and higherend chips keep their lead, but",
+      "start": 604.56,
+      "duration": 5.04
+    },
+    {
+      "text": "this is once again a massive improvement",
+      "start": 607.6,
+      "duration": 3.84
+    },
+    {
+      "text": "over the integrated graphics in prior",
+      "start": 609.6,
+      "duration": 4.479
+    },
+    {
+      "text": "chips. When gaming at full HD resolution",
+      "start": 611.44,
+      "duration": 4.24
+    },
+    {
+      "text": "and high settings, which is what we test",
+      "start": 614.079,
+      "duration": 4.081
+    },
+    {
+      "text": "on weaker hardware like iGPUs, the ARC",
+      "start": 615.68,
+      "duration": 4.56
+    },
+    {
+      "text": "B390 holds its own against low-end",
+      "start": 618.16,
+      "duration": 3.919
+    },
+    {
+      "text": "dedicated GPUs being fed less wattage",
+      "start": 620.24,
+      "duration": 4.0
+    },
+    {
+      "text": "like you see in the MSI Thin. It also",
+      "start": 622.079,
+      "duration": 4.081
+    },
+    {
+      "text": "gets more than 60 FPS, which is",
+      "start": 624.24,
+      "duration": 4.24
+    },
+    {
+      "text": "certainly playable for a AAA title. Not",
+      "start": 626.16,
+      "duration": 4.32
+    },
+    {
+      "text": "to mention, it's absolutely crushing the",
+      "start": 628.48,
+      "duration": 3.599
+    },
+    {
+      "text": "integrated GPUs in both of its",
+      "start": 630.48,
+      "duration": 4.56
+    },
+    {
+      "text": "predecessors, Lunar Lake and Aerolake H.",
+      "start": 632.079,
+      "duration": 4.641
+    },
+    {
+      "text": "Moving over to Forza, the story is",
+      "start": 635.04,
+      "duration": 3.76
+    },
+    {
+      "text": "similar. It gets over 100 FPS, while",
+      "start": 636.72,
+      "duration": 5.28
+    },
+    {
+      "text": "Intel's older iGPUs are only hitting 60.",
+      "start": 638.8,
+      "duration": 5.44
+    },
+    {
+      "text": "It's getting beat by dedicated GPUs, but",
+      "start": 642.0,
+      "duration": 3.6
+    },
+    {
+      "text": "it's still doing better than most",
+      "start": 644.24,
+      "duration": 4.0
+    },
+    {
+      "text": "integrated ones currently available. In",
+      "start": 645.6,
+      "duration": 4.64
+    },
+    {
+      "text": "Marvel Rivals, it does okay. This is a",
+      "start": 648.24,
+      "duration": 3.92
+    },
+    {
+      "text": "newer benchmark for us, so we don't have",
+      "start": 650.24,
+      "duration": 3.92
+    },
+    {
+      "text": "it run on everything yet, but we see it",
+      "start": 652.16,
+      "duration": 4.64
+    },
+    {
+      "text": "keeps its 1% lows above 30 FPS in medium",
+      "start": 654.16,
+      "duration": 4.48
+    },
+    {
+      "text": "settings, which is more than we can say",
+      "start": 656.8,
+      "duration": 4.08
+    },
+    {
+      "text": "for Arow Lake H. This is a more",
+      "start": 658.64,
+      "duration": 3.68
+    },
+    {
+      "text": "demanding game with lots of fight",
+      "start": 660.88,
+      "duration": 2.8
+    },
+    {
+      "text": "scenes. So, if you're playing",
+      "start": 662.32,
+      "duration": 3.199
+    },
+    {
+      "text": "competitively, you'll need to lower your",
+      "start": 663.68,
+      "duration": 3.76
+    },
+    {
+      "text": "settings. Now, Intel would be",
+      "start": 665.519,
+      "duration": 3.201
+    },
+    {
+      "text": "disappointed if we didn't mention that",
+      "start": 667.44,
+      "duration": 2.8
+    },
+    {
+      "text": "these chips offer multi-frame",
+      "start": 668.72,
+      "duration": 4.559
+    },
+    {
+      "text": "generation, which is a first. Other than",
+      "start": 670.24,
+      "duration": 5.92
+    },
+    {
+      "text": "Nvidia last year, XSS technology has",
+      "start": 673.279,
+      "duration": 4.481
+    },
+    {
+      "text": "improved to allow for three frames to be",
+      "start": 676.16,
+      "duration": 3.119
+    },
+    {
+      "text": "added for each real frame. [snorts]",
+      "start": 677.76,
+      "duration": 3.28
+    },
+    {
+      "text": "Gamers go back and forth on whether this",
+      "start": 679.279,
+      "duration": 3.281
+    },
+    {
+      "text": "feature actually leads to a better",
+      "start": 681.04,
+      "duration": 3.52
+    },
+    {
+      "text": "gaming experience, but if you want more",
+      "start": 682.56,
+      "duration": 4.24
+    },
+    {
+      "text": "frames, FPS and Cyberpunk does shoot up",
+      "start": 684.56,
+      "duration": 5.44
+    },
+    {
+      "text": "by 82%. 1% lows don't seem to improve,",
+      "start": 686.8,
+      "duration": 5.279
+    },
+    {
+      "text": "though, so keep that in mind. This is",
+      "start": 690.0,
+      "duration": 3.839
+    },
+    {
+      "text": "unfortunate as most people would prefer",
+      "start": 692.079,
+      "duration": 3.601
+    },
+    {
+      "text": "to see an improvement to 1% lows than",
+      "start": 693.839,
+      "duration": 4.481
+    },
+    {
+      "text": "average FPS. This lack of scaling of 1%",
+      "start": 695.68,
+      "duration": 5.04
+    },
+    {
+      "text": "lows with frame gen on also happens on",
+      "start": 698.32,
+      "duration": 4.56
+    },
+    {
+      "text": "some Nvidia laptops. Using gaming",
+      "start": 700.72,
+      "duration": 3.679
+    },
+    {
+      "text": "results as our marker, we have another",
+      "start": 702.88,
+      "duration": 3.28
+    },
+    {
+      "text": "efficiency graph for you. This is a",
+      "start": 704.399,
+      "duration": 3.44
+    },
+    {
+      "text": "newer graph for us, but what I did here",
+      "start": 706.16,
+      "duration": 3.04
+    },
+    {
+      "text": "is measure the frames per second in the",
+      "start": 707.839,
+      "duration": 3.521
+    },
+    {
+      "text": "Cyberpunk benchmark. I then plotted it",
+      "start": 709.2,
+      "duration": 3.92
+    },
+    {
+      "text": "against the average GPU power draw",
+      "start": 711.36,
+      "duration": 3.599
+    },
+    {
+      "text": "during this test to get the same",
+      "start": 713.12,
+      "duration": 4.24
+    },
+    {
+      "text": "performance as a dedicated Nvidia RTX",
+      "start": 714.959,
+      "duration": 5.681
+    },
+    {
+      "text": "4050 in this game around 65 FPS. The",
+      "start": 717.36,
+      "duration": 6.96
+    },
+    {
+      "text": "B390 draws 33% less wattage. It also",
+      "start": 720.64,
+      "duration": 7.439
+    },
+    {
+      "text": "draws 55% less power than an RTX 5050.",
+      "start": 724.32,
+      "duration": 5.759
+    },
+    {
+      "text": "This is super cool to see. It seems like",
+      "start": 728.079,
+      "duration": 3.601
+    },
+    {
+      "text": "Intel is much more efficient than",
+      "start": 730.079,
+      "duration": 3.841
+    },
+    {
+      "text": "Nvidia. When drawing similar wattage to",
+      "start": 731.68,
+      "duration": 5.2
+    },
+    {
+      "text": "the M5's 10 core GPU, it gets 31% more",
+      "start": 733.92,
+      "duration": 5.12
+    },
+    {
+      "text": "frames per second, which is also very",
+      "start": 736.88,
+      "duration": 5.28
+    },
+    {
+      "text": "good. Intel beating Apple is crazy.",
+      "start": 739.04,
+      "duration": 5.12
+    },
+    {
+      "text": "Stricks Halo chips unfortunately do not",
+      "start": 742.16,
+      "duration": 3.84
+    },
+    {
+      "text": "separate their CPU and GPU wattage in",
+      "start": 744.16,
+      "duration": 4.08
+    },
+    {
+      "text": "our measuring tools. So we couldn't add",
+      "start": 746.0,
+      "duration": 5.2
+    },
+    {
+      "text": "AMD's integrated Radeon 8060S to this",
+      "start": 748.24,
+      "duration": 5.039
+    },
+    {
+      "text": "graph for comparison. As a whole, that",
+      "start": 751.2,
+      "duration": 4.0
+    },
+    {
+      "text": "chip was showing around 61 watts total",
+      "start": 753.279,
+      "duration": 3.761
+    },
+    {
+      "text": "during Cyberpunk. So we are doubtful",
+      "start": 755.2,
+      "duration": 3.68
+    },
+    {
+      "text": "that the GPU cores are pulling less than",
+      "start": 757.04,
+      "duration": 3.919
+    },
+    {
+      "text": "half of that. This leaves Panther Lake",
+      "start": 758.88,
+      "duration": 4.079
+    },
+    {
+      "text": "in the lead here in terms of FPS per",
+      "start": 760.959,
+      "duration": 4.32
+    },
+    {
+      "text": "watt. By the way, Cyberpunk doesn't hit",
+      "start": 762.959,
+      "duration": 4.32
+    },
+    {
+      "text": "the GPU as hard as Forza. We have a",
+      "start": 765.279,
+      "duration": 4.0
+    },
+    {
+      "text": "video about why we use Forza for most of",
+      "start": 767.279,
+      "duration": 4.161
+    },
+    {
+      "text": "our testing, which I'll link below. We",
+      "start": 769.279,
+      "duration": 4.56
+    },
+    {
+      "text": "didn't use Forza here because then we",
+      "start": 771.44,
+      "duration": 3.68
+    },
+    {
+      "text": "couldn't compare to the MacBooks if we",
+      "start": 773.839,
+      "duration": 3.68
+    },
+    {
+      "text": "did. Again, power efficiency leads to",
+      "start": 775.12,
+      "duration": 5.68
+    },
+    {
+      "text": "less annoyances. Gaming in balanced mode",
+      "start": 777.519,
+      "duration": 6.32
+    },
+    {
+      "text": "was a treat. It stayed quiet, didn't get",
+      "start": 780.8,
+      "duration": 5.76
+    },
+    {
+      "text": "too warm. The 100 FPS number in Forza",
+      "start": 783.839,
+      "duration": 5.201
+    },
+    {
+      "text": "from earlier was actually from the Duo's",
+      "start": 786.56,
+      "duration": 4.64
+    },
+    {
+      "text": "balanced mode because it does better in",
+      "start": 789.04,
+      "duration": 4.32
+    },
+    {
+      "text": "that mode, probably because it gives its",
+      "start": 791.2,
+      "duration": 4.48
+    },
+    {
+      "text": "GPU more wattage. Here's the breakdown",
+      "start": 793.36,
+      "duration": 5.2
+    },
+    {
+      "text": "for each performance mode. The Duo can",
+      "start": 795.68,
+      "duration": 4.959
+    },
+    {
+      "text": "get up to 54 dB if you're putting it in",
+      "start": 798.56,
+      "duration": 4.56
+    },
+    {
+      "text": "its highest mode, but we don't see the",
+      "start": 800.639,
+      "duration": 4.721
+    },
+    {
+      "text": "point. As we said earlier, measuring the",
+      "start": 803.12,
+      "duration": 4.08
+    },
+    {
+      "text": "heat on the keyboard is a bit weird with",
+      "start": 805.36,
+      "duration": 4.08
+    },
+    {
+      "text": "the Duo, but Josh even said the little",
+      "start": 807.2,
+      "duration": 4.96
+    },
+    {
+      "text": "slim 7i Ultra at CES also didn't get hot",
+      "start": 809.44,
+      "duration": 4.8
+    },
+    {
+      "text": "while gaming with its full wattage X9",
+      "start": 812.16,
+      "duration": 4.799
+    },
+    {
+      "text": "processor. Other compact 14-in laptops",
+      "start": 814.24,
+      "duration": 4.64
+    },
+    {
+      "text": "with dedicated GPUs, like the Zephris",
+      "start": 816.959,
+      "duration": 5.12
+    },
+    {
+      "text": "G14, can get insanely hot. So, we are",
+      "start": 818.88,
+      "duration": 4.959
+    },
+    {
+      "text": "hopeful these thin and lights will keep",
+      "start": 822.079,
+      "duration": 4.641
+    },
+    {
+      "text": "their cool. For AI, we did a quick LM",
+      "start": 823.839,
+      "duration": 4.721
+    },
+    {
+      "text": "Studio test to see how it does with the",
+      "start": 826.72,
+      "duration": 4.0
+    },
+    {
+      "text": "standard wolf goat cabbage question.",
+      "start": 828.56,
+      "duration": 3.92
+    },
+    {
+      "text": "This is using a 14 billion parameter",
+      "start": 830.72,
+      "duration": 4.08
+    },
+    {
+      "text": "model, and we use the same seed. It does",
+      "start": 832.48,
+      "duration": 4.32
+    },
+    {
+      "text": "a little worse than the M5, but better",
+      "start": 834.8,
+      "duration": 4.159
+    },
+    {
+      "text": "than the LOQ with the 50/50, which",
+      "start": 836.8,
+      "duration": 3.68
+    },
+    {
+      "text": "weirdly seems to struggle with this",
+      "start": 838.959,
+      "duration": 3.601
+    },
+    {
+      "text": "test. It also does better than Aerrow",
+      "start": 840.48,
+      "duration": 4.0
+    },
+    {
+      "text": "Lake and Lunar Lake. Now, we of course",
+      "start": 842.56,
+      "duration": 3.6
+    },
+    {
+      "text": "had to see how well it performed for",
+      "start": 844.48,
+      "duration": 3.84
+    },
+    {
+      "text": "creators. We'll start with video editing",
+      "start": 846.16,
+      "duration": 3.679
+    },
+    {
+      "text": "benchmarks like Premiere Pro and Da",
+      "start": 848.32,
+      "duration": 3.84
+    },
+    {
+      "text": "Vinci Resolve. In Premiere Pro, the Arc",
+      "start": 849.839,
+      "duration": 4.881
+    },
+    {
+      "text": "B390 GPU seems to do well, much better",
+      "start": 852.16,
+      "duration": 4.64
+    },
+    {
+      "text": "than most integrated GPUs, and it's not",
+      "start": 854.72,
+      "duration": 4.479
+    },
+    {
+      "text": "far behind the M5 chip. This means less",
+      "start": 856.8,
+      "duration": 4.64
+    },
+    {
+      "text": "complex projects like ours are viable to",
+      "start": 859.199,
+      "duration": 4.241
+    },
+    {
+      "text": "edit. It's a good step forward from the",
+      "start": 861.44,
+      "duration": 3.759
+    },
+    {
+      "text": "older Lunar Lake and Aerake laptops",
+      "start": 863.44,
+      "duration": 3.839
+    },
+    {
+      "text": "without a dedicated GPU, but it's",
+      "start": 865.199,
+      "duration": 3.681
+    },
+    {
+      "text": "certainly not competing with most",
+      "start": 867.279,
+      "duration": 4.0
+    },
+    {
+      "text": "dedicated GPUs or higherend MacBook",
+      "start": 868.88,
+      "duration": 4.72
+    },
+    {
+      "text": "Pros. You can see that specifically when",
+      "start": 871.279,
+      "duration": 4.881
+    },
+    {
+      "text": "you export the project. Time is money",
+      "start": 873.6,
+      "duration": 4.72
+    },
+    {
+      "text": "for professional creators like us. So,",
+      "start": 876.16,
+      "duration": 3.6
+    },
+    {
+      "text": "we still don't think these are at that",
+      "start": 878.32,
+      "duration": 3.68
+    },
+    {
+      "text": "level yet. In Da Vinci Resolve, it falls",
+      "start": 879.76,
+      "duration": 3.759
+    },
+    {
+      "text": "behind the competition a bit, but it's",
+      "start": 882.0,
+      "duration": 4.079
+    },
+    {
+      "text": "still 46% better than Aerake H, which is",
+      "start": 883.519,
+      "duration": 4.481
+    },
+    {
+      "text": "a nice bump. This is somewhere the",
+      "start": 886.079,
+      "duration": 3.921
+    },
+    {
+      "text": "MacBooks excel in the Flow with Stricks",
+      "start": 888.0,
+      "duration": 4.639
+    },
+    {
+      "text": "Halo stays near the top as well. We also",
+      "start": 890.0,
+      "duration": 4.24
+    },
+    {
+      "text": "test 3D rendering in Blender where the",
+      "start": 892.639,
+      "duration": 4.241
+    },
+    {
+      "text": "Duo did very well. It beat the Flow and",
+      "start": 894.24,
+      "duration": 4.159
+    },
+    {
+      "text": "even one of our gaming laptops with a",
+      "start": 896.88,
+      "duration": 3.84
+    },
+    {
+      "text": "higher wattage 4050. It didn't beat the",
+      "start": 898.399,
+      "duration": 4.24
+    },
+    {
+      "text": "Max, but hey, there's a reason they're",
+      "start": 900.72,
+      "duration": 4.4
+    },
+    {
+      "text": "the go-to for creatives. It's still cool",
+      "start": 902.639,
+      "duration": 5.521
+    },
+    {
+      "text": "to see Intel improving so much here.",
+      "start": 905.12,
+      "duration": 4.48
+    },
+    {
+      "text": "Now, another place we were very",
+      "start": 908.16,
+      "duration": 3.119
+    },
+    {
+      "text": "impressed to see Intel do well was in",
+      "start": 909.6,
+      "duration": 3.44
+    },
+    {
+      "text": "battery testing. This goes for both",
+      "start": 911.279,
+      "duration": 3.68
+    },
+    {
+      "text": "performance tasks on battery and also",
+      "start": 913.04,
+      "duration": 4.32
+    },
+    {
+      "text": "battery duration for light tasks. The",
+      "start": 914.959,
+      "duration": 4.161
+    },
+    {
+      "text": "Duo is able to maintain full performance",
+      "start": 917.36,
+      "duration": 3.919
+    },
+    {
+      "text": "in Cinebench when unplugged. This is",
+      "start": 919.12,
+      "duration": 4.32
+    },
+    {
+      "text": "somewhere the Flow falters. This is also",
+      "start": 921.279,
+      "duration": 4.8
+    },
+    {
+      "text": "something Macs do very well, and",
+      "start": 923.44,
+      "duration": 4.32
+    },
+    {
+      "text": "although Windows manufacturers have",
+      "start": 926.079,
+      "duration": 3.521
+    },
+    {
+      "text": "gotten better about it in recent years,",
+      "start": 927.76,
+      "duration": 3.28
+    },
+    {
+      "text": "it's still nice to see every time it",
+      "start": 929.6,
+      "duration": 3.359
+    },
+    {
+      "text": "comes up. When I saw this, my immediate",
+      "start": 931.04,
+      "duration": 3.359
+    },
+    {
+      "text": "question was whether or not it could",
+      "start": 932.959,
+      "duration": 4.24
+    },
+    {
+      "text": "still game on battery since most gaming",
+      "start": 934.399,
+      "duration": 5.601
+    },
+    {
+      "text": "laptops nuke their performance. Nvidia",
+      "start": 937.199,
+      "duration": 4.721
+    },
+    {
+      "text": "graphics cards just aren't fed full",
+      "start": 940.0,
+      "duration": 4.16
+    },
+    {
+      "text": "wattage unplugged. So, good news, the",
+      "start": 941.92,
+      "duration": 4.24
+    },
+    {
+      "text": "Duo maintain full performance in gaming,",
+      "start": 944.16,
+      "duration": 3.76
+    },
+    {
+      "text": "getting around the same FPS numbers in",
+      "start": 946.16,
+      "duration": 4.08
+    },
+    {
+      "text": "Forza. This gets it very close to both",
+      "start": 947.92,
+      "duration": 5.68
+    },
+    {
+      "text": "the Grahams RTX 5050 and the Flowzy 13",
+      "start": 950.24,
+      "duration": 5.039
+    },
+    {
+      "text": "because they both see drops in",
+      "start": 953.6,
+      "duration": 4.0
+    },
+    {
+      "text": "performance when unplugged. A drop of",
+      "start": 955.279,
+      "duration": 5.841
+    },
+    {
+      "text": "around 21% and 28% respectively. The Duo",
+      "start": 957.6,
+      "duration": 5.599
+    },
+    {
+      "text": "even has more stable 1% lows, which",
+      "start": 961.12,
+      "duration": 4.48
+    },
+    {
+      "text": "makes Panther Lake look pretty good. As",
+      "start": 963.199,
+      "duration": 3.921
+    },
+    {
+      "text": "far as battery life for lighter tasks",
+      "start": 965.6,
+      "duration": 3.679
+    },
+    {
+      "text": "goes, like office work, the Duo actually",
+      "start": 967.12,
+      "duration": 4.719
+    },
+    {
+      "text": "beats our M5 MacBook Pro. Let me say",
+      "start": 969.279,
+      "duration": 4.881
+    },
+    {
+      "text": "that again. The Duo actually beats our",
+      "start": 971.839,
+      "duration": 5.12
+    },
+    {
+      "text": "M5 MacBook Pro. Intel deserves a round",
+      "start": 974.16,
+      "duration": 6.0
+    },
+    {
+      "text": "of applause. The Duo's 99Wh battery is",
+      "start": 976.959,
+      "duration": 5.041
+    },
+    {
+      "text": "of course a major contributing factor,",
+      "start": 980.16,
+      "duration": 4.0
+    },
+    {
+      "text": "but this is still impressive. Just to",
+      "start": 982.0,
+      "duration": 4.0
+    },
+    {
+      "text": "even the score, we did normalize our",
+      "start": 984.16,
+      "duration": 3.84
+    },
+    {
+      "text": "battery results as if each laptop had a",
+      "start": 986.0,
+      "duration": 4.56
+    },
+    {
+      "text": "70Wh battery. The Duo then came in",
+      "start": 988.0,
+      "duration": 5.6
+    },
+    {
+      "text": "second, but that's still a good result.",
+      "start": 990.56,
+      "duration": 4.639
+    },
+    {
+      "text": "Now, we didn't have time in this video",
+      "start": 993.6,
+      "duration": 3.28
+    },
+    {
+      "text": "to test battery life while gaming, but",
+      "start": 995.199,
+      "duration": 3.121
+    },
+    {
+      "text": "let us know with a comment below if you",
+      "start": 996.88,
+      "duration": 2.879
+    },
+    {
+      "text": "want us to do that. Now, I'm going to",
+      "start": 998.32,
+      "duration": 3.84
+    },
+    {
+      "text": "let Josh close us out. All right, as you",
+      "start": 999.759,
+      "duration": 4.401
+    },
+    {
+      "text": "can see, this is a big step forward for",
+      "start": 1002.16,
+      "duration": 4.08
+    },
+    {
+      "text": "Intel. I kind of think this is Intel's",
+      "start": 1004.16,
+      "duration": 4.96
+    },
+    {
+      "text": "M1 moment. The chips itself not as huge",
+      "start": 1006.24,
+      "duration": 4.8
+    },
+    {
+      "text": "a leap forward as that one was. But",
+      "start": 1009.12,
+      "duration": 3.76
+    },
+    {
+      "text": "they're still such an improvement. And",
+      "start": 1011.04,
+      "duration": 3.68
+    },
+    {
+      "text": "the laptops with them, guys, are also",
+      "start": 1012.88,
+      "duration": 3.68
+    },
+    {
+      "text": "just so strong that I think people who",
+      "start": 1014.72,
+      "duration": 3.6
+    },
+    {
+      "text": "buy them, they're going to hold onto",
+      "start": 1016.56,
+      "duration": 4.959
+    },
+    {
+      "text": "their laptop a really long time, guys.",
+      "start": 1018.32,
+      "duration": 5.12
+    },
+    {
+      "text": "There are still people who bought one of",
+      "start": 1021.519,
+      "duration": 3.92
+    },
+    {
+      "text": "those original MacBook Airs with M1 way",
+      "start": 1023.44,
+      "duration": 3.999
+    },
+    {
+      "text": "back in 2020, and they're still very",
+      "start": 1025.439,
+      "duration": 4.561
+    },
+    {
+      "text": "good today. [snorts] Now, comparing",
+      "start": 1027.439,
+      "duration": 4.0
+    },
+    {
+      "text": "these laptops to Apple's current",
+      "start": 1030.0,
+      "duration": 3.919
+    },
+    {
+      "text": "MacBooks, we do need to be careful which",
+      "start": 1031.439,
+      "duration": 4.721
+    },
+    {
+      "text": "Apple MacBooks we compare them to. I saw",
+      "start": 1033.919,
+      "duration": 4.561
+    },
+    {
+      "text": "this article saying the Yoga Slim 7i",
+      "start": 1036.16,
+      "duration": 5.2
+    },
+    {
+      "text": "Ultra is a MacBook Air killer. Guys,",
+      "start": 1038.48,
+      "duration": 4.959
+    },
+    {
+      "text": "this is absolutely not a fair",
+      "start": 1041.36,
+      "duration": 4.319
+    },
+    {
+      "text": "comparison. It's just pure clickbait.",
+      "start": 1043.439,
+      "duration": 4.081
+    },
+    {
+      "text": "Laptops with this X9 chip, they're",
+      "start": 1045.679,
+      "duration": 4.481
+    },
+    {
+      "text": "probably going to range around $1,500",
+      "start": 1047.52,
+      "duration": 5.519
+    },
+    {
+      "text": "to well over 2,000. These will compete",
+      "start": 1050.16,
+      "duration": 4.72
+    },
+    {
+      "text": "with Apple's MacBook Pro range,",
+      "start": 1053.039,
+      "duration": 3.201
+    },
+    {
+      "text": "including the models with their",
+      "start": 1054.88,
+      "duration": 4.32
+    },
+    {
+      "text": "higherend Pro chips. As we've shown you,",
+      "start": 1056.24,
+      "duration": 4.96
+    },
+    {
+      "text": "Panther Lake, it does compete very well",
+      "start": 1059.2,
+      "duration": 4.24
+    },
+    {
+      "text": "with a base M5 chip, but it doesn't do",
+      "start": 1061.2,
+      "duration": 4.96
+    },
+    {
+      "text": "that well vers chip. That being said,",
+      "start": 1063.44,
+      "duration": 4.96
+    },
+    {
+      "text": "Intel laptops of course have many other",
+      "start": 1066.16,
+      "duration": 3.68
+    },
+    {
+      "text": "factors that make them better than a",
+      "start": 1068.4,
+      "duration": 3.04
+    },
+    {
+      "text": "MacBook. Broader application",
+      "start": 1069.84,
+      "duration": 3.68
+    },
+    {
+      "text": "compatibility, especially in games,",
+      "start": 1071.44,
+      "duration": 4.16
+    },
+    {
+      "text": "diverse form factors, bells and whistles",
+      "start": 1073.52,
+      "duration": 3.76
+    },
+    {
+      "text": "like dual screens, touchcreens, and",
+      "start": 1075.6,
+      "duration": 4.88
+    },
+    {
+      "text": "two-in-1 capabilities. As a whole, I",
+      "start": 1077.28,
+      "duration": 4.88
+    },
+    {
+      "text": "think these new Panther Lake laptops",
+      "start": 1080.48,
+      "duration": 3.439
+    },
+    {
+      "text": "will be very competitive with Apple's",
+      "start": 1082.16,
+      "duration": 4.08
+    },
+    {
+      "text": "range. Now, compared to laptops with",
+      "start": 1083.919,
+      "duration": 4.481
+    },
+    {
+      "text": "Qualcomm's X2, we still have a lot of",
+      "start": 1086.24,
+      "duration": 4.88
+    },
+    {
+      "text": "testing to do here. My gut is this.",
+      "start": 1088.4,
+      "duration": 4.48
+    },
+    {
+      "text": "Qualcomm is kind of giving you more of",
+      "start": 1091.12,
+      "duration": 3.36
+    },
+    {
+      "text": "what you don't need from their chips,",
+      "start": 1092.88,
+      "duration": 3.76
+    },
+    {
+      "text": "CPU performance, but they aren't solving",
+      "start": 1094.48,
+      "duration": 4.319
+    },
+    {
+      "text": "enough of what you do need, broader",
+      "start": 1096.64,
+      "duration": 4.48
+    },
+    {
+      "text": "application compatibility, although they",
+      "start": 1098.799,
+      "duration": 4.721
+    },
+    {
+      "text": "are improving there. I feel Qualcomm is",
+      "start": 1101.12,
+      "duration": 3.919
+    },
+    {
+      "text": "still going to be relegated to competing",
+      "start": 1103.52,
+      "duration": 3.92
+    },
+    {
+      "text": "based on price and value. Now, compared",
+      "start": 1105.039,
+      "duration": 4.081
+    },
+    {
+      "text": "with AMD, which is probably Intel's",
+      "start": 1107.44,
+      "duration": 4.16
+    },
+    {
+      "text": "biggest competitor, AMD bit of a mess",
+      "start": 1109.12,
+      "duration": 4.72
+    },
+    {
+      "text": "right now. their stricks Halo processor,",
+      "start": 1111.6,
+      "duration": 4.16
+    },
+    {
+      "text": "which is really good, just isn't",
+      "start": 1113.84,
+      "duration": 4.48
+    },
+    {
+      "text": "available in many laptops. Then their",
+      "start": 1115.76,
+      "duration": 4.48
+    },
+    {
+      "text": "mainstream Gorgon Point chips, they're",
+      "start": 1118.32,
+      "duration": 3.76
+    },
+    {
+      "text": "basically a rebrand of the chips they",
+      "start": 1120.24,
+      "duration": 4.96
+    },
+    {
+      "text": "released in 2024. Back then, those chips",
+      "start": 1122.08,
+      "duration": 5.44
+    },
+    {
+      "text": "were really far ahead. But now, Intel",
+      "start": 1125.2,
+      "duration": 4.479
+    },
+    {
+      "text": "has just caught up. In fact, because of",
+      "start": 1127.52,
+      "duration": 5.2
+    },
+    {
+      "text": "Intel's GPU, they're solidly ahead. If",
+      "start": 1129.679,
+      "duration": 4.88
+    },
+    {
+      "text": "the same laptop had the choice of a",
+      "start": 1132.72,
+      "duration": 4.48
+    },
+    {
+      "text": "Panther Lake X chip or a Gorgon.1, that",
+      "start": 1134.559,
+      "duration": 4.961
+    },
+    {
+      "text": "AMD laptop, it really needs to be around",
+      "start": 1137.2,
+      "duration": 5.92
+    },
+    {
+      "text": "$400 cheaper. Well guys, what do you",
+      "start": 1139.52,
+      "duration": 5.2
+    },
+    {
+      "text": "think? Will you be buying one of these",
+      "start": 1143.12,
+      "duration": 3.919
+    },
+    {
+      "text": "new Panther Lake laptops? And if you do,",
+      "start": 1144.72,
+      "duration": 4.16
+    },
+    {
+      "text": "you know what I'm going to say. You have",
+      "start": 1147.039,
+      "duration": 3.921
+    },
+    {
+      "text": "to check out our website, best laptop",
+      "start": 1148.88,
+      "duration": 4.96
+    },
+    {
+      "text": "dodges. Over there, we are demystifying",
+      "start": 1150.96,
+      "duration": 4.719
+    },
+    {
+      "text": "laptop shopping. We show you the top",
+      "start": 1153.84,
+      "duration": 4.0
+    },
+    {
+      "text": "laptops for each type of buyer. You can",
+      "start": 1155.679,
+      "duration": 4.561
+    },
+    {
+      "text": "even combine use cases together and we",
+      "start": 1157.84,
+      "duration": 4.56
+    },
+    {
+      "text": "track prices right across retailers so",
+      "start": 1160.24,
+      "duration": 4.96
+    },
+    {
+      "text": "you know who's offering the best deal.",
+      "start": 1162.4,
+      "duration": 5.12
+    },
+    {
+      "text": "Well, today it was all about the X9",
+      "start": 1165.2,
+      "duration": 4.719
+    },
+    {
+      "text": "chip, which was the embargo for today.",
+      "start": 1167.52,
+      "duration": 4.24
+    },
+    {
+      "text": "Over the next couple of weeks, we'll be",
+      "start": 1169.919,
+      "duration": 3.921
+    },
+    {
+      "text": "releasing a ton more videos. We'll be",
+      "start": 1171.76,
+      "duration": 3.919
+    },
+    {
+      "text": "reviewing all the Panther Lake laptops,",
+      "start": 1173.84,
+      "duration": 3.28
+    },
+    {
+      "text": "of course, and we'll be testing the",
+      "start": 1175.679,
+      "duration": 3.601
+    },
+    {
+      "text": "other Panther Lake chips. So, get",
+      "start": 1177.12,
+      "duration": 4.16
+    },
+    {
+      "text": "subscribed with the notification bell on",
+      "start": 1179.28,
+      "duration": 3.68
+    },
+    {
+      "text": "because you'll want to be the first to",
+      "start": 1181.28,
+      "duration": 4.24
+    },
+    {
+      "text": "know. On behalf of all of us here, have",
+      "start": 1182.96,
+      "duration": 4.16
+    },
+    {
+      "text": "a great rest of your day and we will",
+      "start": 1185.52,
+      "duration": 5.399
+    },
+    {
+      "text": "catch you later.",
+      "start": 1187.12,
+      "duration": 3.799
+    }
+  ],
+  "full_text": "I am delighted to announce that Intel is back. Their brand new Ultra X9 CPU, it does live up to the hype. It is as powerful as Arrol Lake H. That's the chip that was found in high performance laptops last year like Asus's famous Sephus G16 and it's able to do this at Luna Lake power draws, which was the chip found in thinner light laptops that gave you excellent battery life. This means you can finally have it all. Strong CPU performance and long battery life in an x86 Windows laptop. But there's more. This new integrated GPU is absolutely fantastic. Performance that rivals entry-level GPUs from Nvidia, at least at lower wattage. And because this processor is so power efficient, you can get all this performance in a super thin and light laptop that is silent and doesn't get that warm. Guys, the team has just worked super hard on today's video. Seriously, three people working round the clock testing a ton of laptops. I don't want to steal their thunder, so I'm going to hand over to Sierra to walk you through Panther Lake and specifically how this new Core Ultra X9 chip performs. I'll be back at the end, though, to wrap up on how it stacks up versus competitors and whether you should actually buy one. Intel released a whopping 14 CPUs, so there's a lot to sort through. In summary, there are three main types for three different types of users. First, we have the Core Ultra X7 and X9 processors that end with H. Those are your highest tier options, best for people looking for performance and who also want some performance in gaming and creative tasks. These have 16 core CPUs and a special 12 core GPU called ARC B390. Next, we have the rest of the CPUs that end in H. These still have higher core count CPUs like the prior ones, but they only have a 4 core GPU. These are best suited for users like programmers, audio engineers, and even some students, all of whom don't plan to be gaming or creating on the side. Both these types of processors are a direct replacement of last year's Aerolake Hline. The Core Ultra Series 2 chips, which also had an H at the end. These offered solid performance, but usually mediocre battery life, the latter of which series 3 does improve on. Lastly, we have the lower core count CPUs. These will not have a letter at the end of the name and will be best for folks who stick to simple stuff like web browsing, office work, and studying. They are a replacement for late 2024's Lunar Lake. You may know these as the series 2 chips that ended in V. They offered great battery life, but mediocre performance. Now that the basics are out of the way, I'm going to go over a couple gotchas to be aware of. As always, Intel just couldn't keep it simple. biggest thing is the fact that not all Core Ultra 7s will perform better than a Core Ultra 5. There are nonH7s and there are fives that end in H. That letter at the end will help you determine performance better than the number at the beginning. Secondly, there are many Ultra 5 chips. Two have 12 cores and at the other end of the scale, two have six. So, be careful which Ultra 5 you buy. Another thing, there is a third GPU option in one of the Ultra 5H chips. The Ultra 5 338HH seems to be a slightly cut down version of the X7 and X9 chips. It has a 10 core GPU instead of a 12-core one. We think this chip has the potential to offer really strong price for performance, so we're excited to get it in. As Josh mentioned in his outrage video, Intel's naming sucks. We're really confused why this one doesn't also start with X like the other three, plus all the other issues I already brought up. All right, I've kept you waiting long enough. In Geekbench, the X9 chip performs well in multi-core. It lands between the AeroLake H chips of last gen in the Idea Pad and the LG Graham Pro. It does better than AMD's Ryzen 9 chip in the Omnibook and Qualcomm Snapdragon chip in the Slim 7X as well. The MacBook Pro with the M4 Pro chip and the Flowzy 13 with stricks Halo have a very solid lead here. These are also laptops with powerful CPUs and great integrated graphics. The MacBooks also maintain a very large lead in terms of single core score in all our graphs. The reason we're comparing to expensive devices like the Max is because the X9 is the highest end chip. We expect it to be found in laptops ranging from mid000s to mid2000s. We'd love to be wrong if it's cheaper, though. This is just how we decided which laptops to show. Now, on to Cinebench, which tests max performance. We're currently transitioning between Cinebench 24 and 26 since it just came out. So, some of our graphs will be using the older 24 version until we're completely done with the transition. In 24, the Duo keeps up with the M5 MacBook Pro in multi-core. It beats laptops with last gen chips, landing near the top of the graph, still lagging behind the M4 Pro Mac and the Flow with the Stricks Halo chip, aka AI Max 395. In 26 Cinebench, they renamed the tests to be more accurate as single and multi-thread. Here in single thread performance, we actually see a lift over last generation from the X9 388H instead of their tie in 2024. About an 8% improvement here. Clearly 26 Cinebench has some new optimizations for newer processors. Unsurprisingly, the Max keep their lead in 26 multi-threaded performance. It's a similar story to the other graphs. The X9 maintains great Aerolake H performance while still falling behind our two highest end chips on the graph. Now, what this performance doesn't show you is efficiency, which this new chip does quite well. In case you haven't seen this graph before on our channel, we plot Cinebench performance on the Y-axis and average power draw along the X. Lower power draw and higher performance is the goal here. This is important because in a laptop, more power consumption can make the laptop feel warmer, have louder fan noise, and shorter battery life. Unlike last gen, Intel is now ahead of AMD's Ryzen 9 HX370 stricks point chip. It delivers slightly better performance at similar power draws. We only just got a laptop with AMD's 2026 Gorgon point in and this Panther Lake X9 CPU appears much more efficient than that, too. Their Stricks Halo chip, which launched last year, however, was a big leap as you can see in pink on the graph. Where people might prefer Panther Lake is its lower power draw, which means it will be found in thinner and lighter laptops. Comparing the 16 core X9 to an 8 core Lunar Lake, it has the same power draw while delivering 60% more performance. This is fantastic. This doesn't surprise us though, as higher core count chips tend to be more efficient. We're not sure the 8 core Panther Lake versions will maintain this efficiency, but we'll get those numbers to you as soon as possible. Rounding out this graph, Apple's M510 core is still more efficient and the M4 Pro 14 core is even more impressive. Same hypothesis, the 14 core M4 Pro has more cores. So, we believe that's one of the key reasons. One of the benefits of better efficiency is usually lower CPU temps and less resulting heat and fan noise, which holds partially true in the Duo's highest performance mode. Its CPU temps stay very reasonable under 90° C on average. internal CPU temps is more dependent on each laptop's specific cooling solution, so this may change on other models. Also, Josh wanted me to mention the MacBook Pro getting very hot here is not as bad as it seems. Compared to Windows manufacturers, Apple keeps their devices close to silent and lets them run hotter as a trade-off. He uses Mac's fan control on his to up the fan speed a little. Still inaudible to him, but it keeps his cooler. He hates that Apple makes him do this, but it does work. Regarding heat you feel during performance tasks, Panther Lake looks promising, but the Duo is a bit of a unique device. There is an additional layer between the components and the keyboard than a normal laptop has since the keyboard is detachable and sits on top of the second screen, so keep that in mind. The Flow also has a detachable keyboard, but it doesn't have any components underneath it, so its keyboard temps are irrelevant. Looking at fan noise, the Duo is on the upper end, but this doesn't tell the full story. We also test its different performance modes, and balanced is a much more reasonable option here. It performs 13% worse, sure, but we'd still recommend balanced since it maintains most of the performance. The fan noise is nearly dead silent. 42 dB is low enough that I have to turn off our AC, and my door has to be shut to actually read it properly. Ambient volume in my room is about 39. So, this was truly quiet for the performance it was getting. In your average room, it's completely silent in its lowest mode. After looking at this, we can see why manufacturers like Dell might be limiting the average TDP to 35 W in their XPS 16. They probably decided the performance was good enough for most people and they wanted to minimize distractions like fan noise. Anyway, this was about what we expected to see for CPU tasks. We were promised on par with the older AeroLake H with Lunar Lake power draws and that appears to be true. This is positive. But this chip honestly blew us away in GPU tasks. For example, in Time Spy, it lands between the lower wattage 4050 in the MSI Thin and the mid wattage 50/50 in the LG Graham. Very impressive. What it also does well here is CPU performance, and this is likely due to its efficiency. You'll notice the Flow's integrated GPU performs the best here, but it falls behind the Duo in terms of CPU performance even though it was beating it earlier. This is likely because the Flow pulls power away from its CPU cores to give to the GPU cores instead. Where the Panther Lake CPU is performing very well at low wattage. Continuing on GPU performance, we were also very impressed with the addition of ray tracing cores in the ARC B390. It makes it pull ahead of the thin again and compete with the 50/50 in the Graham. Not to mention, it's an insane 86% uplift from Aerrowake H. Looking at Steel Nomad Light, which is a cross-platform 1440p benchmark that the Max can also run, it actually beats the M5 here by a bit. The dedicated GPUs and higherend chips keep their lead, but this is once again a massive improvement over the integrated graphics in prior chips. When gaming at full HD resolution and high settings, which is what we test on weaker hardware like iGPUs, the ARC B390 holds its own against low-end dedicated GPUs being fed less wattage like you see in the MSI Thin. It also gets more than 60 FPS, which is certainly playable for a AAA title. Not to mention, it's absolutely crushing the integrated GPUs in both of its predecessors, Lunar Lake and Aerolake H. Moving over to Forza, the story is similar. It gets over 100 FPS, while Intel's older iGPUs are only hitting 60. It's getting beat by dedicated GPUs, but it's still doing better than most integrated ones currently available. In Marvel Rivals, it does okay. This is a newer benchmark for us, so we don't have it run on everything yet, but we see it keeps its 1% lows above 30 FPS in medium settings, which is more than we can say for Arow Lake H. This is a more demanding game with lots of fight scenes. So, if you're playing competitively, you'll need to lower your settings. Now, Intel would be disappointed if we didn't mention that these chips offer multi-frame generation, which is a first. Other than Nvidia last year, XSS technology has improved to allow for three frames to be added for each real frame. [snorts] Gamers go back and forth on whether this feature actually leads to a better gaming experience, but if you want more frames, FPS and Cyberpunk does shoot up by 82%. 1% lows don't seem to improve, though, so keep that in mind. This is unfortunate as most people would prefer to see an improvement to 1% lows than average FPS. This lack of scaling of 1% lows with frame gen on also happens on some Nvidia laptops. Using gaming results as our marker, we have another efficiency graph for you. This is a newer graph for us, but what I did here is measure the frames per second in the Cyberpunk benchmark. I then plotted it against the average GPU power draw during this test to get the same performance as a dedicated Nvidia RTX 4050 in this game around 65 FPS. The B390 draws 33% less wattage. It also draws 55% less power than an RTX 5050. This is super cool to see. It seems like Intel is much more efficient than Nvidia. When drawing similar wattage to the M5's 10 core GPU, it gets 31% more frames per second, which is also very good. Intel beating Apple is crazy. Stricks Halo chips unfortunately do not separate their CPU and GPU wattage in our measuring tools. So we couldn't add AMD's integrated Radeon 8060S to this graph for comparison. As a whole, that chip was showing around 61 watts total during Cyberpunk. So we are doubtful that the GPU cores are pulling less than half of that. This leaves Panther Lake in the lead here in terms of FPS per watt. By the way, Cyberpunk doesn't hit the GPU as hard as Forza. We have a video about why we use Forza for most of our testing, which I'll link below. We didn't use Forza here because then we couldn't compare to the MacBooks if we did. Again, power efficiency leads to less annoyances. Gaming in balanced mode was a treat. It stayed quiet, didn't get too warm. The 100 FPS number in Forza from earlier was actually from the Duo's balanced mode because it does better in that mode, probably because it gives its GPU more wattage. Here's the breakdown for each performance mode. The Duo can get up to 54 dB if you're putting it in its highest mode, but we don't see the point. As we said earlier, measuring the heat on the keyboard is a bit weird with the Duo, but Josh even said the little slim 7i Ultra at CES also didn't get hot while gaming with its full wattage X9 processor. Other compact 14-in laptops with dedicated GPUs, like the Zephris G14, can get insanely hot. So, we are hopeful these thin and lights will keep their cool. For AI, we did a quick LM Studio test to see how it does with the standard wolf goat cabbage question. This is using a 14 billion parameter model, and we use the same seed. It does a little worse than the M5, but better than the LOQ with the 50/50, which weirdly seems to struggle with this test. It also does better than Aerrow Lake and Lunar Lake. Now, we of course had to see how well it performed for creators. We'll start with video editing benchmarks like Premiere Pro and Da Vinci Resolve. In Premiere Pro, the Arc B390 GPU seems to do well, much better than most integrated GPUs, and it's not far behind the M5 chip. This means less complex projects like ours are viable to edit. It's a good step forward from the older Lunar Lake and Aerake laptops without a dedicated GPU, but it's certainly not competing with most dedicated GPUs or higherend MacBook Pros. You can see that specifically when you export the project. Time is money for professional creators like us. So, we still don't think these are at that level yet. In Da Vinci Resolve, it falls behind the competition a bit, but it's still 46% better than Aerake H, which is a nice bump. This is somewhere the MacBooks excel in the Flow with Stricks Halo stays near the top as well. We also test 3D rendering in Blender where the Duo did very well. It beat the Flow and even one of our gaming laptops with a higher wattage 4050. It didn't beat the Max, but hey, there's a reason they're the go-to for creatives. It's still cool to see Intel improving so much here. Now, another place we were very impressed to see Intel do well was in battery testing. This goes for both performance tasks on battery and also battery duration for light tasks. The Duo is able to maintain full performance in Cinebench when unplugged. This is somewhere the Flow falters. This is also something Macs do very well, and although Windows manufacturers have gotten better about it in recent years, it's still nice to see every time it comes up. When I saw this, my immediate question was whether or not it could still game on battery since most gaming laptops nuke their performance. Nvidia graphics cards just aren't fed full wattage unplugged. So, good news, the Duo maintain full performance in gaming, getting around the same FPS numbers in Forza. This gets it very close to both the Grahams RTX 5050 and the Flowzy 13 because they both see drops in performance when unplugged. A drop of around 21% and 28% respectively. The Duo even has more stable 1% lows, which makes Panther Lake look pretty good. As far as battery life for lighter tasks goes, like office work, the Duo actually beats our M5 MacBook Pro. Let me say that again. The Duo actually beats our M5 MacBook Pro. Intel deserves a round of applause. The Duo's 99Wh battery is of course a major contributing factor, but this is still impressive. Just to even the score, we did normalize our battery results as if each laptop had a 70Wh battery. The Duo then came in second, but that's still a good result. Now, we didn't have time in this video to test battery life while gaming, but let us know with a comment below if you want us to do that. Now, I'm going to let Josh close us out. All right, as you can see, this is a big step forward for Intel. I kind of think this is Intel's M1 moment. The chips itself not as huge a leap forward as that one was. But they're still such an improvement. And the laptops with them, guys, are also just so strong that I think people who buy them, they're going to hold onto their laptop a really long time, guys. There are still people who bought one of those original MacBook Airs with M1 way back in 2020, and they're still very good today. [snorts] Now, comparing these laptops to Apple's current MacBooks, we do need to be careful which Apple MacBooks we compare them to. I saw this article saying the Yoga Slim 7i Ultra is a MacBook Air killer. Guys, this is absolutely not a fair comparison. It's just pure clickbait. Laptops with this X9 chip, they're probably going to range around $1,500 to well over 2,000. These will compete with Apple's MacBook Pro range, including the models with their higherend Pro chips. As we've shown you, Panther Lake, it does compete very well with a base M5 chip, but it doesn't do that well vers chip. That being said, Intel laptops of course have many other factors that make them better than a MacBook. Broader application compatibility, especially in games, diverse form factors, bells and whistles like dual screens, touchcreens, and two-in-1 capabilities. As a whole, I think these new Panther Lake laptops will be very competitive with Apple's range. Now, compared to laptops with Qualcomm's X2, we still have a lot of testing to do here. My gut is this. Qualcomm is kind of giving you more of what you don't need from their chips, CPU performance, but they aren't solving enough of what you do need, broader application compatibility, although they are improving there. I feel Qualcomm is still going to be relegated to competing based on price and value. Now, compared with AMD, which is probably Intel's biggest competitor, AMD bit of a mess right now. their stricks Halo processor, which is really good, just isn't available in many laptops. Then their mainstream Gorgon Point chips, they're basically a rebrand of the chips they released in 2024. Back then, those chips were really far ahead. But now, Intel has just caught up. In fact, because of Intel's GPU, they're solidly ahead. If the same laptop had the choice of a Panther Lake X chip or a Gorgon.1, that AMD laptop, it really needs to be around $400 cheaper. Well guys, what do you think? Will you be buying one of these new Panther Lake laptops? And if you do, you know what I'm going to say. You have to check out our website, best laptop dodges. Over there, we are demystifying laptop shopping. We show you the top laptops for each type of buyer. You can even combine use cases together and we track prices right across retailers so you know who's offering the best deal. Well, today it was all about the X9 chip, which was the embargo for today. Over the next couple of weeks, we'll be releasing a ton more videos. We'll be reviewing all the Panther Lake laptops, of course, and we'll be testing the other Panther Lake chips. So, get subscribed with the notification bell on because you'll want to be the first to know. On behalf of all of us here, have a great rest of your day and we will catch you later.",
+  "fetched_at": "2026-02-06T12:35:21.419576"
+}

@@ -1,0 +1,1063 @@
+{
+  "_createdAt": "2025-10-13T20:59:15Z",
+  "_id": "77287dae-4450-45d5-906e-d1b4f9476b1e",
+  "_rev": "ZDaHS4lCmyLn3Q2Whwmsmp",
+  "_type": "articles",
+  "_updatedAt": "2026-02-02T05:47:19Z",
+  "body": [
+    {
+      "_key": "bcc13dd48665",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "4d61eaae449f0",
+          "_type": "span",
+          "marks": [],
+          "text": "Options like the "
+        },
+        {
+          "_key": "4d61eaae449f1",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Zephyrus G16"
+        },
+        {
+          "_key": "4d61eaae449f2",
+          "_type": "span",
+          "marks": [],
+          "text": ", "
+        },
+        {
+          "_key": "4d61eaae449f3",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Legion 7i"
+        },
+        {
+          "_key": "4d61eaae449f4",
+          "_type": "span",
+          "marks": [],
+          "text": ", "
+        },
+        {
+          "_key": "4d61eaae449f5",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Blade 16"
+        },
+        {
+          "_key": "4d61eaae449f6",
+          "_type": "span",
+          "marks": [],
+          "text": ", "
+        },
+        {
+          "_key": "7d9b1571c3e2",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "ProArt P16"
+        },
+        {
+          "_key": "17d7a939fa10",
+          "_type": "span",
+          "marks": [],
+          "text": ", and "
+        },
+        {
+          "_key": "4d61eaae449f7",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "MacBook Pro 16"
+        },
+        {
+          "_key": "4d61eaae449f8",
+          "_type": "span",
+          "marks": [],
+          "text": " finally deliver serious performance without the stove-top heat or jet-engine fans of years past. Still, there’s no perfect laptop here—each excels for different people. Below, we go through the best of them, their pros and cons, and who should buy which one."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "a36e5ce97b67",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "651eda86495e0",
+          "_type": "span",
+          "marks": [],
+          "text": "Gaming-First Laptops"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "27185e1983b8",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d297d5f55d1d",
+          "_type": "span",
+          "marks": [],
+          "text": "Asus Zephyrus G16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "173953196c83",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "a64b8d01a00f0",
+          "_type": "span",
+          "marks": [],
+          "text": "The "
+        },
+        {
+          "_key": "a64b8d01a00f1",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Zephyrus G16"
+        },
+        {
+          "_key": "a64b8d01a00f2",
+          "_type": "span",
+          "marks": [],
+          "text": " is the best all-rounder in this category, doing everything well with few trade-offs. You can configure it with up to an RTX 5070 Ti or 5080—rare in this size class. Laptops with lower-tier GPUs (like the 5060 or 5050) all cap out at 8 GB of VRAM, which can bottleneck modern games on high settings. The 5070 Ti version hits the sweet spot."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "1e8e01b86b0e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "e9d88634fbed0",
+          "_type": "span",
+          "marks": [],
+          "text": "This laptop looks and feels premium (especially the Silver model), remains lightweight and compact, and stays cool and quiet even under load. Battery life is solid, speakers are strong, and the keyboard deck never gets uncomfortably warm."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "0540ca03616c",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "dd44f2a68a750",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Cons:"
+        },
+        {
+          "_key": "dd44f2a68a751",
+          "_type": "span",
+          "marks": [],
+          "text": "\nIts GPUs are power-limited, so higher-end versions underperform thicker laptops with the same hardware. The display is decent but not exceptional, the webcam is grainy, and the CPU is throttled when unplugged. Still, the Zephyrus G16 with the RTX 5070 Ti is the configuration we recommend—it’s the one we’d tell friends to buy."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "615cc9211d30",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "192813e00f69",
+          "key": "337",
+          "sortOrder": 1
+        }
+      ]
+    },
+    {
+      "_key": "d5e4923d555e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "a8f27d97c61d0",
+          "_type": "span",
+          "marks": [],
+          "text": "Lenovo Legion 7i"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "6bdbdf85a7c9",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "41e122a1c41b0",
+          "_type": "span",
+          "marks": [],
+          "text": "The "
+        },
+        {
+          "_key": "41e122a1c41b1",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Legion 7i"
+        },
+        {
+          "_key": "41e122a1c41b2",
+          "_type": "span",
+          "marks": [],
+          "text": " is Lenovo’s thin-and-light powerhouse. It pairs an Intel HX processor—much faster than the Zephyrus’s H-series—with a fantastic keyboard and bright display. It’s a pleasure to type on, with large keys and a premium feel."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "1210ea6b57cc",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "896ee3f380b00",
+          "_type": "span",
+          "marks": [],
+          "text": "Performance is excellent, and unlike the G16, its RAM is upgradeable. However, that HX processor comes with trade-offs: loud fans, hot spots on the keyboard deck, and rough battery life. It also tops out at an RTX 5070, creating an odd mismatch between a very strong CPU and a mid-tier GPU. Still, the 5070 here runs at full power, giving it great gaming performance overall."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "0752e3866cbf",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "ebe90af996270",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Get it if:"
+        },
+        {
+          "_key": "ebe90af996271",
+          "_type": "span",
+          "marks": [],
+          "text": " You prioritize CPU performance and keyboard comfort, and you don’t mind dialing down settings in demanding games. Great for video editors or casual gamers."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "7e1edc79d9e0",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "781cd5d75291",
+          "key": "400",
+          "sortOrder": 2
+        }
+      ]
+    },
+    {
+      "_key": "b6e322b3b635",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "85f3b7e525930",
+          "_type": "span",
+          "marks": [],
+          "text": "Acer Predator Helios Neo 16S"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "1d5cbd568de4",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "861e4a85aac40",
+          "_type": "span",
+          "marks": [],
+          "text": "Acer’s new "
+        },
+        {
+          "_key": "861e4a85aac41",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Predator Helios Neo 16S"
+        },
+        {
+          "_key": "861e4a85aac42",
+          "_type": "span",
+          "marks": [],
+          "text": " offers the CPU strength of the Legion and the GPU advantage of the Zephyrus 5070 Ti—all at a phenomenal price. The keyboard is comfortable, and it even includes 2.5 Gb Ethernet, which is rare at this size."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "dc484de604fa",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "87bcb654c5770",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Cons:"
+        },
+        {
+          "_key": "87bcb654c5771",
+          "_type": "span",
+          "marks": [],
+          "text": " The laptop feels warm almost all the time, fan noise is aggressive under load, and it’s bulkier than its peers. Port placement isn’t ideal, and its battery life is poor because it can’t lower its display refresh rate on battery power."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "43301a881b48",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "aa21a7fcc5820",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Buy it if:"
+        },
+        {
+          "_key": "aa21a7fcc5821",
+          "_type": "span",
+          "marks": [],
+          "text": " You want maximum performance per dollar, don’t mind fan noise, and plan to stay plugged in."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "852e2e9aaf32",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "d3b6fc889aa9",
+          "key": "386",
+          "sortOrder": 3
+        }
+      ]
+    },
+    {
+      "_key": "bf75eecf6a79",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "172a033637180",
+          "_type": "span",
+          "marks": [],
+          "text": "Razer Blade 16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "744f8ae4981e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "2f299056ebe20",
+          "_type": "span",
+          "marks": [],
+          "text": "The "
+        },
+        {
+          "_key": "2f299056ebe21",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Blade 16"
+        },
+        {
+          "_key": "2f299056ebe22",
+          "_type": "span",
+          "marks": [],
+          "text": " is the only thin-and-light laptop that supports full-power top-end GPUs (up to RTX 5090 at 175 W). It’s stunningly built, MacBook-level premium, with super-fast ports, an excellent keyboard, and a gorgeous display."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "c46231cb2c77",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "4177d895f3a60",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Cons:"
+        },
+        {
+          "_key": "4177d895f3a61",
+          "_type": "span",
+          "marks": [],
+          "text": " Razer’s reliability and support have been spotty. Many users report hardware quirks like trackpad issues, and Razer’s customer service can be slow. Also, its AMD CPU lags behind Intel options in some creator apps like Premiere Pro. It runs warm under load and stays slightly audible even in quiet mode."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "d384b9fe1ea9",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6a25e7d203f50",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Buy it if:"
+        },
+        {
+          "_key": "6a25e7d203f51",
+          "_type": "span",
+          "marks": [],
+          "text": " You want luxury, portability, and gaming power in one device and can tolerate a few quirks. It’s the Lamborghini of laptops: fast, beautiful, but not problem-free."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "d0920006f649",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "debf623522f4",
+          "key": "301",
+          "sortOrder": 4
+        }
+      ]
+    },
+    {
+      "_key": "95d028eb43ba",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d03f266ad46a0",
+          "_type": "span",
+          "marks": [],
+          "text": "Gigabyte A16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "e6d27b21e043",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "7aecbe63912a0",
+          "_type": "span",
+          "marks": [],
+          "text": "At the other end of the price spectrum, the "
+        },
+        {
+          "_key": "7aecbe63912a1",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Gigabyte A16"
+        },
+        {
+          "_key": "7aecbe63912a2",
+          "_type": "span",
+          "marks": [],
+          "text": " proves you can get a thin-and-light gaming laptop for under $800. Our RTX 4050 version performs well for its class but clearly can’t match premium options. The display is dim and lacks color accuracy, but if you’re on a budget and want a capable portable gaming machine, it’s a solid entry-level choice."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "85ce3976820f",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "3c70f8bf22cf",
+          "key": "428",
+          "sortOrder": 5
+        }
+      ]
+    },
+    {
+      "_key": "43b2c247606c",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0d20e2d782e40",
+          "_type": "span",
+          "marks": [],
+          "text": "Creator & Professional Laptops"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "087422516ca2",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "538929a146750",
+          "_type": "span",
+          "marks": [],
+          "text": "Lenovo Yoga Pro 9i"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "fe7af87a3a0e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "bc16551fb00b0",
+          "_type": "span",
+          "marks": [],
+          "text": "The "
+        },
+        {
+          "_key": "bc16551fb00b1",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Yoga Pro 9i"
+        },
+        {
+          "_key": "bc16551fb00b2",
+          "_type": "span",
+          "marks": [],
+          "text": " is a gorgeous creator laptop with a high-resolution 3200×2000 Tandem OLED display and one of Lenovo’s best keyboards. It feels premium, runs fairly cool, and has strong speakers.\n"
+        },
+        {
+          "_key": "bc16551fb00b3",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Cons:"
+        },
+        {
+          "_key": "bc16551fb00b4",
+          "_type": "span",
+          "marks": [],
+          "text": " Poor battery life, a slow SD card reader, and a battery drain issue under sustained load (fixable with a 245 W charger and BIOS update).\n"
+        },
+        {
+          "_key": "bc16551fb00b5",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Verdict:"
+        },
+        {
+          "_key": "bc16551fb00b6",
+          "_type": "span",
+          "marks": [],
+          "text": " Excellent screen for coders or designers, but the Legion 7i is more versatile overall."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b0a387a935e2",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "d31b5303f430",
+          "key": "399",
+          "sortOrder": 6
+        }
+      ]
+    },
+    {
+      "_key": "d964307e0a0d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d41d22abab4f0",
+          "_type": "span",
+          "marks": [],
+          "text": "Asus ProArt P16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "eb2c31d79d1a",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "bf47b24faec70",
+          "_type": "span",
+          "marks": [],
+          "text": "The "
+        },
+        {
+          "_key": "bf47b24faec71",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "ProArt P16"
+        },
+        {
+          "_key": "bf47b24faec72",
+          "_type": "span",
+          "marks": [],
+          "text": " is Asus’s creator-focused version of the Zephyrus G16, featuring a crisp 4K display and refined black finish. It’s ideal for editors or programmers who want sharp visuals. With the highest-end 5090 model finally getting a brighter, 120Hz screen, it is now a reasonable choice for gamers too. They also offer a 2880 x 1800 version at 120Hz, but it's still a little on the dimmer side under 400 nits like last year's model.\n"
+        },
+        {
+          "_key": "bf47b24faec73",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Verdict:"
+        },
+        {
+          "_key": "bf47b24faec74",
+          "_type": "span",
+          "marks": [],
+          "text": " 5090 model is great in almost every way except for the price tag. 5070 models come with different screen compromises, either a 2.8K or a 60Hz one. Regardless of which model you get, these make a lot of sense over the Zephyrus G16 for creators who also game."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "2557039924e9",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "d5928477fc37",
+          "key": "494",
+          "sortOrder": 7
+        }
+      ]
+    },
+    {
+      "_key": "caa0da81c768",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "20e92a34559c0",
+          "_type": "span",
+          "marks": [],
+          "text": "MacBook Pro 16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "df4b04535a0e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c0698d99a2e90",
+          "_type": "span",
+          "marks": [],
+          "text": "Apple’s "
+        },
+        {
+          "_key": "c0698d99a2e91",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "MacBook Pro 16"
+        },
+        {
+          "_key": "c0698d99a2e92",
+          "_type": "span",
+          "marks": [],
+          "text": " remains unmatched in battery life, efficiency, and build quality. It’s whisper-quiet, powerful, and premium in every way—from speakers to trackpad to ports.\n"
+        },
+        {
+          "_key": "c0698d99a2e93",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Cons:"
+        },
+        {
+          "_key": "c0698d99a2e94",
+          "_type": "span",
+          "marks": [],
+          "text": " Limited game support, no Wi-Fi 7, and zero upgradeability.\n"
+        },
+        {
+          "_key": "c0698d99a2e95",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Buy it if:"
+        },
+        {
+          "_key": "c0698d99a2e96",
+          "_type": "span",
+          "marks": [],
+          "text": " You’re a programmer, video editor, or creative pro who lives in macOS."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "80434d8aa79b",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "fbbb779cd462",
+          "key": "125",
+          "sortOrder": 8
+        }
+      ]
+    },
+    {
+      "_key": "a630fabf33dc",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "a288b3e1f8970",
+          "_type": "span",
+          "marks": [],
+          "text": "Gigabyte Aero X16"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "8fc75e132516",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b62b33cc6d490",
+          "_type": "span",
+          "marks": [],
+          "text": "The "
+        },
+        {
+          "_key": "b62b33cc6d491",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Aero X16"
+        },
+        {
+          "_key": "b62b33cc6d492",
+          "_type": "span",
+          "marks": [],
+          "text": " delivers solid performance at a lower price. It has a matte display, good battery life, and upgradeable memory. It runs quieter and cooler than competitors under load.\n"
+        },
+        {
+          "_key": "b62b33cc6d493",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Cons:"
+        },
+        {
+          "_key": "b62b33cc6d494",
+          "_type": "span",
+          "marks": [],
+          "text": " Build quality and keyboard feel are weaker, the screen’s color accuracy is average, and the port layout is poor for left-handers.\n"
+        },
+        {
+          "_key": "b62b33cc6d495",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Verdict:"
+        },
+        {
+          "_key": "b62b33cc6d496",
+          "_type": "span",
+          "marks": [],
+          "text": " Strong value if you can live with its quirks."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "d13329236a8b",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "97b589697864",
+          "key": "425",
+          "sortOrder": 9
+        }
+      ]
+    },
+    {
+      "_key": "33688db8b554",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "4f4b4a00aa710",
+          "_type": "span",
+          "marks": [],
+          "text": "Lenovo IdeaPad Pro 5i"
+        }
+      ],
+      "markDefs": [],
+      "style": "h3"
+    },
+    {
+      "_key": "996c8441faca",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "819da8f2025e0",
+          "_type": "span",
+          "marks": [],
+          "text": "The "
+        },
+        {
+          "_key": "819da8f2025e1",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "IdeaPad Pro 5i"
+        },
+        {
+          "_key": "819da8f2025e2",
+          "_type": "span",
+          "marks": [],
+          "text": " is the best affordable creator option. It’s lightweight, well built, and offers a great screen and keyboard. Its RTX 5050 limits performance, but for students and light creators, it’s a reliable, portable choice."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "144a9a8ad076",
+      "_type": "configEmbed",
+      "configs": [
+        {
+          "_key": "e25fdcf0adf3",
+          "key": "384",
+          "sortOrder": 10
+        }
+      ]
+    },
+    {
+      "_key": "e74fcd20e77e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "74d01a509ed60",
+          "_type": "span",
+          "marks": [],
+          "text": "Conclusion"
+        }
+      ],
+      "markDefs": [],
+      "style": "h2"
+    },
+    {
+      "_key": "8957af7be93a",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "254590be192d0",
+          "_type": "span",
+          "marks": [],
+          "text": "After weeks of testing, here’s where our team landed:"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "706ae2b2c1fa",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "309214fe0d350",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Cierra:"
+        },
+        {
+          "_key": "309214fe0d351",
+          "_type": "span",
+          "marks": [],
+          "text": " ProArt P16 (5090)"
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "25535e6256b8",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "5c6625d02c350",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Seth:"
+        },
+        {
+          "_key": "5c6625d02c351",
+          "_type": "span",
+          "marks": [],
+          "text": " Zephyrus G16 (5070 Ti)"
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "ac26fa6dc149",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "eda4f88766da0",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Josh:"
+        },
+        {
+          "_key": "eda4f88766da1",
+          "_type": "span",
+          "marks": [],
+          "text": " Uses a MacBook Pro 16 daily, but needs a Blade 16 for gaming"
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "d0a274a1a913",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c67ccbef46590",
+          "_type": "span",
+          "marks": [],
+          "text": "There’s no perfect laptop in this space—each involves trade-offs in heat, fan noise, battery life, and performance. But if you want a thin, powerful all-rounder that truly nails the balance, our vote still goes to the "
+        },
+        {
+          "_key": "c67ccbef46591",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Asus Zephyrus G16 with an RTX 5070 Ti"
+        },
+        {
+          "_key": "c67ccbef46592",
+          "_type": "span",
+          "marks": [],
+          "text": "."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "category": "laptops",
+  "mainImage": {
+    "AltText": "Text Reads \"Best Powerful & Portable Laptop\"",
+    "_type": "image",
+    "asset": {
+      "_ref": "image-168fe815774859ec1573b73b397408452a8d9ed6-1920x1080-jpg",
+      "_type": "reference"
+    },
+    "caption": "Best Powerful & Portable Laptop"
+  },
+  "metaDescription": "This used to be the impossible category, but there are finally laptops that deliver serious performance without the compromises of years past.",
+  "metaTitle": "Best Thin & Light Performance Laptops (Gamers, Coders, Etc)",
+  "publishedAt": "2025-10-13T20:57:50.742Z",
+  "readCount": 10744,
+  "relatedBlogs": [
+    {
+      "_key": "668ba650eb65",
+      "_ref": "1e03aeff-601e-4cb9-a1af-704e5a5a1f7a",
+      "_type": "reference"
+    }
+  ],
+  "slug": {
+    "_type": "slug",
+    "current": "best-thin-and-light-performance-laptops-gamers-video-editors-coders"
+  },
+  "title": "Best Thin & Light Performance Laptops (Gamers, Video Editors, Coders & More)"
+}
