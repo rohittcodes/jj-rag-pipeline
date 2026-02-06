@@ -80,6 +80,7 @@ python cli.py setup --all
 This creates:
 - `josh_content` & `content_chunks` - Blog content with embeddings
 - `youtube_content` & `youtube_chunks` - YouTube transcripts with embeddings
+- `test_data_chunks` - Performance benchmark data with embeddings
 - `configs` - Product configurations
 - `rag_query_logs` - API query logs
 
@@ -241,6 +242,25 @@ python cli.py ingest --embeddings --youtube-only
 # Sync from production database
 python cli.py sync --products
 ```
+
+### Sync Test Data (Performance Benchmarks)
+
+```bash
+# Sync all available test data PDFs from S3
+python cli.py sync --test-data
+
+# Sync specific config
+python cli.py sync --test-data --config-id=15
+
+# Sync with limit (useful for testing)
+python cli.py sync --test-data --limit=10
+```
+
+**What is Test Data?**
+- Performance benchmarks for specific laptop configurations
+- Examples: gaming FPS, video rendering times, battery life tests
+- Stored as PDFs in AWS S3, parsed and embedded for semantic search
+- Currently synced: 229 configs with 2,126 benchmark chunks
 
 ### Re-generate Embeddings
 

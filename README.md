@@ -48,8 +48,9 @@ API is now running at `http://localhost:8000`
 ## Features
 
 - ✅ **Semantic Search** - Vector-based content retrieval using e5-base-v2 embeddings
-- ✅ **Multi-Source Content** - Unified search across blog articles and YouTube transcripts
-- ✅ **Smart Ranking** - Josh's context (70%) + Spec matching (30%)
+- ✅ **Multi-Source Content** - Unified search across blog articles, YouTube transcripts, and test data
+- ✅ **Smart Ranking** - Josh's context (60%) + Spec matching (25%) + Test data (15%)
+- ✅ **Performance Benchmarks** - Real test data from 229 laptop configurations
 - ✅ **Spec Fallback** - Pure spec matching for low confidence queries
 - ✅ **API Authentication** - Optional Bearer token authentication
 - ✅ **Query Logging** - Monitor all recommendation requests
@@ -137,6 +138,11 @@ python cli.py ingest --youtube --embeddings
 **Update product configs:**
 ```bash
 python cli.py sync --products
+```
+
+**Sync test data (performance benchmarks):**
+```bash
+python cli.py sync --test-data
 ```
 
 **Start API server:**

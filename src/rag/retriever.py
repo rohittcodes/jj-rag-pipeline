@@ -239,6 +239,28 @@ class RAGRetriever:
         if self.min_content_date:
             sql += " AND yt.publish_date >= %s"
             params.append(self.min_content_date)
+        
+        # Add test data chunks
+        sql += """
+            UNION ALL
+            SELECT 
+                td.id as chunk_id,
+                td.config_id as content_id,
+                td.chunk_text,
+                td.test_type as section_title,
+                td.benchmark_results as metadata,
+                CONCAT(c.product_name, ' - ', td.test_type, ' Test Data') as content_title,
+                'test_data' as content_type,
+                COALESCE(c.test_data_pdf_url, '') as url,
+                c.updated_at::date as publish_date,
+                ARRAY['performance', 'benchmark', 'test'] as use_case_tags,
+                1 - (td.embedding <=> %s::vector) as similarity,
+                'test_data' as source_type
+            FROM test_data_chunks td
+            JOIN configs c ON td.config_id = c.config_id
+            WHERE td.embedding IS NOT NULL
+        """
+        params.append(query_embedding)
 
         # Order by similarity and limit (applies to UNION result)
         sql += """
@@ -263,21 +285,30 @@ class RAGRetriever:
                 import json
                 metadata = json.loads(metadata)
             
+            # Build metadata dict
+            result_metadata = {
+                'content_title': row['content_title'],
+                'content_type': row['content_type'],
+                'url': row['url'],
+                'publish_date': str(row['publish_date']) if row['publish_date'] else None,
+                'use_case_tags': row['use_case_tags'] or [],
+                'source_type': row.get('source_type', 'blog')
+            }
+            
+            # For test_data, the content_id is actually the config_id
+            if row.get('source_type') == 'test_data':
+                result_metadata['config_ids'] = [row['content_id']]
+                result_metadata['benchmark_results'] = metadata  # benchmark_results from test_data_chunks
+            else:
+                result_metadata['config_ids'] = metadata.get('config_ids', [])
+            
             result = RetrievalResult(
                 chunk_id=row['chunk_id'],
                 content_id=row['content_id'],
                 chunk_text=row['chunk_text'],
                 section_title=row['section_title'],
                 similarity=float(row['similarity']),
-                metadata={
-                    'content_title': row['content_title'],
-                    'content_type': row['content_type'],
-                    'url': row['url'],
-                    'publish_date': str(row['publish_date']) if row['publish_date'] else None,
-                    'use_case_tags': row['use_case_tags'] or [],
-                    'config_ids': metadata.get('config_ids', []),
-                    'source_type': row.get('source_type', 'blog')
-                }
+                metadata=result_metadata
             )
             results.append(result)
         

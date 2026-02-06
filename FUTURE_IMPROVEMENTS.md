@@ -16,118 +16,60 @@ This document outlines potential enhancements and next steps for the JustJosh RA
 - API key authentication
 - FastAPI service with webhooks (Sanity)
 - Consolidated CLI (`setup`, `sync`, `api`)
+- **Test data ingestion** (229 configs with benchmark PDFs)
+- **Test data retrieval** (UNION query across blogs, YouTube, test data)
+- **Test data scoring** (15% weight, presence-based)
 
-### 🚧 In Progress (Current Plan)
-- **Unified Sync Architecture Overhaul**
-  - Cursor-based incremental syncing for all sources
-  - YouTube webhook (PubSubHubbub)
-  - Products polling (every 5 min)
-  - Eliminate `raw/` folder
-  - Auto-embedding after sync
-  - Consolidate scripts (`ingest.py` → `sync.py`, `youtube.py` → `sync.py`)
-- **Improved Product Extraction**
-  - Multi-signal scoring (title, frequency, position, context)
-  - Distinguish main product from passing mentions
+### 🚧 Next Steps (Priority Order)
+
+#### 1. Cleanup & Documentation
+- Add `--test-data` command to CLI
+- Remove temporary test files
+- Update documentation with test data workflow
+- Run end-to-end test of complete pipeline
+
+#### 2. Unified Sync Architecture (Deferred)
+- Cursor-based incremental syncing for all sources
+- YouTube webhook (PubSubHubbub)
+- Products polling (every 5 min)
+- Eliminate `raw/` folder
+- Auto-embedding after sync
+- Consolidate scripts (`ingest.py` → `sync.py`, `youtube.py` → `sync.py`)
+
+#### 3. Test Data Improvements (Future)
+- **Current limitation:** Only checks if benchmarks exist, doesn't evaluate scores
+- **Future enhancement:** Extract numerical scores and rank by actual performance
+- **Example:** Parse "Geekbench: 15,014" and score based on percentile vs other products
+- **Priority:** Medium (current approach works, but not optimal)
 
 ---
 
-## Immediate Next Steps
+## Completed Features
 
-### 1. Test Data Ingestion & Integration
+### 1. Test Data Ingestion & Integration ✅
 
-**Problem:** Test data (performance benchmarks for each config) is not yet ingested into the RAG pipeline.
+**Status:** Completed with basic implementation
 
-**What is Test Data?**
-- Performance benchmarks for specific laptop configurations
-- Examples: gaming FPS, video rendering times, battery life tests
-- Stored in production DB: `configs.test_data` (JSONB column)
-- Already synced to local DB but not yet used in recommendations
+**What Was Done:**
+- ✅ Created `test_data_chunks` table with config_id foreign key
+- ✅ Built S3Client for downloading test PDFs from AWS S3
+- ✅ Built TestDataParser to extract benchmark sections from PDFs
+- ✅ Added `sync_test_data()` function to sync.py
+- ✅ Integrated test_data_chunks into retriever UNION query
+- ✅ Added test data scoring (15% weight) to ranker
+- ✅ Synced 229 configs with test data (2,126 chunks total)
 
-**Implementation Plan:**
+**Current Limitations:**
+- Only checks if benchmarks **exist**, doesn't evaluate actual scores
+- Treats all products with test data similarly (0.6-0.7 score)
+- Doesn't extract numerical values (e.g., "Geekbench: 15,014")
+- Doesn't rank products by comparative performance
 
-#### A. Database Schema Enhancement
-```sql
--- Already exists in configs table:
--- test_data JSONB (contains benchmark results)
-
--- Create dedicated table for test data chunks (optional, for better search)
-CREATE TABLE test_data_chunks (
-  id SERIAL PRIMARY KEY,
-  config_id INT REFERENCES configs(id),
-  test_type VARCHAR(100),  -- 'gaming', 'rendering', 'battery', etc.
-  test_description TEXT,
-  benchmark_results JSONB,
-  chunk_text TEXT,  -- Natural language description for embedding
-  embedding vector(768),
-  created_at TIMESTAMP DEFAULT NOW()
-);
-```
-
-#### B. Test Data Extraction & Chunking
-```python
-# In sync.py or new test_data_processor.py
-
-def process_test_data(config_id: int, test_data: dict):
-    """
-    Extract test data and create searchable chunks.
-    
-    Example test_data:
-    {
-      "gaming": {
-        "cyberpunk_2077": {"fps": 85, "settings": "high"},
-        "fortnite": {"fps": 144, "settings": "epic"}
-      },
-      "rendering": {
-        "davinci_resolve": {"4k_timeline": "2.3x realtime"}
-      },
-      "battery": {
-        "video_playback": "12.5 hours",
-        "web_browsing": "15 hours"
-      }
-    }
-    """
-    chunks = []
-    
-    for category, tests in test_data.items():
-        # Create natural language description
-        chunk_text = f"Performance tests for {category}:\n"
-        
-        for test_name, results in tests.items():
-            chunk_text += f"- {test_name}: {format_results(results)}\n"
-        
-        chunks.append({
-            'config_id': config_id,
-            'test_type': category,
-            'chunk_text': chunk_text,
-            'benchmark_results': tests
-        })
-    
-    return chunks
-```
-
-#### C. Integration with Retriever
-```python
-# Option 1: Add test_data_chunks to UNION query in retriever.py
-SELECT ... FROM content_chunks WHERE ...
-UNION ALL
-SELECT ... FROM youtube_chunks WHERE ...
-UNION ALL
-SELECT ... FROM test_data_chunks WHERE ...
-
-# Option 2: Use test_data in ranker scoring
-# Boost configs that have strong test results for user's use case
-if user_use_case == 'gaming':
-    test_score = calculate_gaming_performance_score(config.test_data)
-    final_score += test_score * 0.2  # 20% weight
-```
-
-#### D. Recommendation Enhancement
-- Show actual benchmark numbers in explanations
-- "This laptop achieves 85 FPS in Cyberpunk 2077 at high settings"
-- "Battery lasts 12.5 hours for video playback"
-- Compare test results between recommendations
-
-**Priority:** High (adds concrete, measurable data to recommendations)
+**Future Enhancement (Low Priority):**
+- Parse numerical benchmark scores from PDFs
+- Calculate percentile rankings across all products
+- Score based on actual performance vs just presence
+- Example: "Geekbench 15,014 (top 10%)" → higher score than "Geekbench 8,500 (bottom 30%)"
 
 ---
 

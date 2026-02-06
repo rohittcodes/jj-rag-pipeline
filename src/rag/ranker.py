@@ -34,6 +34,7 @@ class ProductRecommendation:
     confidence_score: float  # Combined score (0-1)
     josh_score: float  # Score from Josh's content (0-1)
     spec_score: float  # Score from spec matching (0-1)
+    test_data_score: float  # Score from test data benchmarks (0-1)
     
     # Josh's opinion
     ranking: Optional[int]  # Josh's ranking (#1, #2, etc.)
@@ -70,8 +71,9 @@ class RAGRanker:
     
     def __init__(
         self,
-        josh_weight: float = 0.7,
-        spec_weight: float = 0.3,
+        josh_weight: float = 0.60,
+        spec_weight: float = 0.25,
+        test_data_weight: float = 0.15,
         use_ec2_db: bool = False,
         ec2_db_config: Optional[Dict] = None,
         verbose: bool = False
@@ -80,14 +82,16 @@ class RAGRanker:
         Initialize the ranker.
         
         Args:
-            josh_weight: Weight for Josh's recommendations (default 0.7)
-            spec_weight: Weight for spec matching (default 0.3)
+            josh_weight: Weight for Josh's recommendations (default 0.60)
+            spec_weight: Weight for spec matching (default 0.25)
+            test_data_weight: Weight for test data benchmarks (default 0.15)
             use_ec2_db: Whether to connect to EC2 product database
             ec2_db_config: EC2 database connection config
             verbose: Whether to print initialization messages
         """
         self.josh_weight = josh_weight
         self.spec_weight = spec_weight
+        self.test_data_weight = test_data_weight
         self.use_ec2_db = use_ec2_db
         self.ec2_db_config = ec2_db_config
         self.verbose = verbose
@@ -108,6 +112,7 @@ class RAGRanker:
             print(f"[+] RAG Ranker initialized")
             print(f"    - Josh weight: {self.josh_weight}")
             print(f"    - Spec weight: {self.spec_weight}")
+            print(f"    - Test data weight: {self.test_data_weight}")
             print(f"    - Config database: Local (synced)")
             config_count = self.config_client.get_config_count()
             print(f"    - Available configs: {config_count}")
@@ -156,8 +161,11 @@ class RAGRanker:
             config_id = product_data.get('config_id')
             spec_score = self._calculate_spec_score(product_name, quiz_response, config_id)
             
+            # Calculate test data score
+            test_data_score = self._calculate_test_data_score(product_data, quiz_response)
+            
             # Combined score
-            confidence_score = (josh_score * self.josh_weight) + (spec_score * self.spec_weight)
+            confidence_score = (josh_score * self.josh_weight) + (spec_score * self.spec_weight) + (test_data_score * self.test_data_weight)
             
             # Generate explanation
             explanation = self._generate_explanation(
@@ -171,6 +179,7 @@ class RAGRanker:
                 confidence_score=confidence_score,
                 josh_score=josh_score,
                 spec_score=spec_score,
+                test_data_score=test_data_score,
                 ranking=product_data.get('ranking'),
                 recommendation_type=product_data.get('recommendation_type', 'mentioned'),
                 josh_quote=product_data.get('josh_quote'),
@@ -215,6 +224,7 @@ class RAGRanker:
         # Group by config_id first (most reliable)
         configs = defaultdict(lambda: {
             'chunk_ids': [],
+            'chunks': [],  # Store actual RetrievalResult objects
             'similarities': [],
             'rankings': [],
             'quotes': [],
@@ -254,6 +264,7 @@ class RAGRanker:
                     key = f"config_{config_id}"
                     configs[key]['config_id'] = config_id
                     configs[key]['chunk_ids'].append(result.chunk_id)
+                    configs[key]['chunks'].append(result)  # Store the actual result object
                     configs[key]['similarities'].append(result.similarity)
                     configs[key]['source_article'] = result.metadata['content_title']
                     configs[key]['source_url'] = result.metadata['url']
@@ -298,6 +309,7 @@ class RAGRanker:
                 'product_name': product_name,
                 'config_id': config_id,
                 'chunk_ids': data['chunk_ids'],
+                'chunks': data['chunks'],  # Include the actual RetrievalResult objects
                 'max_similarity': max(data['similarities']) if data['similarities'] else 0.0,
                 'avg_similarity': sum(data['similarities']) / len(data['similarities']) if data['similarities'] else 0.0,
                 'ranking': min(data['rankings']) if data['rankings'] else None,
@@ -325,6 +337,7 @@ class RAGRanker:
         """
         products = defaultdict(lambda: {
             'chunk_ids': [],
+            'chunks': [],  # Store actual RetrievalResult objects
             'similarities': [],
             'rankings': [],
             'quotes': [],
@@ -375,6 +388,7 @@ class RAGRanker:
                 
                 products[key]['product_name'] = product
                 products[key]['chunk_ids'].append(result.chunk_id)
+                products[key]['chunks'].append(result)  # Store the actual result object
                 products[key]['similarities'].append(result.similarity)
                 products[key]['source_article'] = result.metadata['content_title']
                 products[key]['source_url'] = result.metadata['url']
@@ -416,6 +430,7 @@ class RAGRanker:
                 'product_name': product_name,
                 'config_id': config_id,
                 'chunk_ids': data['chunk_ids'],
+                'chunks': data['chunks'],  # Include the actual RetrievalResult objects
                 'max_similarity': max(data['similarities']) if data['similarities'] else 0.0,
                 'avg_similarity': sum(data['similarities']) / len(data['similarities']) if data['similarities'] else 0.0,
                 'ranking': min(data['rankings']) if data['rankings'] else None,
@@ -661,6 +676,60 @@ class RAGRanker:
         match = re.search(r'(\d+(?:\.\d+)?)', str(text))
         return float(match.group(1)) if match else 0.0
     
+    def _calculate_test_data_score(self, product_data: Dict, quiz_response: Dict) -> float:
+        """
+        Calculate score based on test data benchmarks.
+        
+        Args:
+            product_data: Product data including chunks with test data
+            quiz_response: User's quiz response
+        
+        Returns:
+            Score from 0.0 to 1.0
+        """
+        # Check if this product has test data chunks
+        chunks = product_data.get('chunks', [])
+        test_data_chunks = [
+            chunk for chunk in chunks 
+            if chunk.metadata.get('source_type') == 'test_data'
+        ]
+        
+        if not test_data_chunks:
+            return 0.5  # Neutral score if no test data
+        
+        # Base score for having test data
+        score = 0.6
+        
+        # Bonus for relevant benchmarks based on use case
+        use_cases = quiz_response.get('use_case', [])
+        benchmark_bonus = 0.0
+        
+        for chunk in test_data_chunks:
+            benchmark_results = chunk.metadata.get('benchmark_results', {})
+            
+            # Check for relevant benchmarks
+            if 'gaming' in use_cases or 'video_editing' in use_cases:
+                # GPU/graphics performance matters
+                if any(key in benchmark_results for key in ['3dmark', 'gpu', 'graphics']):
+                    benchmark_bonus += 0.1
+            
+            if 'programming' in use_cases or 'video_editing' in use_cases:
+                # CPU performance matters
+                if any(key in benchmark_results for key in ['geekbench', 'cinebench', 'cpu']):
+                    benchmark_bonus += 0.1
+            
+            if 'portability' in quiz_response:
+                portability = quiz_response.get('portability', '')
+                if portability in ['light', 'somewhat']:
+                    # Battery and weight matter
+                    if any(key in benchmark_results for key in ['battery', 'weight']):
+                        benchmark_bonus += 0.1
+        
+        # Cap the bonus
+        benchmark_bonus = min(benchmark_bonus, 0.4)
+        
+        return min(score + benchmark_bonus, 1.0)
+    
     def _generate_explanation(
         self,
         product_name: str,
@@ -738,6 +807,34 @@ class RAGRanker:
             
             if spec_highlights:
                 explanation_parts.append(", ".join(spec_highlights))
+        
+        # Add test data highlights if available
+        chunks = product_data.get('chunks', [])
+        test_data_chunks = [
+            chunk for chunk in chunks 
+            if chunk.metadata.get('source_type') == 'test_data'
+        ]
+        
+        if test_data_chunks:
+            test_highlights = []
+            use_cases = quiz_response.get('use_case', [])
+            
+            for chunk in test_data_chunks:
+                benchmark_results = chunk.metadata.get('benchmark_results', {})
+                
+                # Mention relevant benchmarks
+                if ('gaming' in use_cases or 'video_editing' in use_cases) and '3dmark' in benchmark_results:
+                    test_highlights.append("tested gaming performance")
+                    break
+                elif ('programming' in use_cases or 'video_editing' in use_cases) and 'geekbench' in benchmark_results:
+                    test_highlights.append("verified CPU benchmarks")
+                    break
+                elif 'battery' in benchmark_results:
+                    test_highlights.append("battery tested")
+                    break
+            
+            if test_highlights:
+                explanation_parts.append(", ".join(test_highlights))
         
         # Add price context if available
         if config and config.get('price'):

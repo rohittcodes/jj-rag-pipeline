@@ -49,9 +49,9 @@ User Quiz → API → Retriever → Ranker → Recommendations
 
 ## Data Pipeline
 
-### Content Extraction
+### Content Sources
 
-**Source:** Sanity CMS articles (blogs, reviews, guides)
+**1. Sanity CMS (Blogs, Reviews, Guides)**
 
 **Process:**
 1. Fetch articles via Sanity API
@@ -63,6 +63,32 @@ User Quiz → API → Retriever → Ranker → Recommendations
 - `title`, `content_type`, `url`, `publish_date`
 - `tags` (use case tags: gaming, programming, etc.)
 - `author`, `updated_at`
+
+**2. YouTube Transcripts**
+
+**Process:**
+1. Fetch transcripts via YouTube API
+2. Extract metadata (title, video ID, publish date)
+3. Store in `youtube_content` table
+4. Chunk and embed transcripts
+
+**3. Test Data (Performance Benchmarks)**
+
+**Source:** AWS S3 (PDF files)
+
+**Process:**
+1. Query `configs` table for `test_data_pdf_key`
+2. Download PDFs from S3 using boto3
+3. Parse PDFs to extract benchmark sections
+4. Store in `test_data_chunks` table with `config_id` foreign key
+
+**Benchmark Categories:**
+- Gaming (FPS, settings, games tested)
+- Rendering (DaVinci Resolve, Premiere Pro)
+- Battery life (video playback, web browsing)
+- Synthetic benchmarks (Geekbench, Cinebench, 3DMark)
+
+**Current Status:** 229 configs synced with 2,126 benchmark chunks
 
 ### Chunking Strategy
 
@@ -123,17 +149,28 @@ def construct_query(quiz_response: Dict) -> str:
     return f"laptop recommendation {' '.join(parts)}"
 ```
 
-**SQL Query:**
+**SQL Query (Multi-Source UNION):**
 ```sql
-SELECT 
-    cc.id, cc.content_id, cc.chunk_text, cc.metadata,
-    jc.title, jc.url, jc.publish_date,
-    1 - (cc.embedding <=> %s::vector) as similarity
-FROM content_chunks cc
+-- Blogs
+SELECT ... FROM content_chunks cc
 JOIN josh_content jc ON cc.content_id = jc.id
 WHERE cc.embedding IS NOT NULL
-  AND (COALESCE(jc.publish_date, jc.updated_at::date) >= %s)
-ORDER BY cc.embedding <=> %s::vector
+
+UNION ALL
+
+-- YouTube
+SELECT ... FROM youtube_chunks yc
+JOIN youtube_content yt ON yc.content_id = yt.id
+WHERE yc.embedding IS NOT NULL
+
+UNION ALL
+
+-- Test Data
+SELECT ... FROM test_data_chunks td
+JOIN configs c ON td.config_id = c.config_id
+WHERE td.embedding IS NOT NULL
+
+ORDER BY similarity DESC
 LIMIT %s;
 ```
 
@@ -145,8 +182,14 @@ LIMIT %s;
 
 **Scoring Formula:**
 ```
-Total Score = (Josh Score × 0.7) + (Spec Score × 0.3)
+Total Score = (Josh Score × 0.60) + (Spec Score × 0.25) + (Test Data Score × 0.15)
 ```
+
+**Score Components:**
+
+1. **Josh Score (60%)** - Semantic relevance from blog/YouTube content
+2. **Spec Score (25%)** - Matching user requirements (RAM, storage, GPU, etc.)
+3. **Test Data Score (15%)** - Presence of performance benchmarks
 
 **Josh Score Components:**
 - Ranking position: 0-1 (1st place = 1.0, 10th = 0.1)

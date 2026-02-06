@@ -61,6 +61,11 @@ python cli.py sync --all
 python cli.py sync --sanity --all         # All Sanity articles
 python cli.py sync --sanity --id=<ID>     # Specific article
 python cli.py sync --products             # Product configs
+python cli.py sync --test-data            # Test data PDFs from S3
+
+# Test data options
+python cli.py sync --test-data --config-id=15  # Specific config
+python cli.py sync --test-data --limit=10      # Limit number of files
 ```
 
 ---
@@ -118,6 +123,18 @@ python cli.py ingest --embeddings --youtube-only
 ### Update Product Data
 ```bash
 python cli.py sync --products
+```
+
+### Sync Test Data (Performance Benchmarks)
+```bash
+# Sync all available test data PDFs
+python cli.py sync --test-data
+
+# Sync specific config
+python cli.py sync --test-data --config-id=15
+
+# Sync with limit
+python cli.py sync --test-data --limit=10
 ```
 
 ### Regenerate All Embeddings

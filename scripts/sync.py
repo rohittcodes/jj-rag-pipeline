@@ -27,6 +27,8 @@ from src.data_pipeline.sanity_client import SanityClient
 from src.data_pipeline.content_extractor import ContentExtractor
 from src.data_pipeline.embedding_generator import EmbeddingGenerator
 from src.rag.product_client import ConfigDatabaseClient
+from src.data_pipeline.s3_client import S3Client
+from src.data_pipeline.test_data_parser import TestDataParser
 
 load_dotenv()
 
@@ -280,12 +282,165 @@ def sync_products():
         return False
 
 
+def sync_test_data(config_id=None, limit=None):
+    """
+    Sync test data PDFs from S3, parse them, and create searchable chunks.
+    
+    Args:
+        config_id: Optional specific config ID to sync (otherwise sync all)
+        limit: Optional limit on number of configs to process
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    print("\n[*] Syncing test data from S3...")
+    
+    try:
+        # Initialize clients
+        s3_client = S3Client()
+        parser = TestDataParser()
+        embedding_gen = EmbeddingGenerator()
+        
+        # Connect to database
+        conn = psycopg2.connect(**DB_CONFIG)
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        
+        # Get configs that have test data PDFs
+        if config_id:
+            print(f"[*] Syncing test data for config ID: {config_id}")
+            cursor.execute("""
+                SELECT config_id, product_name, test_data_pdf_url, test_data_pdf_key
+                FROM configs
+                WHERE config_id = %s AND test_data_pdf_key IS NOT NULL
+            """, (config_id,))
+        else:
+            print(f"[*] Syncing test data for all configs with PDFs...")
+            query = """
+                SELECT config_id, product_name, test_data_pdf_url, test_data_pdf_key
+                FROM configs
+                WHERE test_data_pdf_key IS NOT NULL
+                ORDER BY config_id
+            """
+            if limit:
+                query += f" LIMIT {limit}"
+            cursor.execute(query)
+        
+        configs = cursor.fetchall()
+        print(f"[+] Found {len(configs)} configs with test data PDFs")
+        
+        if not configs:
+            print("[!] No configs with test data PDFs found")
+            return True
+        
+        # Create tmp directory for downloads
+        tmp_dir = Path('tmp/test_data')
+        tmp_dir.mkdir(parents=True, exist_ok=True)
+        
+        synced = 0
+        skipped = 0
+        errors = 0
+        
+        for config in configs:
+            config_id = config['config_id']
+            product_name = config['product_name']
+            s3_key = config['test_data_pdf_key']
+            
+            print(f"\n[*] Processing config {config_id}: {product_name}")
+            
+            try:
+                # Check if already synced
+                cursor.execute("""
+                    SELECT COUNT(*) as count FROM test_data_chunks
+                    WHERE config_id = %s
+                """, (config_id,))
+                existing_count = cursor.fetchone()['count']
+                
+                if existing_count > 0:
+                    print(f"[!] Skipping (already has {existing_count} chunks)")
+                    skipped += 1
+                    continue
+                
+                # Download PDF
+                local_path = tmp_dir / f"{config_id}.pdf"
+                print(f"    Downloading from S3: {s3_key}")
+                
+                if not s3_client.download_file(s3_key, local_path):
+                    print(f"[-] Failed to download PDF")
+                    errors += 1
+                    continue
+                
+                # Parse PDF
+                print(f"    Parsing PDF...")
+                test_data = parser.parse_pdf(local_path, product_name)
+                
+                # Create chunks
+                print(f"    Creating chunks...")
+                chunks = parser.create_chunks(test_data, config_id)
+                print(f"    Created {len(chunks)} chunks")
+                
+                # Generate embeddings for all chunks at once
+                chunk_texts = [chunk['chunk_text'] for chunk in chunks]
+                embeddings = embedding_gen.generate_embeddings(chunk_texts, show_progress=False)
+                
+                # Insert chunks with embeddings
+                for chunk, embedding in zip(chunks, embeddings):
+                    cursor.execute("""
+                        INSERT INTO test_data_chunks
+                        (config_id, test_type, test_description, chunk_text, 
+                         benchmark_results, embedding, source_file)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    """, (
+                        chunk['config_id'],
+                        chunk['test_type'],
+                        chunk['test_description'],
+                        chunk['chunk_text'],
+                        json.dumps(chunk['benchmark_results']),
+                        embedding,
+                        s3_key
+                    ))
+                
+                conn.commit()
+                
+                # Clean up downloaded file
+                local_path.unlink()
+                
+                synced += 1
+                print(f"[+] Successfully synced test data for config {config_id}")
+                
+            except Exception as e:
+                print(f"[-] Error processing config {config_id}: {e}")
+                import traceback
+                traceback.print_exc()
+                errors += 1
+                conn.rollback()
+                continue
+        
+        print(f"\n[*] Test data sync summary:")
+        print(f"    Synced: {synced}")
+        print(f"    Skipped: {skipped}")
+        print(f"    Errors: {errors}")
+        
+        cursor.close()
+        conn.close()
+        
+        return errors == 0
+        
+    except Exception as e:
+        print(f"[-] Error syncing test data: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+
 def main():
     parser = argparse.ArgumentParser(description='Sync data from external sources')
     parser.add_argument('--all', action='store_true', help='Sync everything')
     parser.add_argument('--sanity', action='store_true', help='Sync from Sanity CMS')
     parser.add_argument('--id', type=str, help='Specific article ID to sync (with --sanity)')
     parser.add_argument('--products', action='store_true', help='Sync product configs from production')
+    parser.add_argument('--test-data', action='store_true', help='Sync test data PDFs from S3')
+    parser.add_argument('--config-id', type=int, help='Specific config ID for test data sync')
+    parser.add_argument('--limit', type=int, help='Limit number of test data files to process')
     
     args = parser.parse_args()
     
@@ -307,6 +462,10 @@ def main():
     
     if args.all or args.products:
         if not sync_products():
+            success = False
+    
+    if args.all or args.test_data:
+        if not sync_test_data(config_id=args.config_id, limit=args.limit):
             success = False
     
     print("\n" + "="*60)

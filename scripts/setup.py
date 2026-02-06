@@ -109,15 +109,35 @@ def setup_main_database():
             );
         """)
         
+        # Create test_data_chunks table
+        print("[*] Creating test_data_chunks table...")
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS test_data_chunks (
+                id SERIAL PRIMARY KEY,
+                config_id INTEGER NOT NULL,
+                test_type VARCHAR(100),
+                test_description TEXT,
+                benchmark_results JSONB,
+                chunk_text TEXT NOT NULL,
+                embedding vector(768),
+                source_file TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                CONSTRAINT fk_config FOREIGN KEY (config_id) 
+                    REFERENCES configs(config_id) ON DELETE CASCADE
+            );
+        """)
+        
         # Create indexes
         print("[*] Creating indexes...")
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_josh_content_sanity_id ON josh_content(sanity_id);")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_josh_content_publish_date ON josh_content(publish_date);")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_josh_content_updated_at ON josh_content(updated_at);")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_content_chunks_content_id ON content_chunks(content_id);")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_configs_config_id ON configs(config_id);")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_configs_product_id ON configs(product_id);")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_rag_query_logs_created_at ON rag_query_logs(created_at);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_test_data_chunks_config_id ON test_data_chunks(config_id);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_test_data_chunks_test_type ON test_data_chunks(test_type);")
         
         conn.commit()
         print("[+] Main database schema created successfully!")
