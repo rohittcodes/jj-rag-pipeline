@@ -20,6 +20,18 @@ Complete technical reference for Josh's RAG Pipeline.
 
 ### System Flow
 
+**Option 1: Natural Language Prompt**
+```
+User Prompt → LLM Intent Extraction → Structured Quiz
+                                           ↓
+                                    API → Retriever → Ranker → Recommendations
+                                           ↓
+                                    (if low confidence)
+                                           ↓
+                                      Spec Fallback → Recommendations
+```
+
+**Option 2: Structured Quiz (Legacy)**
 ```
 User Quiz → API → Retriever → Ranker → Recommendations
                       ↓
@@ -30,11 +42,12 @@ User Quiz → API → Retriever → Ranker → Recommendations
 
 ### Components
 
-1. **Data Pipeline** - Ingests content from Sanity CMS, chunks, and generates embeddings
-2. **Retriever** - Semantic search using vector similarity
-3. **Ranker** - Scores products using Josh's context + specs
-4. **Spec Fallback** - Pure spec matching for low confidence queries
-5. **API** - FastAPI service with authentication and logging
+1. **Intent Extractor** - LLM-based extraction of structured intent from natural language
+2. **Data Pipeline** - Unified sync from multiple sources with auto-embedding
+3. **Retriever** - Semantic search using vector similarity across all sources
+4. **Ranker** - Multi-signal scoring (Josh context + Specs + Test data)
+5. **Spec Fallback** - Pure spec matching for low confidence queries
+6. **API** - FastAPI service with webhooks, polling, authentication, and logging
 
 ### Technology Stack
 

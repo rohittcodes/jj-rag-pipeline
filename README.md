@@ -47,6 +47,7 @@ API is now running at `http://localhost:8000`
 
 ## Features
 
+- ✅ **Natural Language Input** - Use free-text prompts or structured quiz (LLM intent extraction)
 - ✅ **Semantic Search** - Vector-based content retrieval using e5-base-v2 embeddings
 - ✅ **Multi-Source Content** - Unified search across blog articles, YouTube transcripts, and test data
 - ✅ **Smart Ranking** - Josh's context (60%) + Spec matching (25%) + Test data (15%)
@@ -54,14 +55,28 @@ API is now running at `http://localhost:8000`
 - ✅ **Spec Fallback** - Pure spec matching for low confidence queries
 - ✅ **API Authentication** - Optional Bearer token authentication
 - ✅ **Query Logging** - Monitor all recommendation requests
-- ✅ **Auto Sync** - Webhook integration with Sanity CMS
+- ✅ **Real-Time Sync** - Webhooks (Sanity, YouTube) + Periodic polling (Products every 5 min)
+- ✅ **Incremental Sync** - Cursor-based syncing (only fetch new/updated content)
 - ✅ **Date Filtering** - Only use recent, relevant content
 
 ---
 
 ## API Usage
 
-### Get Recommendations
+### Get Recommendations (Natural Language)
+
+**NEW: Use natural language prompts!**
+
+```bash
+curl -X POST http://localhost:8000/recommend/prompt \
+  -H "Content-Type: application/json" \
+  -d '{
+    "prompt": "I need a laptop for college programming and gaming, budget around $1500",
+    "top_k": 5
+  }'
+```
+
+### Get Recommendations (Structured Quiz)
 
 ```bash
 curl -X POST http://localhost:8000/recommend \
@@ -166,7 +181,9 @@ SELECT * FROM rag_query_logs ORDER BY created_at DESC LIMIT 10;
 - **PostgreSQL 15** with pgvector for vector search
 - **Redis** for caching
 - **Sentence Transformers** (e5-base-v2) for embeddings
+- **OpenAI GPT-3.5-turbo** for intent extraction
 - **Docker** for local development
+- **AWS S3** for test data storage
 
 ---
 

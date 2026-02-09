@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 from datetime import datetime
+import os
 
 
 class ContentExtractor:
@@ -182,9 +183,9 @@ class ContentExtractor:
         
         return ''.join(text_parts)
     
-    def chunk_content(self, content: str, chunk_size: int = 512, overlap: int = 50) -> List[Dict]:
+    def chunk_content(self, content: str, chunk_size: int = 1000, overlap: int = 200) -> List[Dict]:
         """
-        Split content into overlapping chunks for embedding.
+        Split content into overlapping chunks using recursive character splitting.
         
         Args:
             content: Text content to chunk
@@ -194,59 +195,94 @@ class ContentExtractor:
         Returns:
             List of chunk dictionaries with text and metadata
         """
-        # Try to split by paragraphs first
-        paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
-        
-        # If no paragraphs (e.g., YouTube transcripts), split by sentences
-        if len(paragraphs) == 1 and len(paragraphs[0]) > chunk_size:
-            # Split by sentences (periods followed by space or end of string)
-            import re
-            sentences = re.split(r'(?<=[.!?])\s+', content)
-            paragraphs = [s.strip() for s in sentences if s.strip()]
-        
-        chunks = []
-        current_chunk = []
-        current_length = 0
-        chunk_index = 0
-        
-        for para in paragraphs:
-            para_length = len(para)
+        if not content:
+            return []
             
-            # If adding this paragraph exceeds chunk_size, save current chunk
-            if current_length + para_length > chunk_size and current_chunk:
-                chunk_text = ' '.join(current_chunk)
-                chunks.append({
-                    'text': chunk_text,
-                    'index': chunk_index,
-                    'char_count': len(chunk_text)
-                })
-                chunk_index += 1
-                
-                # Keep last paragraph for overlap
-                if overlap > 0 and current_chunk:
-                    current_chunk = [current_chunk[-1]]
-                    current_length = len(current_chunk[0])
+        separators = ["\n\n", "\n", " ", ""]
+        
+        # Helper to split text recursively
+        def _split_text(text: str, separators: List[str]) -> List[str]:
+            final_chunks = []
+            separator = separators[-1]
+            new_separators = []
+            
+            for i, _s in enumerate(separators):
+                if _s == "":
+                    separator = _s
+                    break
+                if _s in text:
+                    separator = _s
+                    new_separators = separators[i+1:]
+                    break
+            
+            _splits = text.split(separator) if separator else list(text)
+            good_splits = []
+            
+            for s in _splits:
+                if len(s) < chunk_size:
+                    good_splits.append(s)
                 else:
-                    current_chunk = []
-                    current_length = 0
+                    if good_splits:
+                        merged_text = self._merge_splits(good_splits, separator, chunk_size, overlap)
+                        final_chunks.extend(merged_text)
+                        good_splits = []
+                    if not new_separators:
+                        final_chunks.append(s)
+                    else:
+                        other_splits = _split_text(s, new_separators)
+                        final_chunks.extend(other_splits)
             
-            current_chunk.append(para)
-            current_length += para_length
+            if good_splits:
+                merged_text = self._merge_splits(good_splits, separator, chunk_size, overlap)
+                final_chunks.extend(merged_text)
+                
+            return final_chunks
+
+        text_chunks = _split_text(content, separators)
         
-        # Add remaining content
-        if current_chunk:
-            chunk_text = ' '.join(current_chunk)
-            chunks.append({
-                'text': chunk_text,
-                'index': chunk_index,
-                'char_count': len(chunk_text)
-            })
+        # Format chunks with metadata
+        return [
+            {
+                'text': chunk,
+                'index': i,
+                'char_count': len(chunk)
+            }
+            for i, chunk in enumerate(text_chunks)
+        ]
+
+    def _merge_splits(self, splits: List[str], separator: str, chunk_size: int, overlap: int) -> List[str]:
+        """Merge smaller splits into chunks of max size with overlap."""
+        docs = []
+        current_doc = []
+        total = 0
+        separator_len = len(separator)
         
-        return chunks
-    
-    def extract_and_chunk(self, content: str, title: str = "", chunk_size: int = 512, overlap: int = 50) -> List[Dict]:
+        for d in splits:
+            _len = len(d)
+            if total + _len + (separator_len if current_doc else 0) > chunk_size:
+                if current_doc:
+                    doc = separator.join(current_doc)
+                    if doc.strip():
+                        docs.append(doc)
+                    
+                    # Keep valid overlap
+                    while total > overlap or (total + _len + separator_len > chunk_size and total > 0):
+                        total -= len(current_doc[0]) + separator_len
+                        current_doc.pop(0)
+            
+            current_doc.append(d)
+            total += _len + (separator_len if len(current_doc) > 1 else 0)
+            
+        if current_doc:
+            doc = separator.join(current_doc)
+            if doc.strip():
+                docs.append(doc)
+                
+        return docs
+
+    def extract_and_chunk(self, content: str, title: str = "", chunk_size: int = 1000, overlap: int = 200) -> List[Dict]:
         """
-        Extract and chunk content in one step (convenience method).
+        Extract and chunk content.
         
         Args:
             content: Raw text content
@@ -261,20 +297,14 @@ class ContentExtractor:
     
     def extract_product_mentions(self, text: str) -> List[str]:
         """
-        Extract product mentions from text using regex patterns.
-        
-        Args:
-            text: Text to extract product mentions from
-            
-        Returns:
-            List of product name strings
+        Extract product mentions from text using regex patterns (Fallback).
         """
         import re
         
         # Common laptop product patterns
         patterns = [
-            r'(?:MacBook|ThinkPad|XPS|Spectre|Envy|Pavilion|IdeaPad|Yoga|VivoBook|ZenBook|ROG|TUF|Legion|Nitro|Aspire|Swift|Predator|Victus|Omen|ProBook|EliteBook|Latitude|Precision|Surface|Galaxy Book|Gram|Blade|Aero|Creator|Prestige|Modern|Summit|Stealth|Scar|Zephyrus|Flow|Strix|Raider|Vector|Katana|Cyborg|Pulse|Bravo|Alpha|Delta|Crosshair|Slim|Pro|Air|Max|Plus|Ultra)\s+(?:\w+\s+)?(?:\d+[\w\s]*)',
-            r'(?:HP|Dell|Lenovo|Asus|Acer|MSI|Razer|Apple|Samsung|LG|Microsoft|Gigabyte|Alienware)\s+(?:\w+\s+)?(?:\d+[\w\s]*)',
+            r'(?:MacBook|ThinkPad|XPS|Spectre|Envy|Pavilion|IdeaPad|Yoga|VivoBook|ZenBook|ROG|TUF|Legion|Nitro|Aspire|Swift|Predator|Victus|Omen|ProBook|EliteBook|Latitude|Precision|Surface|Galaxy Book|Gram|Blade|Aero|Creator|Prestige|Modern|Summit|Stealth|Scar|Zephyrus|Flow|Strix|Raider|Vector|Katana|Cyborg|Pulse|Bravo|Alpha|Delta|Crosshair|Slim|Pro|Air|Max|Plus|Ultra)\s+(?:\w+\s+)?(?:\d+(?:[a-zA-Z0-9-]+)?)',
+            r'(?:HP|Dell|Lenovo|Asus|Acer|MSI|Razer|Apple|Samsung|LG|Microsoft|Gigabyte|Alienware)\s+(?:\w+\s+)?(?:\d+(?:[a-zA-Z0-9-]+)?)',
         ]
         
         mentions = []
@@ -282,9 +312,72 @@ class ContentExtractor:
             matches = re.findall(pattern, text, re.IGNORECASE)
             mentions.extend(matches)
         
-        # Clean and deduplicate
-        mentions = list(set([m.strip() for m in mentions if m.strip()]))
-        return mentions
+        return list(set([m.strip() for m in mentions if m.strip()]))
+
+    def extract_product_mentions_llm(self, text: str, openai_client=None) -> List[str]:
+        """
+        Extract product mentions using LLM for higher accuracy.
+        
+        Args:
+            text: Text chunk
+            openai_client: Initialized OpenAI client (optional, will create one if None)
+            
+        Returns:
+            List of product names
+        """
+        from openai import OpenAI
+        import os
+        
+        if not text or len(text) < 10:
+            return []
+            
+        client = openai_client
+        if not client:
+            api_key = os.getenv('OPENAI_API_KEY')
+            if not api_key:
+                # Fallback silently or log if needed, but user wants LLM. 
+                # If key missing, regex is better than nothing.
+                return self.extract_product_mentions(text)
+            client = OpenAI(api_key=api_key)
+            
+        system_prompt = """You are a precise entity extractor. 
+Extract all distinct laptop product names mentioned in the text.
+Return JSON list of strings.
+Example: ["MacBook Pro 14", "Dell XPS 13"]
+Rules:
+- Only extract LAPTOP names
+- Include model numbers and series (e.g., "Lenovo Legion 7i", not just "Lenovo")
+- Filter out general terms like "my laptop" or "the computer"
+- If no products found, return []
+"""
+        
+        try:
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": text}
+                ],
+                temperature=0.0
+            )
+            
+            content = response.choices[0].message.content.strip()
+            # Clean markdown if present
+            if content.startswith("```json"):
+                content = content.replace("```json", "").replace("```", "").strip()
+            elif content.startswith("```"):
+                content = content.replace("```", "").strip()
+            
+            import json
+            products = json.loads(content)
+            
+            if isinstance(products, list):
+                return [str(p) for p in products]
+            return []
+            
+        except Exception as e:
+            print(f"[-] LLM extraction error: {e}")
+            return self.extract_product_mentions(text)  # Fallback
 
 
 def extract_all_blogs(blogs_dir: Path) -> List[Dict[str, Any]]:

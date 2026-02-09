@@ -10,6 +10,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.rag.retriever import RAGRetriever
 from src.rag.ranker import RAGRanker
+from src.rag.intent_extractor import IntentExtractor
 from typing import List, Dict, Tuple
 import json
 
@@ -20,34 +21,33 @@ class RAGEvaluator:
     def __init__(self):
         self.retriever = RAGRetriever(top_k=15, verbose=False)
         self.ranker = RAGRanker(josh_weight=0.7, spec_weight=0.3, verbose=False)
+        
+        # Initialize intent extractor (optional - will skip LLM tests if not available)
+        try:
+            self.intent_extractor = IntentExtractor(verbose=False)
+            self.llm_available = True
+        except ValueError:
+            print("[!] OpenAI API key not found - skipping LLM prompt tests")
+            self.llm_available = False
+            self.intent_extractor = None
+        
         self.test_cases = self._load_test_cases()
         
     def _load_test_cases(self) -> List[Dict]:
         """Load diverse test cases covering different user personas."""
         return [
+            # Natural language prompt tests (require LLM)
             {
-                "name": "Budget Student (Programming)",
-                "quiz": {
-                    "profession": ["Student"],
-                    "use_case": ["programming"],
-                    "budget": ["budget"],
-                    "portability": "light",
-                    "screen_size": ["13-14 inches"]
-                },
+                "name": "Computer Science Student - AutoCAD",
+                "prompt": "Hey, I want a laptop which could help me in my computer science degree. I will be practicing AutoCAD on it.",
                 "expectations": {
                     "requires_results": True,
                     "requires_config_ids": True
                 }
             },
             {
-                "name": "Professional Video Editor (Premium)",
-                "quiz": {
-                    "profession": ["Content Creator"],
-                    "use_case": ["video_editing"],
-                    "budget": ["premium"],
-                    "portability": "somewhat",
-                    "screen_size": ["15-16 inches"]
-                },
+                "name": "Gaming Enthusiast",
+                "prompt": "Looking for a gaming laptop that can run AAA titles at high settings. Budget isn't a huge concern, but I want the best performance possible.",
                 "expectations": {
                     "requires_results": True,
                     "requires_config_ids": True,
@@ -55,84 +55,35 @@ class RAGEvaluator:
                 }
             },
             {
-                "name": "Hardcore Gamer (Performance)",
-                "quiz": {
-                    "profession": ["Gamer"],
-                    "use_case": ["gaming"],
-                    "budget": ["value", "premium"],
-                    "portability": "performance",
-                    "screen_size": ["15-16 inches", "17+ inches"]
-                },
-                "expectations": {
-                    "requires_results": True,
-                    "requires_config_ids": True,
-                    "requires_gpu": True
-                }
-            },
-            {
-                "name": "Business Professional (Portability)",
-                "quiz": {
-                    "profession": ["Business Professional"],
-                    "use_case": ["general"],
-                    "budget": ["value", "premium"],
-                    "portability": "light",
-                    "screen_size": ["13-14 inches"]
-                },
+                "name": "Business Traveler",
+                "prompt": "I travel a lot for work and need something lightweight for emails, presentations, and video calls. Battery life is crucial.",
                 "expectations": {
                     "requires_results": True,
                     "requires_config_ids": True
-                }
-            },
-            {
-                "name": "Data Science Student (Balanced)",
-                "quiz": {
-                    "profession": ["Student"],
-                    "use_case": ["programming", "video_editing"],
-                    "budget": ["value"],
-                    "portability": "somewhat",
-                    "screen_size": ["15-16 inches"]
-                },
-                "expectations": {
-                    "requires_results": True,
-                    "requires_config_ids": True
-                }
-            },
-            {
-                "name": "Intel Panther Lake User (YouTube Content Test)",
-                "quiz": {
-                    "profession": ["General"],
-                    "use_case": ["general"],
-                    "budget": ["value"],
-                    "portability": "somewhat",
-                    "screen_size": ["14 inches"]
-                },
-                "expectations": {
-                    "requires_results": True,
-                    "requires_config_ids": True,
-                    "expects_youtube": True  # This test should retrieve YouTube content
                 }
             }
         ]
     
     def evaluate_all(self) -> Dict:
         """Run all test cases and return comprehensive results."""
-        print("=" * 80)
-        print("RAG PIPELINE EVALUATION")
-        print("=" * 80)
-        print()
+        print("=" * 80, flush=True)
+        print("RAG PIPELINE EVALUATION", flush=True)
+        print("=" * 80, flush=True)
+        print(flush=True)
         
         results = {
             "total_tests": len(self.test_cases),
             "passed": 0,
             "failed": 0,
+            "skipped": 0,
             "test_results": [],
             "total_blog_chunks": 0,
             "total_youtube_chunks": 0
         }
         
         for i, test_case in enumerate(self.test_cases, 1):
-            print(f"Test {i}/{len(self.test_cases)}: {test_case['name']}")
-            print("-" * 80)
+            print(f"\nTest {i}/{len(self.test_cases)}: {test_case['name']}", flush=True)
+            print("-" * 80, flush=True)
             
             test_result = self._evaluate_test_case(test_case)
             results["test_results"].append(test_result)
@@ -141,14 +92,20 @@ class RAGEvaluator:
                 results["total_blog_chunks"] += test_result["source_stats"]["blog"]
                 results["total_youtube_chunks"] += test_result["source_stats"]["youtube"]
             
-            if test_result["passed"]:
+            if test_result.get("skipped"):
+                results["skipped"] += 1
+                print(f"[!] SKIPPED", flush=True)
+            elif test_result["passed"]:
                 results["passed"] += 1
-                print(f"[+] PASSED")
+                print(f"[+] PASSED", flush=True)
             else:
                 results["failed"] += 1
-                print(f"[-] FAILED")
+                print(f"[-] FAILED", flush=True)
+                if test_result.get("issues"):
+                    for issue in test_result["issues"]:
+                        print(f"    - {issue}", flush=True)
             
-            print()
+            print(flush=True)
         
         # Summary
         print("=" * 80)
@@ -157,6 +114,8 @@ class RAGEvaluator:
         print(f"Total Tests: {results['total_tests']}")
         print(f"Passed: {results['passed']} ({results['passed']/results['total_tests']*100:.1f}%)")
         print(f"Failed: {results['failed']} ({results['failed']/results['total_tests']*100:.1f}%)")
+        if results['skipped'] > 0:
+            print(f"Skipped: {results['skipped']} ({results['skipped']/results['total_tests']*100:.1f}%)")
         print()
         
         # Source distribution summary
@@ -183,17 +142,46 @@ class RAGEvaluator:
     def _evaluate_test_case(self, test_case: Dict) -> Dict:
         """Evaluate a single test case."""
         name = test_case["name"]
-        quiz = test_case["quiz"]
         expectations = test_case["expectations"]
         
+        # Check if this is a prompt-based test
+        if "prompt" in test_case:
+            if not self.llm_available:
+                return {
+                    "test_name": name,
+                    "passed": False,
+                    "issues": ["LLM not available - skipping prompt test"],
+                    "recommendations": [],
+                    "skipped": True
+                }
+            
+            prompt = test_case["prompt"]
+            print(f"  Prompt: \"{prompt}\"", flush=True)
+            
+            # Extract intent using LLM
+            print(f"  [*] Extracting intent...", flush=True)
+            try:
+                quiz = self.intent_extractor.extract_intent(prompt)
+                print(f"  [+] Extracted: profession={quiz.get('profession')}, use_case={quiz.get('use_case')}", flush=True)
+            except Exception as e:
+                return {
+                    "test_name": name,
+                    "passed": False,
+                    "issues": [f"Intent extraction failed: {str(e)}"],
+                    "recommendations": []
+                }
+        else:
+            # Legacy quiz-based test
+            quiz = test_case["quiz"]
+        
         # Run RAG pipeline
+        print(f"  [*] Retrieving content...", flush=True)
         try:
-            # Use custom query for YouTube content test
-            if "Intel Panther Lake" in name:
-                retrieval_results = self.retriever.retrieve(query="Intel Panther Lake ThinkPad Gen 1 integrated GPU", top_k=15)
-            else:
-                retrieval_results = self.retriever.retrieve(quiz_response=quiz, top_k=15)
+            retrieval_results = self.retriever.retrieve(quiz_response=quiz, top_k=15)
+            print(f"  [+] Retrieved {len(retrieval_results)} chunks", flush=True)
+            print(f"  [*] Ranking recommendations...", flush=True)
             recommendations = self.ranker.rank(retrieval_results, quiz, top_k=5)
+            print(f"  [+] Generated {len(recommendations)} recommendations", flush=True)
         except Exception as e:
             return {
                 "test_name": name,
@@ -238,10 +226,12 @@ class RAGEvaluator:
             gpu_found = False
             for rec in recommendations[:3]:
                 if rec.config_id:
-                    config = self.ranker.config_client.get_config_by_id(rec.config_id)
-                    if config and config.get('specs'):
-                        gpu = config['specs'].get('Dedicated Graphics (Yes/No)')
-                        if gpu == 'Yes':
+                    # Fetch config with properties
+                    config = self.ranker.config_client.get_config_by_id(rec.config_id, include_properties=True)
+                    if config:
+                        # Use client's extraction logic
+                        specs = self.ranker.config_client._extract_specs_from_config(config)
+                        if specs.get('has_gpu'):
                             gpu_found = True
                             break
             
@@ -269,22 +259,25 @@ class RAGEvaluator:
         for i, rec in enumerate(recommendations, 1):
             print(f"  {i}. {rec.product_name} (confidence: {rec.confidence_score:.3f})")
             if rec.config_id:
-                config = self.ranker.config_client.get_config_by_id(rec.config_id)
+                # Fetch config with properties for display
+                config = self.ranker.config_client.get_config_by_id(rec.config_id, include_properties=True)
                 if config:
+                    # Use client's extraction logic
                     specs = []
+                    extracted = self.ranker.config_client._extract_specs_from_config(config)
+                    
                     if config.get('price'):
                         specs.append(f"${int(float(config['price']))}")
-                    if config.get('specs'):
-                        ram = config['specs'].get('Memory Amount', '')
-                        if ram:
-                            specs.append(ram)
-                        gpu = config['specs'].get('Dedicated Graphics (Yes/No)')
-                        if gpu == 'Yes':
-                            specs.append("GPU")
+                    
+                    if extracted.get('ram_gb'):
+                        specs.append(f"{extracted['ram_gb']}GB RAM")
+                        
+                    if extracted.get('has_gpu'):
+                        specs.append("GPU")
                     if specs:
                         print(f"     {', '.join(specs)}")
         
-        return {
+        result = {
             "test_name": name,
             "passed": len(issues) == 0,
             "issues": issues,
@@ -298,6 +291,13 @@ class RAGEvaluator:
             ],
             "source_stats": {"blog": blog_count, "youtube": youtube_count}
         }
+        
+        # Include prompt if this was a prompt-based test
+        if "prompt" in test_case:
+            result["prompt"] = test_case["prompt"]
+            result["extracted_quiz"] = quiz
+        
+        return result
     
     def test_retrieval_quality(self):
         """Test retrieval component specifically."""

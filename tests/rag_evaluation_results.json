@@ -1,205 +1,180 @@
 {
-  "total_tests": 6,
-  "passed": 6,
-  "failed": 0,
+  "total_tests": 3,
+  "passed": 2,
+  "failed": 1,
+  "skipped": 0,
   "test_results": [
     {
-      "test_name": "Budget Student (Programming)",
+      "test_name": "Computer Science Student - AutoCAD",
       "passed": true,
       "issues": [],
       "recommendations": [
         {
-          "name": "MacBook Air 13 Apple",
-          "confidence": 0.8272435446580251,
-          "config_id": 641
+          "name": "Surface Laptop 7 13 Microsoft",
+          "confidence": 0.5880638866462642,
+          "config_id": 84
         },
         {
-          "name": "Thinkpad X1 Carbon 14 Lenovo",
-          "confidence": 0.8095014570156732,
-          "config_id": 73
+          "name": "MacBook Air 15 Apple",
+          "confidence": 0.5844612669272464,
+          "config_id": 271
         },
-        {
-          "name": "Yoga 7 2-in-1 14 Lenovo",
-          "confidence": 0.7823953226333484,
-          "config_id": 534
-        },
-        {
-          "name": "Surface Laptop 13 Microsoft",
-          "confidence": 0.7823953226333484,
-          "config_id": 547
-        },
-        {
-          "name": "XPS 13 Dell",
-          "confidence": 0.7818401054437896,
-          "config_id": 545
-        }
-      ],
-      "source_stats": {
-        "blog": 15,
-        "youtube": 0
-      }
-    },
-    {
-      "test_name": "Professional Video Editor (Premium)",
-      "passed": true,
-      "issues": [],
-      "recommendations": [
         {
           "name": "MacBook Pro 14 Apple",
-          "confidence": 0.9057336043258671,
+          "confidence": 0.5130638866462642,
           "config_id": 186
         },
         {
           "name": "Blade 16 Razer",
-          "confidence": 0.8165669376592005,
+          "confidence": 0.5130638866462642,
           "config_id": 526
         },
         {
           "name": "MacBook Pro 16 Apple",
-          "confidence": 0.8012743457158406,
+          "confidence": 0.5103322837750117,
           "config_id": 209
-        },
-        {
-          "name": "MacBook Air 15 Refurbished Apple",
-          "confidence": 0.7895376340548197,
-          "config_id": 156
-        },
-        {
-          "name": "ThinkPad X9 15 Aura Edition Lenovo",
-          "confidence": 0.7895376340548197,
-          "config_id": 170
         }
       ],
       "source_stats": {
-        "blog": 15,
-        "youtube": 0
+        "blog": 12,
+        "youtube": 3
+      },
+      "prompt": "Hey, I want a laptop which could help me in my computer science degree. I will be practicing AutoCAD on it.",
+      "extracted_quiz": {
+        "profession": [
+          "student"
+        ],
+        "use_case": [
+          "school",
+          "engineering"
+        ],
+        "budget": [
+          "value"
+        ],
+        "portability": "balanced",
+        "screen_size": [
+          "15-16 inches"
+        ],
+        "extracted_requirements": {
+          "min_ram": 16,
+          "min_storage": 512,
+          "needs_gpu": true,
+          "other_notes": "needs to run AutoCAD for computer science coursework"
+        }
       }
     },
     {
-      "test_name": "Hardcore Gamer (Performance)",
+      "test_name": "Gaming Enthusiast",
       "passed": true,
       "issues": [],
       "recommendations": [
         {
           "name": "Blade 16 Razer",
-          "confidence": 0.8608903872041368,
+          "confidence": 1.0,
           "config_id": 526
         },
         {
-          "name": "Thin 15.6 MSI",
-          "confidence": 0.8115250996664228,
-          "config_id": 479
+          "name": "Legion 7i 16 Lenovo",
+          "confidence": 1.0,
+          "config_id": 593
         },
         {
-          "name": "Nitro V 15 Acer",
-          "confidence": 0.8115250996664228,
-          "config_id": 250
+          "name": "ROG Zephyrus G16 Asus",
+          "confidence": 1.0,
+          "config_id": 337
         },
-        {
-          "name": "Aero X16 Gigabyte",
-          "confidence": 0.8113100329822325,
-          "config_id": 426
-        },
-        {
-          "name": "Hydroc 16 Eluktronics",
-          "confidence": 0.8105720123663357,
-          "config_id": 567
-        }
-      ],
-      "source_stats": {
-        "blog": 15,
-        "youtube": 0
-      }
-    },
-    {
-      "test_name": "Business Professional (Portability)",
-      "passed": true,
-      "issues": [],
-      "recommendations": [
         {
           "name": "MacBook Pro 14 Apple",
-          "confidence": 0.7392328328966496,
+          "confidence": 0.5142956180527548,
           "config_id": 186
         },
         {
           "name": "Surface Laptop 7 13 Microsoft",
-          "confidence": 0.7392328328966496,
+          "confidence": 0.5142956180527548,
           "config_id": 84
-        },
-        {
-          "name": "XPS 13 Dell",
-          "confidence": 0.7383874271313361,
-          "config_id": 168
-        },
-        {
-          "name": "Zenbook S 14 (Lunar Lake) Asus",
-          "confidence": 0.7383874271313361,
-          "config_id": 11
-        },
-        {
-          "name": "ThinkPad X1 Carbon 14 Lenovo",
-          "confidence": 0.7366153595814325,
-          "config_id": 1
-        }
-      ],
-      "source_stats": {
-        "blog": 15,
-        "youtube": 0
-      }
-    },
-    {
-      "test_name": "Data Science Student (Balanced)",
-      "passed": true,
-      "issues": [],
-      "recommendations": [
-        {
-          "name": "MacBook Pro 14 Apple",
-          "confidence": 0.8277784714268728,
-          "config_id": 186
-        },
-        {
-          "name": "Blade 16 Razer",
-          "confidence": 0.8136118047602062,
-          "config_id": 526
-        },
-        {
-          "name": "MacBook Air 15 Apple",
-          "confidence": 0.8108923057715097,
-          "config_id": 109
-        },
-        {
-          "name": "Aero X16 Gigabyte",
-          "confidence": 0.8108727078589562,
-          "config_id": 425
-        },
-        {
-          "name": "MacBook Pro 16 Apple",
-          "confidence": 0.7141812882820764,
-          "config_id": 209
-        }
-      ],
-      "source_stats": {
-        "blog": 15,
-        "youtube": 0
-      }
-    },
-    {
-      "test_name": "Intel Panther Lake User (YouTube Content Test)",
-      "passed": true,
-      "issues": [],
-      "recommendations": [
-        {
-          "name": "Thinkpad X1 Carbon 14 Lenovo",
-          "confidence": 0.6106905821959178,
-          "config_id": 491
         }
       ],
       "source_stats": {
         "blog": 11,
         "youtube": 4
+      },
+      "prompt": "Looking for a gaming laptop that can run AAA titles at high settings. Budget isn't a huge concern, but I want the best performance possible.",
+      "extracted_quiz": {
+        "profession": [
+          "gamer"
+        ],
+        "use_case": [
+          "gaming"
+        ],
+        "budget": [
+          "flagship"
+        ],
+        "extracted_requirements": {
+          "min_ram": 16,
+          "needs_gpu": true
+        }
+      }
+    },
+    {
+      "test_name": "Business Traveler",
+      "passed": false,
+      "issues": [
+        "Blade 14 Razer: Missing or too short explanation"
+      ],
+      "recommendations": [
+        {
+          "name": "Blade 14 Razer",
+          "confidence": 0.6266287787247333,
+          "config_id": 476
+        },
+        {
+          "name": "ThinkPad X9 14 Aura Edition Lenovo",
+          "confidence": 0.6098165718714396,
+          "config_id": 230
+        },
+        {
+          "name": "Surface Laptop 7 13 Microsoft",
+          "confidence": 0.5890872996501507,
+          "config_id": 84
+        },
+        {
+          "name": "MacBook Pro 14 Apple",
+          "confidence": 0.5140872996501508,
+          "config_id": 186
+        },
+        {
+          "name": "Blade 16 Razer",
+          "confidence": 0.5140872996501508,
+          "config_id": 526
+        }
+      ],
+      "source_stats": {
+        "blog": 11,
+        "youtube": 4
+      },
+      "prompt": "I travel a lot for work and need something lightweight for emails, presentations, and video calls. Battery life is crucial.",
+      "extracted_quiz": {
+        "profession": [
+          "corporate"
+        ],
+        "use_case": [
+          "basic_use"
+        ],
+        "budget": [
+          "value"
+        ],
+        "portability": "ultraportable",
+        "screen_size": [
+          "14 inches"
+        ],
+        "extracted_requirements": {
+          "min_ram": 8,
+          "needs_long_battery": true,
+          "other_notes": "needs lightweight laptop for travel, good for emails, presentations, and video calls"
+        }
       }
     }
   ],
-  "total_blog_chunks": 86,
-  "total_youtube_chunks": 4
+  "total_blog_chunks": 34,
+  "total_youtube_chunks": 11
 }

@@ -92,12 +92,31 @@ class RAGRanker:
         self.josh_weight = josh_weight
         self.spec_weight = spec_weight
         self.test_data_weight = test_data_weight
+        self.manual_tag_weight = 0.5  # Boost for manual tag match
+        
         self.use_ec2_db = use_ec2_db
         self.ec2_db_config = ec2_db_config
         self.verbose = verbose
         
+        # Mapping from quiz use_case strings to DB use_case_ids
+        self.manual_use_case_mapping = {
+            'student': [1],          # Student
+            'gaming': [2],           # Gamer
+            'video_editing': [3, 8], # Video Editor, Graphic Designer
+            'programming': [4, 5, 12], # Data Scientist, Programmer, Engineer
+            'content_creation': [3, 8, 10, 11], # Editor, Designer, Photo, Audio
+            'business': [9, 14],     # Trader, Corporate
+            'general': [6]           # Everyday
+        }
+        
         # Initialize config database client (uses local synced configs)
-        self.config_client = ConfigDatabaseClient()
+        try:
+            self.config_client = ConfigDatabaseClient()
+        except ValueError as e:
+            if verbose:
+                print(f"[!] Warning: ConfigDatabaseClient not available: {e}")
+                print(f"[!] Ranker will work with limited functionality")
+            self.config_client = None
         
         # Local database for content
         self.db_config = {
@@ -144,68 +163,244 @@ class RAGRanker:
         if self.verbose:
             print(f"\n[*] Ranking products from {len(retrieval_results)} chunks...")
         
-        # Step 1: Extract products from chunks
-        products = self._extract_products(retrieval_results)
+        # Step 1: Group chunks by config_id (no DB calls yet)
+        product_candidates = self._group_chunks_by_config(retrieval_results)
         if self.verbose:
-            print(f"[+] Extracted {len(products)} unique products")
+            print(f"[+] Found {len(product_candidates)} unique product candidates")
         
-        # Step 2: Score each product
+        # Step 2: Calculate preliminary scores (chunk-based only, no DB)
+        scored_candidates = []
+        for candidate in product_candidates:
+            # Calculate Josh score (based on chunk content)
+            josh_score = self._calculate_josh_score_from_chunks(candidate)
+            
+            # Calculate test data score (based on chunk content)
+            test_data_score = self._calculate_test_data_score_from_chunks(candidate, quiz_response)
+            
+            # Preliminary score (no spec score yet - requires DB)
+            preliminary_score = (josh_score * self.josh_weight) + (test_data_score * self.test_data_weight)
+            
+            scored_candidates.append({
+                'candidate': candidate,
+                'josh_score': josh_score,
+                'test_data_score': test_data_score,
+                'preliminary_score': preliminary_score
+            })
+        
+        # Step 3: Sort by preliminary score and take top candidates
+        scored_candidates.sort(key=lambda x: x['preliminary_score'], reverse=True)
+        top_candidates = scored_candidates[:top_k * 2]  # Get 2x to have buffer for spec filtering
+        
+        if self.verbose:
+            print(f"[+] Selected top {len(top_candidates)} candidates for detailed scoring")
+        
+        # Step 4: Batch fetch ALL config details (names, use cases, properties) for top candidates
+        config_ids = [c['candidate']['config_id'] for c in top_candidates if c['candidate'].get('config_id')]
+        
+        # Batch fetch all data in parallel (conceptually)
+        product_names = self.config_client.get_product_names_batch(config_ids) if config_ids else {}
+        use_case_map = self.config_client.get_config_use_cases(config_ids) if config_ids else {}
+        
+        # KEY OPTIMIZATION: Fetch full config objects with properties in one batch query
+        # This prevents N+1 queries inside the loop below
+        config_map = self.config_client.get_configs_by_ids(config_ids, include_properties=True) if config_ids else {}
+        
+        if self.verbose and config_ids:
+            print(f"[*] Fetched names for {len(product_names)} configs")
+            print(f"[*] Fetched manual tags for {len(use_case_map)} configs")
+            print(f"[*] Fetched full details for {len(config_map)} configs")
+        
+        # Step 5: Final scoring with spec matching AND manual tags (only for top candidates)
         recommendations = []
-        for key, product_data in products.items():
-            product_name = product_data['product_name']
+        for scored in top_candidates:
+            candidate = scored['candidate']
+            config_id = candidate.get('config_id')
+            product_name = product_names.get(config_id, f"Config {config_id}") if config_id else candidate.get('product_name', 'Unknown')
             
-            # Calculate Josh score
-            josh_score = self._calculate_josh_score(product_data)
+            # Get full config object from batch map
+            config = config_map.get(config_id) if config_id else None
             
-            # Calculate spec score (with real config data)
-            config_id = product_data.get('config_id')
-            spec_score = self._calculate_spec_score(product_name, quiz_response, config_id)
+            # Calculate spec score (uses pre-fetched config to avoid DB hits)
+            spec_score = self._calculate_spec_score(product_name, quiz_response, config_id, config_obj=config)
             
-            # Calculate test data score
-            test_data_score = self._calculate_test_data_score(product_data, quiz_response)
+            # Calculate manual tag score
+            manual_score = 0.0
+            if config_id and config_id in use_case_map:
+                manual_score = self._calculate_manual_use_case_score(use_case_map[config_id], quiz_response)
             
-            # Combined score
-            confidence_score = (josh_score * self.josh_weight) + (spec_score * self.spec_weight) + (test_data_score * self.test_data_weight)
+            # Final combined score
+            confidence_score = (scored['josh_score'] * self.josh_weight) + \
+                             (spec_score * self.spec_weight) + \
+                             (scored['test_data_score'] * self.test_data_weight) + \
+                             (manual_score * self.manual_tag_weight)
+            
+            # Normalize to max 1.0
+            confidence_score = min(1.0, confidence_score)
             
             # Generate explanation
-            explanation = self._generate_explanation(
-                product_name, product_data, quiz_response
+            explanation = self._generate_explanation_from_candidate(
+                product_name, candidate, quiz_response
             )
             
             # Create recommendation
             recommendation = ProductRecommendation(
                 product_name=product_name,
-                config_id=product_data.get('config_id'),
+                config_id=config_id,
                 confidence_score=confidence_score,
-                josh_score=josh_score,
+                josh_score=scored['josh_score'],
                 spec_score=spec_score,
-                test_data_score=test_data_score,
-                ranking=product_data.get('ranking'),
-                recommendation_type=product_data.get('recommendation_type', 'mentioned'),
-                josh_quote=product_data.get('josh_quote'),
-                source_article=product_data['source_article'],
-                source_url=product_data['source_url'],
-                section_title=product_data.get('section_title'),
+                test_data_score=scored['test_data_score'],
+                ranking=candidate.get('ranking'),
+                recommendation_type=candidate.get('recommendation_type', 'mentioned'),
+                josh_quote=candidate.get('josh_quote'),
+                source_article=candidate['source_article'],
+                source_url=candidate['source_url'],
+                section_title=candidate.get('section_title'),
                 explanation=explanation,
-                pros=product_data.get('pros', []),
-                cons=product_data.get('cons', []),
-                who_is_this_for=product_data.get('who_is_this_for'),
-                similarity=product_data['max_similarity'],
-                chunk_ids=product_data['chunk_ids']
+                pros=candidate.get('pros', []),
+                cons=candidate.get('cons', []),
+                who_is_this_for=candidate.get('who_is_this_for'),
+                similarity=candidate['max_similarity'],
+                chunk_ids=candidate['chunk_ids']
             )
             
             recommendations.append(recommendation)
         
-        # Step 3: Sort by confidence score
+        # Step 6: Final sort by complete confidence score
         recommendations.sort(key=lambda x: x.confidence_score, reverse=True)
         
-        if self.verbose:
-            print(f"[+] Ranked {len(recommendations)} products")
-            if recommendations:
-                print(f"    - Top recommendation: {recommendations[0].product_name}")
-                print(f"    - Confidence: {recommendations[0].confidence_score:.3f}")
+        # Step 7: Deduplicate by product name (keep highest scoring config)
+        seen_products = set()
+        unique_recommendations = []
         
-        return recommendations[:top_k]
+        for rec in recommendations:
+            # Normalize product name for comparison
+            name_key = rec.product_name.lower().strip()
+            
+            # Simple heuristic to handle slight variations (e.g. "Blade 16" vs "Razer Blade 16")
+            # If we've already seen a product that contains or is contained by this name, skip
+            is_duplicate = False
+            for seen in seen_products:
+                if name_key in seen or seen in name_key:
+                    is_duplicate = True
+                    break
+            
+            if not is_duplicate:
+                unique_recommendations.append(rec)
+                seen_products.add(name_key)
+        
+        if self.verbose:
+            print(f"[+] Ranked {len(unique_recommendations)} unique products (deduplicated from {len(recommendations)})")
+            if unique_recommendations:
+                print(f"    - Top recommendation: {unique_recommendations[0].product_name}")
+                print(f"    - Confidence: {unique_recommendations[0].confidence_score:.3f}")
+        
+        return unique_recommendations[:top_k]
+    
+    def _group_chunks_by_config(
+        self,
+        retrieval_results: List[RetrievalResult]
+    ) -> List[Dict]:
+        """
+        Group chunks by config_id without fetching product names yet.
+        Returns list of candidate dictionaries with aggregated chunk data.
+        """
+        # Group by config_id first (most reliable)
+        configs = defaultdict(lambda: {
+            'chunk_ids': [],
+            'chunks': [],
+            'similarities': [],
+            'rankings': [],
+            'quotes': [],
+            'pros': [],
+            'cons': [],
+            'sections': [],
+            'chunk_texts': [],
+            'test_data': [],
+            'sentiments': []  # Store sentiment data for each chunk
+        })
+        
+        for result in retrieval_results:
+            chunk_text = result.chunk_text
+            metadata = result.metadata
+            section_title = result.section_title
+            
+            # Extract ranking from section title (e.g., "#1 - MacBook Pro 14")
+            ranking = None
+            if section_title:
+                ranking_match = re.search(r'#(\d+)', section_title)
+                if ranking_match:
+                    ranking = int(ranking_match.group(1))
+            
+            # Extract pros/cons if present
+            pros = self._extract_list_items(chunk_text, r'\*\*Pros?:?\*\*\s*\n((?:[-•]\s*.+\n?)+)')
+            cons = self._extract_list_items(chunk_text, r'\*\*Cons?:?\*\*\s*\n((?:[-•]\s*.+\n?)+)')
+            
+            # Extract quotes
+            quotes = re.findall(r'"([^"]{20,200})"', chunk_text)
+            
+            # Get config_ids from metadata
+            config_ids = metadata.get('config_ids', [])
+            if isinstance(config_ids, int):
+                config_ids = [config_ids]
+            
+            if config_ids:
+                for config_id in config_ids:
+                    key = f"config_{config_id}"
+                    configs[key]['config_id'] = config_id
+                    configs[key]['chunk_ids'].append(result.chunk_id)
+                    configs[key]['chunks'].append(result)
+                    configs[key]['similarities'].append(result.similarity)
+                    configs[key]['source_article'] = metadata['content_title']
+                    configs[key]['source_url'] = metadata['url']
+                    
+                    if section_title:
+                        configs[key]['sections'].append(section_title)
+                        configs[key]['section_title'] = section_title
+                    
+                    if ranking:
+                        configs[key]['rankings'].append(ranking)
+                    
+                    if pros:
+                        configs[key]['pros'].extend(pros)
+                    
+                    if cons:
+                        configs[key]['cons'].extend(cons)
+                    
+                    if quotes:
+                        configs[key]['quotes'].extend(quotes)
+                    
+                    configs[key]['chunk_texts'].append(chunk_text[:500])
+                    
+                    # Store sentiment data if present (per-product)
+                    sentiments_dict = metadata.get('sentiments', {})
+                    if sentiments_dict and str(config_id) in sentiments_dict:
+                        # Get sentiment specific to this config_id
+                        sentiment = sentiments_dict[str(config_id)]
+                        configs[key]['sentiments'].append({
+                            'score': sentiment.get('sentiment_score', 0.0),
+                            'label': sentiment.get('sentiment_label', 'neutral'),
+                            'context': sentiment.get('context_type', 'mention'),
+                            'reasoning': sentiment.get('reasoning', '')
+                        })
+                    
+                    # Store test data if present (with parsed benchmark scores)
+                    if metadata.get('source_type') == 'test_data':
+                        configs[key]['test_data'].append({
+                            'benchmark_name': metadata.get('benchmark_name'),
+                            'benchmark_category': metadata.get('benchmark_category'),
+                            'benchmark_results': metadata.get('benchmark_results', {}),  # Include parsed scores
+                            'content': chunk_text
+                        })
+        
+        # Convert to list of candidates
+        candidates = []
+        for key, data in configs.items():
+            data['max_similarity'] = max(data['similarities']) if data['similarities'] else 0.0
+            data['avg_similarity'] = sum(data['similarities']) / len(data['similarities']) if data['similarities'] else 0.0
+            candidates.append(data)
+        
+        return candidates
     
     def _extract_products(
         self,
@@ -297,13 +492,16 @@ class RAGRanker:
                 })
         
         # Process config-based products
+        # Batch fetch all product names at once (fast - from local DB)
+        config_ids = [data['config_id'] for data in configs.values()]
+        product_names = self.config_client.get_product_names_batch(config_ids)
+        
         processed_products = {}
         for key, data in configs.items():
             config_id = data['config_id']
             
-            # Get product name from database
-            config = self.config_client.get_config_by_id(config_id)
-            product_name = config['product_name'] if config else f"Config {config_id}"
+            # Get product name from batch fetch
+            product_name = product_names.get(config_id, f"Config {config_id}")
             
             processed_products[key] = {
                 'product_name': product_name,
@@ -456,6 +654,118 @@ class RAGRanker:
         items = re.findall(r'[-•]\s*(.+)', list_text)
         return [item.strip() for item in items if item.strip()]
     
+    def _calculate_josh_score_from_chunks(self, candidate: Dict) -> float:
+        """
+        Calculate score based on Josh's recommendation from chunk data.
+        No DB calls - uses only chunk metadata.
+        
+        Factors:
+        - Ranking (#1 = highest score)
+        - Similarity score (how relevant the content is)
+        - Number of mentions (only positive/neutral)
+        - Sentiment multiplier (boosts positive, penalizes negative)
+        """
+        # Calculate base score
+        base_score = 0.0
+        
+        # Ranking bonus (0.5 weight)
+        if candidate.get('rankings'):
+            ranking = min(candidate['rankings'])  # Best ranking
+            # #1 = 1.0, #2 = 0.9, #3 = 0.8, etc.
+            rank_score = max(0.0, 1.0 - (ranking - 1) * 0.1)
+            base_score += rank_score * 0.5
+        else:
+            # No explicit ranking, but mentioned
+            base_score += 0.3
+        
+        # Similarity bonus (0.3 weight)
+        similarity = candidate.get('max_similarity', 0.0)
+        base_score += similarity * 0.3
+        
+        # Multiple mentions bonus (0.2 weight) - only count positive/neutral mentions
+        sentiments = candidate.get('sentiments', [])
+        if sentiments:
+            # Only count positive and neutral mentions
+            positive_mentions = [
+                s for s in sentiments 
+                if s['label'] in ['highly_positive', 'positive', 'neutral']
+            ]
+            num_mentions = len(positive_mentions)
+        else:
+            # No sentiment data, count all mentions
+            num_mentions = len(candidate.get('chunk_ids', []))
+        
+        mention_score = min(1.0, num_mentions / 3.0)  # Cap at 3 mentions
+        base_score += mention_score * 0.2
+        
+        # Apply sentiment multiplier
+        sentiment_multiplier = self._calculate_sentiment_multiplier(candidate)
+        final_score = base_score * sentiment_multiplier
+        
+        return min(1.0, final_score)
+    
+    def _calculate_sentiment_multiplier(self, candidate: Dict) -> float:
+        """
+        Calculate sentiment multiplier based on chunk sentiments.
+        
+        Returns multiplier between 0.1 and 1.2:
+        - highly_positive: 1.2x (boost 20%)
+        - positive: 1.0x (no change)
+        - neutral: 0.7x (reduce 30%)
+        - negative: 0.3x (reduce 70%)
+        - highly_negative: 0.1x (reduce 90%)
+        """
+        sentiments = candidate.get('sentiments', [])
+        
+        if not sentiments:
+            # No sentiment data, treat as neutral (no penalty)
+            return 1.0
+        
+        # Calculate average sentiment score
+        avg_sentiment = sum(s['score'] for s in sentiments) / len(sentiments)
+        
+        # Count sentiment labels
+        label_counts = {}
+        for s in sentiments:
+            label = s['label']
+            label_counts[label] = label_counts.get(label, 0) + 1
+        
+        # Determine dominant sentiment
+        dominant_label = max(label_counts, key=label_counts.get)
+        
+        # Apply multiplier based on dominant sentiment
+        multipliers = {
+            'highly_positive': 1.2,
+            'positive': 1.0,
+            'neutral': 0.7,
+            'negative': 0.3,
+            'highly_negative': 0.1
+        }
+        
+        multiplier = multipliers.get(dominant_label, 1.0)
+        
+        # Special case: If ALL mentions are negative, heavily penalize
+        all_negative = all(s['label'] in ['negative', 'highly_negative'] for s in sentiments)
+        if all_negative:
+            multiplier = 0.1
+        
+        # Special case: If mix of positive and negative, use average sentiment score
+        has_positive = any(s['label'] in ['highly_positive', 'positive'] for s in sentiments)
+        has_negative = any(s['label'] in ['negative', 'highly_negative'] for s in sentiments)
+        
+        if has_positive and has_negative:
+            # Mixed sentiment - use average score to determine multiplier
+            if avg_sentiment > 0.5:
+                multiplier = 1.1  # Mostly positive
+            elif avg_sentiment > 0.0:
+                multiplier = 0.9  # Slightly positive
+            elif avg_sentiment > -0.5:
+                multiplier = 0.5  # Slightly negative
+            else:
+                multiplier = 0.2  # Mostly negative
+        
+        return multiplier
+    
     def _calculate_josh_score(self, product_data: Dict) -> float:
         """
         Calculate score based on Josh's recommendation.
@@ -488,7 +798,36 @@ class RAGRanker:
         
         return min(1.0, score)
     
-    def _calculate_spec_score(self, product_name: str, quiz_response: Dict, config_id: Optional[int] = None) -> float:
+    def _calculate_manual_use_case_score(self, config_use_case_ids: List[int], quiz_response: Dict) -> float:
+        """
+        Calculate score boost if manual DB tags match user's quiz intent.
+        
+        Args:
+            config_use_case_ids: List of manual use case IDs for this config
+            quiz_response: User's quiz response
+            
+        Returns:
+            1.0 if manual tag matches user intent, 0.0 otherwise.
+        """
+        if not config_use_case_ids:
+            return 0.0
+            
+        user_intents = quiz_response.get('use_case', [])
+        if not user_intents:
+            return 0.0
+            
+        # Check for intersection between user's requested use cases and the config's manual tags
+        for intent in user_intents:
+            target_ids = self.manual_use_case_mapping.get(intent, [])
+            for tid in target_ids:
+                if tid in config_use_case_ids:
+                    if self.verbose:
+                        print(f"    [+] Manual Tag Match! Intent '{intent}' (ID {tid}) found in config tags.")
+                    return 1.0
+                    
+        return 0.0
+
+    def _calculate_spec_score(self, product_name: str, quiz_response: Dict, config_id: Optional[int] = None, config_obj: Optional[Dict] = None) -> float:
         """
         Calculate score based on real spec matching.
         
@@ -496,15 +835,19 @@ class RAGRanker:
         Falls back to name-based heuristics if config not found.
         """
         # Try to get real config data
-        config = None
-        if config_id:
-            config = self.config_client.get_config_by_id(config_id)
+        config = config_obj
+        if not config and config_id:
+            # Fallback to individual fetch if not provided in batch
+            config = self.config_client.get_config_by_id(config_id, include_properties=True)
         
-        if not config or not config.get('specs'):
+        # Check if config exists and has either specs column OR property_groups
+        if not config or (not config.get('specs') and not config.get('property_groups')):
             # Fallback to name-based heuristics
             return self._calculate_spec_score_heuristic(product_name, quiz_response)
         
-        specs = config['specs']
+        # Extract specs (handles both legacy and new schema)
+        specs = self.config_client._extract_specs_from_config(config)
+        
         score = 0.0
         checks = 0
         
@@ -517,34 +860,26 @@ class RAGRanker:
             for use_case in use_cases:
                 if use_case == 'gaming':
                     # Check for dedicated GPU
-                    has_gpu = specs.get('Dedicated Graphics (Yes/No)') == 'Yes'
-                    if has_gpu:
+                    if specs['has_gpu']:
                         use_case_score = 1.0
                         break
                 
                 elif use_case == 'programming':
                     # Check for good CPU and RAM
-                    ram = specs.get('Memory Amount', '')
-                    cpu = specs.get('Processor', '')
+                    ram_gb = specs['ram_gb']
+                    cpu = specs['processor'].lower()
                     
-                    ram_gb = self._extract_number(ram)
-                    if ram_gb >= 16 and ('i7' in cpu.lower() or 'ryzen 7' in cpu.lower() or 'm3' in cpu.lower()):
-                        use_case_score = 1.0
-                        break
+                    if ram_gb >= 16 and ('i7' in cpu or 'ryzen 7' in cpu or 'm3' in cpu or 'm2' in cpu or 'm1' in cpu):
+                        use_case_score = max(use_case_score, 1.0)
                     elif ram_gb >= 8:
-                        use_case_score = 0.7
+                        use_case_score = max(use_case_score, 0.7)
                 
                 elif use_case == 'video_editing':
-                    # Check for GPU, RAM, and good CPU
-                    has_gpu = specs.get('Dedicated Graphics (Yes/No)') == 'Yes'
-                    ram = specs.get('Memory Amount', '')
-                    ram_gb = self._extract_number(ram)
-                    
-                    if has_gpu and ram_gb >= 16:
-                        use_case_score = 1.0
-                        break
-                    elif ram_gb >= 16:
-                        use_case_score = 0.7
+                    # Check for GPU, RAM
+                    if specs['has_gpu'] and specs['ram_gb'] >= 16:
+                        use_case_score = max(use_case_score, 1.0)
+                    elif specs['ram_gb'] >= 16 or specs['has_gpu']:
+                        use_case_score = max(use_case_score, 0.7)
             
             score += use_case_score
         
@@ -552,16 +887,13 @@ class RAGRanker:
         portability = quiz_response.get('portability', '')
         if portability:
             checks += 1
-            weight_str = specs.get('Weight (lbs)', '')
-            screen_size = specs.get('Display Size', '')
-            
-            weight_lbs = self._extract_number(weight_str)
-            screen_inches = self._extract_number(screen_size)
+            weight_lbs = specs['weight_lbs']
+            screen_inches = specs['screen_size']
             
             if portability == 'light':
                 if weight_lbs > 0 and weight_lbs < 3.5 and screen_inches <= 14:
                     score += 1.0
-                elif weight_lbs < 4.0:
+                elif weight_lbs > 0 and weight_lbs < 4.0:
                     score += 0.7
             elif portability == 'performance':
                 if screen_inches >= 15:
@@ -676,6 +1008,147 @@ class RAGRanker:
         match = re.search(r'(\d+(?:\.\d+)?)', str(text))
         return float(match.group(1)) if match else 0.0
     
+    def _calculate_test_data_score_from_chunks(self, candidate: Dict, quiz_response: Dict) -> float:
+        """
+        Calculate score based on actual benchmark performance scores.
+        Uses numeric benchmark values to rank products by real performance.
+        
+        Scoring approach:
+        - Extract actual numeric scores from test data
+        - Normalize scores relative to expected ranges
+        - Weight by use case relevance
+        
+        Args:
+            candidate: Candidate dictionary with test_data list containing benchmark_results
+            quiz_response: User's quiz response
+        
+        Returns:
+            Score from 0.0 to 1.0 based on actual performance
+        """
+        test_data = candidate.get('test_data', [])
+        
+        if not test_data:
+            return 0.5  # Neutral score if no test data
+        
+        use_cases = quiz_response.get('use_case', [])
+        portability = quiz_response.get('portability', '')
+        
+        # Collect benchmark scores from test data
+        # test_data items have 'benchmark_name', 'benchmark_category', 'content'
+        # We need to extract the actual benchmark_results JSON from the chunks
+        
+        # Since test_data is simplified in candidate, we'll work with what we have
+        # The actual benchmark scores are in the chunk metadata
+        # For now, use a simplified approach based on benchmark presence and context
+        
+        performance_score = 0.5  # Start neutral
+        score_components = []
+        
+        # Extract actual benchmark scores from test data (already parsed and stored)
+        cpu_score_value = 0
+        gpu_score_value = 0
+        battery_minutes = 0
+        weight_grams = 0
+        
+        for test_item in test_data:
+            benchmark_results = test_item.get('benchmark_results', {})
+            
+            # Extract CPU scores (Geekbench or Cinebench)
+            if 'geekbench' in benchmark_results:
+                geekbench_scores = benchmark_results['geekbench'].get('scores', {})
+                if 'multi_core' in geekbench_scores and cpu_score_value == 0:
+                    cpu_score_value = geekbench_scores['multi_core']
+            
+            if 'cinebench' in benchmark_results and cpu_score_value == 0:
+                cinebench_scores = benchmark_results['cinebench'].get('scores', {})
+                if 'multi_core' in cinebench_scores:
+                    cpu_score_value = cinebench_scores['multi_core']
+            
+            # Extract GPU scores (3DMark)
+            if '3dmark' in benchmark_results:
+                dmark_scores = benchmark_results['3dmark'].get('scores', {})
+                if 'timespy' in dmark_scores and gpu_score_value == 0:
+                    gpu_score_value = dmark_scores['timespy']
+                elif 'wildlife' in dmark_scores and gpu_score_value == 0:
+                    gpu_score_value = dmark_scores['wildlife']
+            
+            # Extract battery life
+            if 'battery' in benchmark_results and battery_minutes == 0:
+                battery_scores = benchmark_results['battery'].get('scores', {})
+                if 'minutes' in battery_scores:
+                    battery_minutes = battery_scores['minutes']
+                elif 'hours' in battery_scores:
+                    battery_minutes = int(battery_scores['hours'] * 60)
+            
+            # Extract weight
+            if 'weight' in benchmark_results and weight_grams == 0:
+                weight_scores = benchmark_results['weight'].get('scores', {})
+                if 'grams' in weight_scores:
+                    weight_grams = weight_scores['grams']
+        
+        # Calculate performance score based on use case and actual benchmarks
+        
+        # CPU Performance (for programming, school, engineering, video_editing)
+        if any(uc in use_cases for uc in ['programming', 'school', 'engineering', 'video_editing']):
+            if cpu_score_value > 0:
+                # Normalize Geekbench multi-core scores
+                # Typical range: 500-1500 (good range for modern laptops)
+                # Excellent: 1200+, Good: 900-1200, Average: 600-900, Below: <600
+                if cpu_score_value >= 1200:
+                    score_components.append(('cpu_excellent', 0.25))
+                elif cpu_score_value >= 900:
+                    score_components.append(('cpu_good', 0.20))
+                elif cpu_score_value >= 600:
+                    score_components.append(('cpu_average', 0.15))
+                else:
+                    score_components.append(('cpu_below', 0.10))
+        
+        # GPU Performance (for gaming, video_editing)
+        if 'gaming' in use_cases or 'video_editing' in use_cases:
+            if gpu_score_value > 0:
+                # Normalize 3DMark Timespy scores
+                # Typical range: 2000-8000 for gaming laptops
+                # Excellent: 6000+, Good: 4000-6000, Average: 2500-4000, Below: <2500
+                if gpu_score_value >= 6000:
+                    score_components.append(('gpu_excellent', 0.30))
+                elif gpu_score_value >= 4000:
+                    score_components.append(('gpu_good', 0.25))
+                elif gpu_score_value >= 2500:
+                    score_components.append(('gpu_average', 0.18))
+                else:
+                    score_components.append(('gpu_below', 0.10))
+        
+        # Battery Life (for portability)
+        if portability in ['light', 'somewhat']:
+            if battery_minutes > 0:
+                # Normalize battery minutes
+                # Excellent: 600+ min (10h), Good: 420-600 (7-10h), Average: 300-420 (5-7h)
+                if battery_minutes >= 600:
+                    score_components.append(('battery_excellent', 0.20))
+                elif battery_minutes >= 420:
+                    score_components.append(('battery_good', 0.15))
+                elif battery_minutes >= 300:
+                    score_components.append(('battery_average', 0.10))
+        
+        # Weight (for portability)
+        if portability == 'light':
+            if weight_grams > 0:
+                # Normalize weight in grams
+                # Excellent: <1200g, Good: 1200-1500g, Average: 1500-1800g, Heavy: >1800g
+                if weight_grams < 1200:
+                    score_components.append(('weight_excellent', 0.15))
+                elif weight_grams < 1500:
+                    score_components.append(('weight_good', 0.10))
+                elif weight_grams < 1800:
+                    score_components.append(('weight_average', 0.05))
+        
+        # Sum up score components
+        if score_components:
+            total_bonus = sum(score for _, score in score_components)
+            performance_score = min(1.0, 0.5 + total_bonus)
+        
+        return performance_score
+    
     def _calculate_test_data_score(self, product_data: Dict, quiz_response: Dict) -> float:
         """
         Calculate score based on test data benchmarks.
@@ -729,6 +1202,64 @@ class RAGRanker:
         benchmark_bonus = min(benchmark_bonus, 0.4)
         
         return min(score + benchmark_bonus, 1.0)
+    
+    def _generate_explanation_from_candidate(
+        self,
+        product_name: str,
+        candidate: Dict,
+        quiz_response: Dict
+    ) -> str:
+        """
+        Generate explanation from candidate data (optimized version).
+        Uses candidate dictionary instead of product_data.
+        """
+        explanation_parts = []
+        
+        # Josh's ranking
+        if candidate.get('rankings'):
+            ranking = min(candidate['rankings'])
+            if ranking == 1:
+                explanation_parts.append("Josh's top pick")
+            elif ranking <= 3:
+                explanation_parts.append(f"Ranked #{ranking} by Josh")
+        
+        # Josh's quotes
+        if candidate.get('quotes'):
+            quote = candidate['quotes'][0]
+            if len(quote) > 100:
+                quote = quote[:97] + "..."
+            explanation_parts.append(f'"{quote}"')
+        
+        # Pros
+        if candidate.get('pros'):
+            pros = candidate['pros']
+            if pros:
+                explanation_parts.append(pros[0])
+        
+        # Test data highlights
+        test_data = candidate.get('test_data', [])
+        if test_data:
+            test_highlights = []
+            use_cases = quiz_response.get('use_case', [])
+            
+            for test_item in test_data:
+                benchmark_name = test_item.get('benchmark_name', '').lower()
+                
+                # Mention relevant benchmarks
+                if ('gaming' in use_cases or 'video_editing' in use_cases) and '3dmark' in benchmark_name:
+                    test_highlights.append("tested gaming performance")
+                    break
+                elif ('programming' in use_cases or 'video_editing' in use_cases) and 'geekbench' in benchmark_name:
+                    test_highlights.append("verified CPU benchmarks")
+                    break
+                elif 'battery' in benchmark_name:
+                    test_highlights.append("battery tested")
+                    break
+            
+            if test_highlights:
+                explanation_parts.append(test_highlights[0])
+        
+        return ". ".join(explanation_parts) if explanation_parts else f"Recommended based on your needs"
     
     def _generate_explanation(
         self,

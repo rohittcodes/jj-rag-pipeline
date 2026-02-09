@@ -1,16 +1,12 @@
 """
 Unified database setup script.
-Handles all schema creation and initialization.
+Creates all tables and indexes for the RAG pipeline.
 
 Usage:
-    python scripts/setup.py --all                    # Setup everything
-    python scripts/setup.py --database               # Setup main database schema
-    python scripts/setup.py --youtube                # Setup YouTube schema
-    python scripts/setup.py --indexes                # Create vector indexes
+    python scripts/setup.py
 """
 import os
 import sys
-import argparse
 from pathlib import Path
 
 # Add project root to path
@@ -224,36 +220,29 @@ def create_vector_indexes():
     cursor = conn.cursor()
     
     try:
-        # Check if we have embeddings
-        cursor.execute("SELECT COUNT(*) FROM content_chunks WHERE embedding IS NOT NULL;")
-        blog_count = cursor.fetchone()[0]
-        
-        cursor.execute("SELECT COUNT(*) FROM youtube_chunks WHERE embedding IS NOT NULL;")
-        youtube_count = cursor.fetchone()[0]
-        
-        if blog_count == 0 and youtube_count == 0:
-            print("[!] No embeddings found. Generate embeddings first using: python scripts/ingest.py --embeddings")
-            return False
-        
         # Create HNSW index for blog chunks
-        if blog_count > 0:
-            print(f"[*] Creating HNSW index for {blog_count} blog chunks...")
-            cursor.execute("""
-                CREATE INDEX IF NOT EXISTS idx_content_chunks_embedding 
-                ON content_chunks 
-                USING hnsw (embedding vector_cosine_ops)
-                WITH (m = 16, ef_construction = 64);
-            """)
+        print("[*] Creating HNSW index for content_chunks...")
+        cursor.execute("""
+            CREATE INDEX IF NOT EXISTS idx_content_chunks_embedding 
+            ON content_chunks 
+            USING hnsw (embedding vector_cosine_ops);
+        """)
         
         # Create HNSW index for YouTube chunks
-        if youtube_count > 0:
-            print(f"[*] Creating HNSW index for {youtube_count} YouTube chunks...")
-            cursor.execute("""
-                CREATE INDEX IF NOT EXISTS idx_youtube_chunks_embedding 
-                ON youtube_chunks 
-                USING hnsw (embedding vector_cosine_ops)
-                WITH (m = 16, ef_construction = 64);
-            """)
+        print("[*] Creating HNSW index for youtube_chunks...")
+        cursor.execute("""
+            CREATE INDEX IF NOT EXISTS idx_youtube_chunks_embedding 
+            ON youtube_chunks 
+            USING hnsw (embedding vector_cosine_ops);
+        """)
+        
+        # Create HNSW index for test data chunks
+        print("[*] Creating HNSW index for test_data_chunks...")
+        cursor.execute("""
+            CREATE INDEX IF NOT EXISTS idx_test_data_chunks_embedding 
+            ON test_data_chunks 
+            USING hnsw (embedding vector_cosine_ops);
+        """)
         
         conn.commit()
         print("[+] Vector indexes created successfully!")
@@ -270,40 +259,30 @@ def create_vector_indexes():
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Setup database schema')
-    parser.add_argument('--all', action='store_true', help='Setup everything')
-    parser.add_argument('--database', action='store_true', help='Setup main database schema')
-    parser.add_argument('--youtube', action='store_true', help='Setup YouTube schema')
-    parser.add_argument('--indexes', action='store_true', help='Create vector indexes')
-    
-    args = parser.parse_args()
-    
-    # If no args, show help
-    if not any(vars(args).values()):
-        parser.print_help()
-        return
-    
+    """Setup complete database schema and indexes."""
     print("="*60)
     print("Database Setup")
     print("="*60)
     
     success = True
     
-    if args.all or args.database:
-        if not setup_main_database():
-            success = False
+    # Setup all schemas
+    if not setup_main_database():
+        success = False
     
-    if args.all or args.youtube:
-        if not setup_youtube_schema():
-            success = False
+    if not setup_youtube_schema():
+        success = False
     
-    if args.all or args.indexes:
-        if not create_vector_indexes():
-            success = False
+    if not create_vector_indexes():
+        success = False
     
     print("\n" + "="*60)
     if success:
         print("[+] Setup completed successfully!")
+        print("\nNext steps:")
+        print("  1. Run: uv run jj sync products    # Sync product data")
+        print("  2. Run: uv run jj sync blogs       # Sync blog content")
+        print("  3. Run: uv run jj sync youtube     # Sync YouTube videos")
     else:
         print("[-] Setup completed with errors")
     print("="*60)

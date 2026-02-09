@@ -8,35 +8,29 @@ This document outlines potential enhancements and next steps for the JustJosh RA
 
 ### ✅ Completed
 - Basic RAG pipeline (retriever + ranker)
-- Multi-source content (Sanity blogs + YouTube videos)
+- Multi-source content (Sanity blogs + YouTube videos + test data)
 - Product config syncing from production DB
 - Date-based content filtering
 - Spec-based fallback for low confidence
 - RAG query logging
 - API key authentication
-- FastAPI service with webhooks (Sanity)
+- FastAPI service with webhooks (Sanity + YouTube)
 - Consolidated CLI (`setup`, `sync`, `api`)
 - **Test data ingestion** (229 configs with benchmark PDFs)
 - **Test data retrieval** (UNION query across blogs, YouTube, test data)
 - **Test data scoring** (15% weight, presence-based)
+- **Unified sync architecture** (cursor-based incremental syncing)
+- **LLM intent extraction** (natural language → structured quiz)
 
 ### 🚧 Next Steps (Priority Order)
 
-#### 1. Cleanup & Documentation
-- Add `--test-data` command to CLI
-- Remove temporary test files
-- Update documentation with test data workflow
-- Run end-to-end test of complete pipeline
+#### 1. YouTube Backfill (Pending)
+- **Current:** Only 5 recent videos synced
+- **Need:** Fetch all historical videos from channel
+- **Implementation:** Add `--backfill` flag to `sync.py`
+- **Command:** `python cli.py sync --youtube --backfill --count=100`
 
-#### 2. Unified Sync Architecture (Deferred)
-- Cursor-based incremental syncing for all sources
-- YouTube webhook (PubSubHubbub)
-- Products polling (every 5 min)
-- Eliminate `raw/` folder
-- Auto-embedding after sync
-- Consolidate scripts (`ingest.py` → `sync.py`, `youtube.py` → `sync.py`)
-
-#### 3. Test Data Improvements (Future)
+#### 2. Test Data Improvements (Future)
 - **Current limitation:** Only checks if benchmarks exist, doesn't evaluate scores
 - **Future enhancement:** Extract numerical scores and rank by actual performance
 - **Example:** Parse "Geekbench: 15,014" and score based on percentile vs other products
@@ -71,11 +65,55 @@ This document outlines potential enhancements and next steps for the JustJosh RA
 - Score based on actual performance vs just presence
 - Example: "Geekbench 15,014 (top 10%)" → higher score than "Geekbench 8,500 (bottom 30%)"
 
+### 2. LLM Intent Extraction ✅
+
+**Status:** Completed
+
+**What Was Done:**
+- ✅ Created `IntentExtractor` class using OpenAI GPT-3.5-turbo
+- ✅ Added `/recommend/prompt` endpoint for natural language queries
+- ✅ Hybrid approach: supports both structured quiz AND free-text prompts
+- ✅ Fallback keyword extraction if LLM fails
+- ✅ Logs original prompt for analytics
+
+**How It Works:**
+```
+User Prompt: "I'm a CS student needing a laptop for coding and gaming, budget $1200"
+     ↓
+LLM Extracts Intent:
+  {
+    "profession": ["student"],
+    "use_case": ["programming", "gaming"],
+    "budget": ["value"],
+    "portability": "light"
+  }
+     ↓
+Existing RAG Pipeline → Recommendations
+```
+
+**Benefits:**
+- Users can type naturally instead of filling forms
+- Better captures nuanced requirements
+- Maintains existing RAG accuracy
+- Backwards compatible (quiz endpoint still works)
+
+**Cost:** ~$0.001 per request using GPT-3.5-turbo (~$10 for 10k requests)
+
+**API Usage:**
+```bash
+curl -X POST http://localhost:8000/recommend/prompt \
+  -H "Content-Type: application/json" \
+  -d '{
+    "prompt": "I need a laptop for college programming and gaming, budget around $1500",
+    "top_k": 5
+  }'
+```
+
 ---
 
 ## Phase 2: Performance & Scalability
 
-### 2. Redis Caching Layer
+### 3. Redis Caching Layer
 
 **Why:** Reduce database load and improve API response time
 

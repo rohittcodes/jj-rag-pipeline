@@ -1,230 +1,309 @@
 """
-Test Data Parser - Extract performance benchmarks from test data PDFs.
+Test Data Parser - Extract performance benchmarks from test data PDFs using Gemini Flash.
 
-The PDFs contain comparative benchmark data across multiple laptops.
-We extract the data for the target product and create searchable chunks.
+This parser uses Google's Gemini Flash multimodal AI to accurately extract
+benchmark data from visual PDF charts. Benefits over regex-based parsing:
+1. Gemini can see the actual visual layout of charts
+2. It can understand table structures and bar charts
+3. It can handle N/A values contextually
+4. No need for complex regex patterns
+5. More accurate score extraction from visual elements
 """
-import PyPDF2
-import re
+import os
+import json
 from typing import Dict, List, Optional
 from pathlib import Path
+from io import BytesIO
+from google import genai
+from google.genai import types
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class TestDataParser:
-    """Parse test data PDFs and extract structured benchmark information."""
+    """Parse test data PDFs using Gemini Flash vision capabilities."""
     
     def __init__(self):
-        # Benchmark categories we look for
-        self.benchmark_patterns = {
-            'geekbench': r'Geekbench \d+',
-            'cinebench': r'Cinebench \d+',
-            '3dmark': r'3DMark|Timespy|Wildlife',
-            'battery': r'Battery|Video Playback|Netflix',
-            'display': r'Display.*Brightness|Max Brightness',
-            'weight': r'Weight',
-            'temperature': r'Temperature|Heat',
-            'fan_noise': r'Fan Noise',
-            'power_draw': r'Power Draw'
-        }
+        # Configure Gemini
+        api_key = os.getenv('GEMINI_API_KEY')
+        if not api_key:
+            raise ValueError("GEMINI_API_KEY not found in environment variables")
+        
+        self.client = genai.Client(api_key=api_key)
     
-    def parse_pdf(self, pdf_path: Path, product_name: str) -> Dict:
+    def parse_pdf(self, pdf_source: BytesIO, product_name: str) -> Dict:
         """
-        Extract test data from PDF for a specific product.
+        Parse PDF using Gemini Flash to extract benchmark data.
         
         Args:
-            pdf_path: Path to the PDF file
-            product_name: Name of the product to extract data for
+            pdf_source: BytesIO object containing PDF data
+            product_name: Product name to extract (e.g., "Zenbook A14")
         
         Returns:
-            Dict with structured benchmark data
+            Dict with parsed benchmarks
         """
-        # Extract all text from PDF
-        with open(pdf_path, 'rb') as f:
-            reader = PyPDF2.PdfReader(f)
-            full_text = ""
-            for page in reader.pages:
-                full_text += page.extract_text() + "\n"
+        # Upload PDF to Gemini
+        print(f"[*] Uploading PDF to Gemini...")
         
-        # Clean product name for matching (remove special chars, normalize)
-        clean_product = self._normalize_product_name(product_name)
+        # Save to temp file for upload
+        temp_path = "temp_test_data.pdf"
+        with open(temp_path, 'wb') as f:
+            f.write(pdf_source.getvalue())
         
-        # Extract benchmarks
-        benchmarks = {
-            'product_name': product_name,
-            'raw_text': full_text,  # Keep for fallback search
-            'benchmarks': {}
-        }
+        # Upload file
+        uploaded_file = self.client.files.upload(file=temp_path)
+        print(f"[+] Uploaded")
         
-        # Try to extract specific benchmark values
-        benchmarks['benchmarks'] = self._extract_benchmarks(full_text, clean_product)
+        # Create prompt
+        prompt = self._create_extraction_prompt(product_name)
         
-        return benchmarks
+        # Generate response
+        print(f"[*] Analyzing PDF with Gemini Flash...")
+        response = self.client.models.generate_content(
+            model='gemini-3-flash-preview',
+            contents=[
+                types.Part.from_uri(file_uri=uploaded_file.uri, mime_type=uploaded_file.mime_type),
+                prompt
+            ]
+        )
+        
+        # Clean up temp file
+        os.remove(temp_path)
+        
+        # Parse JSON response
+        try:
+            # Extract JSON from response (handle markdown code blocks)
+            response_text = response.text.strip()
+            if response_text.startswith('```json'):
+                response_text = response_text[7:]
+            if response_text.startswith('```'):
+                response_text = response_text[3:]
+            if response_text.endswith('```'):
+                response_text = response_text[:-3]
+            
+            result = json.loads(response_text.strip())
+            print(f"[+] Parsed {len(result.get('benchmarks', []))} benchmarks")
+            
+            return result
+        except json.JSONDecodeError as e:
+            print(f"[!] Failed to parse JSON response: {e}")
+            print(f"[!] Raw response: {response.text}")
+            return {
+                'product_name': product_name,
+                'benchmarks': [],
+                'error': str(e)
+            }
     
-    def _normalize_product_name(self, name: str) -> str:
-        """Normalize product name for matching."""
-        # Remove special characters, convert to lowercase
-        normalized = re.sub(r'[^\w\s]', '', name.lower())
-        # Remove extra whitespace
-        normalized = ' '.join(normalized.split())
-        return normalized
-    
-    def _extract_benchmarks(self, text: str, product_name: str) -> Dict:
-        """
-        Extract benchmark values for the product.
-        
-        This is a simplified extraction - in reality, the PDF format is complex.
-        We'll focus on creating searchable natural language descriptions.
-        """
-        benchmarks = {}
-        
-        # Look for benchmark sections
-        for category, pattern in self.benchmark_patterns.items():
-            if re.search(pattern, text, re.IGNORECASE):
-                benchmarks[category] = {
-                    'found': True,
-                    'context': self._extract_context(text, pattern, product_name)
-                }
-        
-        return benchmarks
-    
-    def _extract_context(self, text: str, pattern: str, product_name: str, context_chars: int = 500) -> str:
-        """Extract context around a benchmark mention."""
-        matches = list(re.finditer(pattern, text, re.IGNORECASE))
-        if not matches:
-            return ""
-        
-        # Get text around the first match
-        match = matches[0]
-        start = max(0, match.start() - context_chars)
-        end = min(len(text), match.end() + context_chars)
-        
-        return text[start:end]
+    def _create_extraction_prompt(self, product_name: str) -> str:
+        """Create prompt for Gemini to extract benchmark data."""
+        return f"""
+You are analyzing a test data PDF that contains benchmark results for laptop computers.
+
+**Target Product:** {product_name}
+
+**Your Task:**
+Extract ALL benchmark scores for the product "{product_name}" from this PDF.
+
+**PDF Structure:**
+- Each page typically shows one benchmark test (Geekbench, Cinebench, 3DMark, Battery, etc.)
+- Products are listed in a comparison chart (usually as bars or in a table)
+- The target product "{product_name}" appears in the product list
+- Some benchmarks may show "N/A" or "-" if the product wasn't tested
+
+**Instructions:**
+1. Go through EVERY page of the PDF
+2. For each page with benchmark data:
+   - Identify the benchmark name (e.g., "Geekbench 6", "Cinebench 2024", "3DMark Timespy")
+   - Find "{product_name}" in the product list
+   - Extract the numeric scores for this product
+   - If the product shows "N/A", "-", or no data, SKIP that benchmark entirely
+3. Return the data in the JSON format specified below
+
+**Important:**
+- Only include benchmarks where "{product_name}" has actual numeric scores
+- Do NOT include benchmarks with N/A or missing data
+- Extract ALL metrics for each benchmark (e.g., single-core AND multi-core for Geekbench)
+- Be precise with numbers - include commas if present (e.g., 10,677)
+
+**Output Format (JSON):**
+{{
+  "product_name": "{product_name}",
+  "total_pages_analyzed": <number>,
+  "benchmarks_found": <number>,
+  "benchmarks": [
+    {{
+      "page_number": <int>,
+      "benchmark_name": "<full name, e.g., 'Geekbench 6'>",
+      "benchmark_type": "<type: geekbench|cinebench|3dmark|battery|weight|display>",
+      "scores": {{
+        "<metric_name>": <numeric_value>,
+        ...
+      }}
+    }},
+    ...
+  ]
+}}
+
+**Example scores object:**
+- Geekbench: {{"single_core": 10677, "multi_core": 2119}}
+- Cinebench: {{"single_core": 142, "multi_core": 695}}
+- 3DMark Timespy: {{"timespy": 2047, "graphics": 3878, "cpu": 8000}}
+- 3DMark Wildlife: {{"wildlife": 3254}}
+- Battery: {{"duration_minutes": 720}}
+- Weight: {{"grams": 980}}
+
+Return ONLY the JSON object, no additional text or explanation.
+"""
     
     def create_chunks(self, test_data: Dict, config_id: int) -> List[Dict]:
         """
-        Create searchable chunks from test data.
+        Create semantic chunks from parsed benchmark data.
         
         Args:
-            test_data: Parsed test data dictionary
-            config_id: Configuration ID this data belongs to
+            test_data: Output from parse_pdf()
+            config_id: Configuration ID
         
         Returns:
-            List of chunk dictionaries ready for embedding
+            List of chunks ready for embedding and storage
         """
         chunks = []
         product_name = test_data['product_name']
-        benchmarks = test_data['benchmarks']
+        benchmarks = test_data.get('benchmarks', [])
         
-        # Create a comprehensive performance summary chunk
-        summary_text = f"Performance test data for {product_name}:\n\n"
-        
-        benchmark_descriptions = []
-        for category, data in benchmarks.items():
-            if data.get('found'):
-                category_name = category.replace('_', ' ').title()
-                benchmark_descriptions.append(f"- {category_name} benchmarks available")
-        
-        if benchmark_descriptions:
-            summary_text += "\n".join(benchmark_descriptions)
-        else:
-            summary_text += "Comprehensive performance testing completed."
-        
-        chunks.append({
-            'config_id': config_id,
-            'test_type': 'summary',
-            'chunk_text': summary_text,
-            'benchmark_results': benchmarks,
-            'test_description': f"Performance test summary for {product_name}"
-        })
-        
-        # Create individual chunks for each benchmark category
-        for category, data in benchmarks.items():
-            if data.get('found') and data.get('context'):
-                category_name = category.replace('_', ' ').title()
-                chunk_text = f"{category_name} performance for {product_name}:\n\n"
-                chunk_text += data['context'][:300]  # Limit context size
-                
-                chunks.append({
-                    'config_id': config_id,
-                    'test_type': category,
-                    'chunk_text': chunk_text,
-                    'benchmark_results': {category: data},
-                    'test_description': f"{category_name} test results"
-                })
-        
-        # If no specific benchmarks found, create a general chunk with raw text snippet
         if not benchmarks:
-            raw_text = test_data.get('raw_text', '')
-            if raw_text:
-                chunk_text = f"Test data for {product_name}:\n\n"
-                chunk_text += raw_text[:500]  # First 500 chars
-                
-                chunks.append({
-                    'config_id': config_id,
-                    'test_type': 'general',
-                    'chunk_text': chunk_text,
-                    'benchmark_results': {},
-                    'test_description': f"General test data for {product_name}"
-                })
+            return chunks
+        
+        # Create one chunk per benchmark
+        for benchmark in benchmarks:
+            if not benchmark.get('scores'):
+                continue
+            
+            # Natural language description
+            chunk_text = self._create_benchmark_description(
+                product_name, 
+                benchmark['benchmark_name'],
+                benchmark['benchmark_type'],
+                benchmark['scores']
+            )
+            
+            # Structured benchmark results
+            benchmark_results = {
+                benchmark['benchmark_type']: {
+                    'found': True,
+                    'benchmark_name': benchmark['benchmark_name'],
+                    'scores': benchmark['scores']
+                }
+            }
+            
+            chunks.append({
+                'config_id': config_id,
+                'test_type': benchmark['benchmark_type'],
+                'test_description': f"{benchmark['benchmark_name']} performance",
+                'chunk_text': chunk_text,
+                'benchmark_results': benchmark_results,
+                'source_file': f"page_{benchmark['page_number']}"
+            })
+        
+        # Create summary chunk
+        if chunks:
+            summary_text = self._create_summary_description(product_name, benchmarks)
+            
+            # Aggregate all benchmark results
+            all_results = {}
+            for benchmark in benchmarks:
+                if benchmark.get('scores'):
+                    bench_type = benchmark['benchmark_type']
+                    all_results[bench_type] = {
+                        'found': True,
+                        'benchmark_name': benchmark['benchmark_name'],
+                        'scores': benchmark['scores']
+                    }
+            
+            chunks.insert(0, {
+                'config_id': config_id,
+                'test_type': 'summary',
+                'test_description': f"Complete performance testing for {product_name}",
+                'chunk_text': summary_text,
+                'benchmark_results': all_results,
+                'source_file': 'summary'
+            })
         
         return chunks
     
-    def create_natural_language_summary(self, benchmarks: Dict) -> str:
-        """
-        Create a natural language summary of benchmark results.
+    def _create_benchmark_description(
+        self,
+        product_name: str,
+        benchmark_name: str,
+        benchmark_type: str,
+        scores: Dict[str, int]
+    ) -> str:
+        """Create natural language description of benchmark results."""
+        parts = [f"{product_name} tested in {benchmark_name}."]
         
-        This is useful for generating explanations in recommendations.
-        """
-        summary_parts = []
+        if benchmark_type in ['geekbench', 'cinebench']:
+            if 'single_core' in scores and 'multi_core' in scores:
+                parts.append(f"Single-core score: {scores['single_core']}, multi-core score: {scores['multi_core']}.")
+            elif 'multi_core' in scores:
+                parts.append(f"Multi-core score: {scores['multi_core']}.")
         
-        if benchmarks.get('geekbench', {}).get('found'):
-            summary_parts.append("Tested with Geekbench for CPU performance")
+        elif benchmark_type == '3dmark':
+            if 'timespy' in scores:
+                parts.append(f"3DMark Timespy score: {scores['timespy']}.")
+            if 'wildlife' in scores:
+                parts.append(f"Wildlife Extreme score: {scores['wildlife']}.")
+            if 'graphics' in scores:
+                parts.append(f"Graphics score: {scores['graphics']}.")
         
-        if benchmarks.get('3dmark', {}).get('found'):
-            summary_parts.append("3DMark graphics benchmarks available")
+        elif benchmark_type == 'battery':
+            if 'duration_minutes' in scores:
+                hours = scores['duration_minutes'] / 60
+                parts.append(f"Battery life: {hours:.1f} hours ({scores['duration_minutes']} minutes).")
         
-        if benchmarks.get('battery', {}).get('found'):
-            summary_parts.append("Battery life tests completed")
+        elif benchmark_type == 'weight':
+            if 'grams' in scores:
+                pounds = scores['grams'] / 453.592
+                parts.append(f"Weight: {scores['grams']}g ({pounds:.2f} lbs).")
         
-        if benchmarks.get('cinebench', {}).get('found'):
-            summary_parts.append("Cinebench CPU rendering tests performed")
+        parts.append("Tested in highest performance mode.")
         
-        if not summary_parts:
-            return "Comprehensive performance testing completed"
-        
-        return ". ".join(summary_parts) + "."
-
-
-# Test the parser
-if __name__ == '__main__':
-    parser = TestDataParser()
+        return " ".join(parts)
     
-    # Test with the sample PDF we downloaded
-    pdf_path = Path('tmp/test_sample.pdf')
-    product_name = "ThinkPad T14s Gen 6"
-    
-    if pdf_path.exists():
-        print(f"[*] Parsing test data for: {product_name}")
-        test_data = parser.parse_pdf(pdf_path, product_name)
+    def _create_summary_description(self, product_name: str, benchmarks: List[Dict]) -> str:
+        """Create comprehensive summary of all benchmarks."""
+        parts = [f"Complete performance testing results for {product_name}."]
         
-        print(f"\n[+] Found benchmarks:")
-        for category, data in test_data['benchmarks'].items():
-            if data.get('found'):
-                print(f"  - {category}")
+        # Categorize benchmarks
+        cpu_info = []
+        gpu_info = []
+        portability_info = []
         
-        print(f"\n[*] Creating chunks...")
-        chunks = parser.create_chunks(test_data, config_id=15)
+        for bench in benchmarks:
+            scores = bench.get('scores', {})
+            bench_type = bench['benchmark_type']
+            
+            if bench_type in ['geekbench', 'cinebench']:
+                if 'multi_core' in scores:
+                    cpu_info.append(f"{bench['benchmark_name']}: {scores['multi_core']} multi-core")
+            
+            elif bench_type == '3dmark':
+                if 'timespy' in scores:
+                    gpu_info.append(f"3DMark Timespy: {scores['timespy']}")
+            
+            elif bench_type == 'battery':
+                if 'duration_minutes' in scores:
+                    hours = scores['duration_minutes'] / 60
+                    portability_info.append(f"Battery: {hours:.1f}h")
+            
+            elif bench_type == 'weight':
+                if 'grams' in scores:
+                    portability_info.append(f"Weight: {scores['grams']}g")
         
-        print(f"[+] Created {len(chunks)} chunks:")
-        for i, chunk in enumerate(chunks, 1):
-            print(f"\n  Chunk {i}:")
-            print(f"    Type: {chunk['test_type']}")
-            print(f"    Description: {chunk['test_description']}")
-            print(f"    Text preview: {chunk['chunk_text'][:150]}...")
+        if cpu_info:
+            parts.append(f"CPU performance: {', '.join(cpu_info)}.")
+        if gpu_info:
+            parts.append(f"GPU performance: {', '.join(gpu_info)}.")
+        if portability_info:
+            parts.append(f"Portability: {', '.join(portability_info)}.")
         
-        print(f"\n[*] Natural language summary:")
-        summary = parser.create_natural_language_summary(test_data['benchmarks'])
-        print(f"    {summary}")
-    else:
-        print(f"[!] PDF not found: {pdf_path}")
-        print(f"[!] Run test_pdf_fetch.py first")
+        return " ".join(parts)
