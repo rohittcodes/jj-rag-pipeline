@@ -34,7 +34,7 @@ class SentimentAnalyzer:
             raise ValueError("GEMINI_API_KEY not found in environment variables")
         
         self.client = genai.Client(api_key=api_key)
-        self.model_name = 'gemini-2.0-flash'
+        self.model_name = 'gemini-3-flash-preview'
         self.verbose = verbose
         self.rate_limit_delay = rate_limit_delay
         self.last_call_time = 0

@@ -20,24 +20,18 @@ Complete technical reference for Josh's RAG Pipeline.
 
 ### System Flow
 
-**Option 1: Natural Language Prompt**
+**Option 1: Natural Language Prompt (Streaming)**
 ```
-User Prompt → LLM Intent Extraction → Structured Quiz
-                                           ↓
-                                    API → Retriever → Ranker → Recommendations
-                                           ↓
-                                    (if low confidence)
-                                           ↓
-                                      Spec Fallback → Recommendations
+User Prompt → LLM Intent Extraction → Query Context
+                                            ↓
+               API (Stream) ← Generator ← Retriever ← Ranker (Batch Fetch)
+                                            ↓
+                                     (Data Block Appended)
 ```
 
-**Option 2: Structured Quiz (Legacy)**
+**Option 2: Structured Quiz (Standard)**
 ```
 User Quiz → API → Retriever → Ranker → Recommendations
-                      ↓
-                  (if low confidence)
-                      ↓
-                 Spec Fallback → Recommendations
 ```
 
 ### Components
@@ -66,11 +60,13 @@ User Quiz → API → Retriever → Ranker → Recommendations
 
 **1. Sanity CMS (Blogs, Reviews, Guides)**
 
+**Path:** Sanity API → Direct Database Insertion
 **Process:**
 1. Fetch articles via Sanity API
 2. Extract metadata (title, URL, publish date, tags)
 3. Parse content sections
-4. Store in `josh_content` table
+4. Map to products and generate embeddings
+5. Store in `josh_content` table
 
 **Key Fields:**
 - `title`, `content_type`, `url`, `publish_date`
@@ -79,11 +75,12 @@ User Quiz → API → Retriever → Ranker → Recommendations
 
 **2. YouTube Transcripts**
 
+**Path:** YouTube API → Local JSON (`raw/youtube/`) → Database
 **Process:**
-1. Fetch transcripts via YouTube API
-2. Extract metadata (title, video ID, publish date)
-3. Store in `youtube_content` table
-4. Chunk and embed transcripts
+1. Fetch transcripts via YouTube API (`python cli.py youtube --fetch`)
+2. Extract metadata and save as local JSON
+3. Ingest into `youtube_content` table (`python cli.py ingest --youtube`)
+4. Chunk and embed transcripts (automatic during ingestion)
 
 **3. Test Data (Performance Benchmarks)**
 
@@ -364,24 +361,24 @@ Direct semantic search in Josh's content.
 }
 ```
 
-#### `POST /webhook/sanity`
+#### `POST /stream-rag`
 
-Webhook for Sanity CMS content updates.
+Streaming RAG recommendations endpoint. Returns text tokens as they are generated, followed by a final JSON data block.
 
-**Headers:**
-```
-X-Sanity-Webhook-Signature: <signature>
-```
+**Request:** Same as `/recommend` or Natural Language prompt.
 
-**Payload:** Sanity webhook payload
-
-**Response:**
-```json
-{
-  "status": "processing",
-  "message": "Content ingestion started in background"
-}
-```
+**Response (Stream):**
+1.  **Content Tokens**: `The MacBook Air is...`
+2.  **Data Separator**: `\n__JSON_DATA__`
+3.  **Final JSON**:
+    ```json
+    {
+      "type": "data",
+      "recommendations": [...],
+      "sources": [...],
+      "processing_time": 14.5
+    }
+    ```
 
 ---
 
@@ -594,11 +591,16 @@ PROD_DB_PASSWORD=your_prod_password
 - Total: ~50-100ms
 
 **API Latency:**
-- RAG path: ~200-400ms
+- Standard RAG: ~200-400ms
+- Streaming RAG (Time-to-first-token): ~1-2s
+- Streaming RAG (Full response): ~10-15s
 - Fallback path: ~50-100ms
-- Target: <500ms P95
+- Target (first-token): <2s P95
 
 ### Optimization
+
+**Batch Fetching:**
+- Ranker now fetches all candidate config details (names, use cases, properties) in a single batch query, eliminating the N+1 database bottleneck during scoring.
 
 **Database:**
 - HNSW index for vector search

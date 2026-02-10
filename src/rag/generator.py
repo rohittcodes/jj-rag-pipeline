@@ -15,7 +15,7 @@ class RAGGenerator:
     Uses Gemini Flash for fast, cost-effective generation.
     """
     
-    def __init__(self, model_name: str = 'gemini-2.0-flash', verbose: bool = False):
+    def __init__(self, model_name: str = 'gemini-3-flash-preview', verbose: bool = False):
         """
         Initialize the RAG generator.
         

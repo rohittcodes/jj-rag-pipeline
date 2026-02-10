@@ -46,7 +46,7 @@ DB_CONFIG = {
 BATCH_SIZE = 32
 
 
-def ingest_blogs(clear_existing=False):
+def ingest_blogs(clear_existing=False, limit=None):
     """Ingest blog content from raw/blogs/ directory."""
     print("\n[*] Ingesting blog content...")
     
@@ -59,6 +59,10 @@ def ingest_blogs(clear_existing=False):
     if not json_files:
         print(f"[-] No JSON files found in {raw_dir}")
         return False
+    
+    if limit:
+        print(f"[*] Limiting to first {limit} blog files")
+        json_files = json_files[:limit]
     
     print(f"[+] Found {len(json_files)} blog files")
     
@@ -185,7 +189,7 @@ def ingest_blogs(clear_existing=False):
         conn.close()
 
 
-def ingest_youtube(clear_existing=False):
+def ingest_youtube(clear_existing=False, limit=None):
     """Ingest YouTube transcripts from raw/youtube/ directory."""
     print("\n[*] Ingesting YouTube content...")
     
@@ -212,6 +216,10 @@ def ingest_youtube(clear_existing=False):
     if not transcript_files:
         print(f"[-] No transcript files found in {raw_dir}")
         return False
+    
+    if limit:
+        print(f"[*] Limiting to first {limit} YouTube transcripts")
+        transcript_files = transcript_files[:limit]
     
     print(f"[+] Found {len(transcript_files)} transcript files")
     
@@ -335,7 +343,7 @@ def ingest_youtube(clear_existing=False):
         conn.close()
 
 
-def generate_embeddings(blogs_only=False, youtube_only=False, regenerate=False):
+def generate_embeddings(blogs_only=False, youtube_only=False, regenerate=False, limit=None):
     """Generate embeddings for content chunks."""
     if blogs_only and youtube_only:
         print("[-] Cannot specify both --blogs-only and --youtube-only")
@@ -368,13 +376,23 @@ def generate_embeddings(blogs_only=False, youtube_only=False, regenerate=False):
         # Fetch chunks
         all_chunks = []
         for table_name, _ in tables_to_process:
-            if regenerate:
-                cursor.execute(f"SELECT id, chunk_text, '{table_name}' as source_table FROM {table_name} ORDER BY id;")
-            else:
-                cursor.execute(f"SELECT id, chunk_text, '{table_name}' as source_table FROM {table_name} WHERE embedding IS NULL ORDER BY id;")
+            sql = f"SELECT id, chunk_text, '{table_name}' as source_table FROM {table_name}"
+            if not regenerate:
+                sql += " WHERE embedding IS NULL"
+            sql += " ORDER BY id"
+            
+            if limit:
+                sql += f" LIMIT {limit}"
+            
+            cursor.execute(sql + ";")
             
             chunks = cursor.fetchall()
             all_chunks.extend(chunks)
+        
+        # If multiple tables and limit, we might have over-fetched in total if limit was applied per table
+        # But user likely wants a total limit
+        if limit and len(all_chunks) > limit:
+            all_chunks = all_chunks[:limit]
         
         if not all_chunks:
             print("[*] No chunks need embedding generation")
@@ -475,7 +493,7 @@ def scan_video_folders(youtube_dir: Path, verbose: bool = False):
     return video_folders
 
 
-def ingest_youtube_scripts(clear_existing=False, sentiment_enabled=True, verbose=True):
+def ingest_youtube_scripts(clear_existing=False, sentiment_enabled=True, verbose=True, limit=None):
     """Ingest YouTube video scripts from .docx files."""
     print("\\n[*] Ingesting YouTube scripts (.docx)...")
     
@@ -528,6 +546,10 @@ def ingest_youtube_scripts(clear_existing=False, sentiment_enabled=True, verbose
         if not video_folders:
             print("[-] No video folders found")
             return False
+        
+        if limit:
+            print(f"[*] Limiting to first {limit} video folders")
+            video_folders = video_folders[:limit]
         
         # Process each video folder
         ingested_count = 0
@@ -703,6 +725,7 @@ def main():
     parser.add_argument('--youtube-only', action='store_true', help='Only process YouTube content (with --embeddings)')
     parser.add_argument('--regenerate', action='store_true', help='Regenerate all embeddings (with --embeddings)')
     parser.add_argument('--clear', action='store_true', help='Clear existing data before ingesting')
+    parser.add_argument('--limit', type=int, help='Limit number of items to process')
     
     args = parser.parse_args()
     
@@ -718,22 +741,23 @@ def main():
     success = True
     
     if args.all or args.blogs:
-        if not ingest_blogs(clear_existing=args.clear):
+        if not ingest_blogs(clear_existing=args.clear, limit=args.limit):
             success = False
     
     if args.all or args.youtube:
-        if not ingest_youtube(clear_existing=args.clear):
+        if not ingest_youtube(clear_existing=args.clear, limit=args.limit):
             success = False
             
     if args.all or args.youtube_scripts:
-        if not ingest_youtube_scripts(clear_existing=args.clear, sentiment_enabled=True):
+        if not ingest_youtube_scripts(clear_existing=args.clear, sentiment_enabled=True, limit=args.limit):
             success = False
     
     if args.all or args.embeddings:
         if not generate_embeddings(
             blogs_only=args.blogs_only,
             youtube_only=args.youtube_only,
-            regenerate=args.regenerate
+            regenerate=args.regenerate,
+            limit=args.limit
         ):
             success = False
     

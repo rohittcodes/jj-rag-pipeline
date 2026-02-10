@@ -97,22 +97,22 @@ python cli.py sync --sanity --all
 python cli.py sync --all
 ```
 
-### 6. Ingest Local Content
+### 6. Ingest YouTube & Local content
 
-**Option A: Ingest everything (blogs + YouTube + embeddings)**
+**Ingest transcripts from `raw/youtube/`:**
 ```bash
-python cli.py ingest --all
+python cli.py ingest --youtube
 ```
 
-**Option B: Step by step**
+**Local JSON Ingestion (Optional):**
+If you have local blog exports in `raw/blogs/`, you can ingest them manually:
 ```bash
-# Ingest blogs from raw/blogs/
 python cli.py ingest --blogs
+```
 
-# Ingest YouTube from raw/youtube/
-python cli.py ingest --youtube
-
-# Generate embeddings for all content
+**Generate missing embeddings:**
+If any content is missing embeddings, run:
+```bash
 python cli.py ingest --embeddings
 ```
 
@@ -158,18 +158,13 @@ SELECT COUNT(*) FROM configs;
 # Health check
 curl http://localhost:8000/health
 
-# Get recommendations
+# Get recommendations (Structured)
 curl -X POST http://localhost:8000/recommend \
   -H "Content-Type: application/json" \
-  -d '{
-    "quiz_response": {
-      "profession": ["student"],
-      "use_case": ["programming"],
-      "budget": ["value"],
-      "portability": "light"
-    },
-    "top_k": 3
-  }'
+  -d '{"quiz_response": {"profession": ["student"]}, "top_k": 3}'
+
+# Test Streaming API
+uv run python scripts/test_streaming_api.py
 ```
 
 ---
@@ -180,9 +175,10 @@ curl -X POST http://localhost:8000/recommend \
 jj-rag-pipeline/
 ├── src/
 │   ├── data_pipeline/           # Content extraction & embeddings
-│   │   ├── content_extractor.py # Extract from Sanity JSON
-│   │   ├── embedding_generator.py # e5-base-v2 embeddings
-│   │   └── sanity_client.py     # Sanity API client
+│   │   ├── content_extractor.py # Extract from Sanity JSON & Raw files
+│   │   ├── embedding_generator.py # Gemini/SentenceTransformer embeddings
+│   │   ├── sanity_client.py     # Sanity API client
+│   │   └── youtube_script_parser.py # YouTube transcript parser
 │   ├── rag/                     # RAG components
 │   │   ├── retriever.py         # Semantic search
 │   │   ├── ranker.py            # Josh + spec scoring

@@ -49,7 +49,7 @@ PROD_DB_CONFIG = {
 }
 
 
-def sync_from_sanity(article_id=None, sync_all=False):
+def sync_from_sanity(article_id=None, sync_all=False, limit=None):
     """Sync content from Sanity CMS."""
     if not sync_all and not article_id:
         print("[-] Must specify either --all or --id=<article_id>")
@@ -82,6 +82,10 @@ def sync_from_sanity(article_id=None, sync_all=False):
         if not articles:
             print("[-] No articles found")
             return False
+        
+        if limit:
+            print(f"[*] Limiting to first {limit} articles from Sanity")
+            articles = articles[:limit]
         
         print(f"[+] Found {len(articles)} articles")
         
@@ -457,7 +461,7 @@ def main():
     
     if args.all or args.sanity:
         sync_all = args.all or (args.sanity and not args.id)
-        if not sync_from_sanity(article_id=args.id, sync_all=sync_all):
+        if not sync_from_sanity(article_id=args.id, sync_all=sync_all, limit=args.limit):
             success = False
     
     if args.all or args.products:

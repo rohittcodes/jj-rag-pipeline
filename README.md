@@ -17,19 +17,20 @@ docker-compose up -d
 cp .env.example .env
 # Edit .env with your credentials
 
-# 4. Setup database
+# 4. Setup local database (PostgreSQL + vector extension)
 python cli.py setup --all
 
-# 5. Sync data
+# 5. Sync live data (Sanity CMS, Production Products, S3 Test Data)
+# This handles insertion and embedding generation for most content
 python cli.py sync --all
 
-# 6. Ingest content and generate embeddings
-python cli.py ingest --all
+# 6. Ingest YouTube transcripts (Local files provided in raw/youtube/)
+python cli.py ingest --youtube
 
-# 7. Create vector indexes
+# 7. Generate final semantic indexes
 python cli.py setup --indexes
 
-# 8. Start API
+# 8. Start RAG API
 python cli.py api
 ```
 
@@ -47,15 +48,14 @@ API is now running at `http://localhost:8000`
 
 ## Features
 
-- ✅ **Natural Language Input** - Use free-text prompts or structured quiz (LLM intent extraction)
-- ✅ **Semantic Search** - Vector-based content retrieval using e5-base-v2 embeddings
-- ✅ **Multi-Source Content** - Unified search across blog articles, YouTube transcripts, and test data
-- ✅ **Smart Ranking** - Josh's context (60%) + Spec matching (25%) + Test data (15%)
+- ✅ **Streaming API** - Instant token-by-token responses with final structured data block
+- ✅ **Performance Optimization** - Batch fetched configuration lookups to fix N+1 database queries
+- ✅ **Hybrid Ranking** - Josh's context (60%) + Spec matching (25%) + Test data (15%) + Manual Tag Boost (0.5)
+- ✅ **Real-Time Sync** - Webhooks (Sanity, YouTube) + Periodic polling (Products every 5 min)
+- ✅ **OpenAI & Gemini Integration** - GPT-4o for intent extraction, Gemini 2.0 Flash for RAG generation
 - ✅ **Performance Benchmarks** - Real test data from 229 laptop configurations
 - ✅ **Spec Fallback** - Pure spec matching for low confidence queries
 - ✅ **API Authentication** - Optional Bearer token authentication
-- ✅ **Query Logging** - Monitor all recommendation requests
-- ✅ **Real-Time Sync** - Webhooks (Sanity, YouTube) + Periodic polling (Products every 5 min)
 - ✅ **Incremental Sync** - Cursor-based syncing (only fetch new/updated content)
 - ✅ **Date Filtering** - Only use recent, relevant content
 
@@ -100,7 +100,21 @@ curl -X POST http://localhost:8000/recommend \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"quiz_response": {...}}'
+### Streaming Recommendations
+
+**NEW: Experience instant feedback with token streaming!**
+
+```bash
+curl -X POST http://localhost:8000/stream-rag \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "prompt": "I am a computer science student looking for a laptop for coding and some light gaming. Budget around $1200.",
+    "top_k": 5
+  }'
 ```
+
+*Note: The stream returns text tokens first, followed by a final `__JSON_DATA__` block with structured product data (images, links, prices).*
 
 ---
 
@@ -177,11 +191,12 @@ SELECT * FROM rag_query_logs ORDER BY created_at DESC LIMIT 10;
 ## Tech Stack
 
 - **Python 3.12+** with uv package manager
-- **FastAPI** for REST API
+- **FastAPI** for REST and Streaming API
 - **PostgreSQL 15** with pgvector for vector search
 - **Redis** for caching
 - **Sentence Transformers** (e5-base-v2) for embeddings
-- **OpenAI GPT-3.5-turbo** for intent extraction
+- **OpenAI GPT-4o** for intent extraction
+- **Gemini 2.0 Flash** for RAG answer generation
 - **Docker** for local development
 - **AWS S3** for test data storage
 

@@ -7,7 +7,6 @@ Usage:
     python cli.py setup --all
     python cli.py ingest --all
     python cli.py sync --all
-    python cli.py youtube --fetch --count=20
     python cli.py api
 """
 import sys
@@ -49,7 +48,6 @@ def main():
         print("  setup     - Database setup operations")
         print("  ingest    - Content ingestion & embeddings")
         print("  sync      - External data syncing")
-        print("  youtube   - YouTube operations")
         print("  api       - Start API server")
         print("\nUse 'python cli.py <command> --help' for more info")
         return 1
@@ -59,11 +57,11 @@ def main():
     
     if command == 'api':
         return run_api(args)
-    elif command in ['setup', 'ingest', 'sync', 'youtube']:
+    elif command in ['setup', 'ingest', 'sync']:
         return run_script(command, args)
     else:
         print(f"Unknown command: {command}")
-        print("Available: setup, ingest, sync, youtube, api")
+        print("Available: setup, ingest, sync, api")
         return 1
 
 

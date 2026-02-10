@@ -204,12 +204,8 @@ async def root():
 # Request Model for RAG
 class RAGRequest(BaseModel):
     """User input for RAG recommendations."""
-    budget: Optional[str] = Field(None, description="Budget range (e.g., 'budget', 'mid-range', 'premium', '$1000')")
-    use_case: Optional[List[str]] = Field([], description="List of use cases (e.g., 'gaming', 'student', 'programming')")
-    profession: Optional[List[str]] = Field([], description="User professions")
-    portability: Optional[str] = Field(None, description="Portability preference")
-    screen_size: Optional[List[str]] = Field([], description="Screen size preferences")
-    other_requirements: Optional[str] = Field(None, description="Any other natural language requirements")
+    prompt: str = Field(..., description="Natural language query (e.g., 'I need a gaming laptop for college under $1500')")
+    top_k: Optional[int] = Field(5, description="Number of recommendations to return")
 
 
 @app.get("/health")
@@ -261,18 +257,10 @@ async def stream_rag_recommendations(
     
     async def response_stream():
         try:
-            # 1. Extract Intent
+            # 1. Extract Intent from Prompt
             start_time = time.time()
-            quiz_response = {
-                "budget": [request.budget] if request.budget else [],
-                "use_case": request.use_case,
-                "profession": request.profession,
-                "portability": request.portability,
-                "screen_size": request.screen_size,
-                "extracted_requirements": {
-                    "other_notes": request.other_requirements
-                }
-            }
+            extractor_inst = get_intent_extractor()
+            quiz_response = extractor_inst.extract_intent(request.prompt)
             
             # 2. Retrieve Content
             retrieval_results = retriever_inst.retrieve(
@@ -284,16 +272,12 @@ async def stream_rag_recommendations(
             recommendations = ranker_inst.rank(
                 retrieval_results=retrieval_results,
                 quiz_response=quiz_response,
-                top_k=5
+                top_k=request.top_k or 5
             )
             
             # 4. Stream Answer Generation
-            # Construct a natural query from inputs for the generator
-            query = f"I am a {', '.join(request.profession or [])} looking for a {', '.join(request.use_case or [])} laptop. "
-            if request.budget:
-                query += f"My budget is {request.budget}. "
-            if request.other_requirements:
-                query += f"Also: {request.other_requirements}"
+            # Use original prompt
+            query = request.prompt
                 
             # Stream tokens
             for token in rag_generator.generate_stream(query, retrieval_results):

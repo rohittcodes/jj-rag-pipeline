@@ -1,15 +1,12 @@
 # RAG IMPLEMENTATION GUIDE
 
-# RAG Recommendation System - Step-by-Step Implementation Guide
+> [!CAUTION]
+> **UPDATE NOTICE (2026-02-10):** This guide contains historical implementation steps. For the most up-to-date setup instructions, authentication details, and API usage, please refer to:
+> 1. **[README.md](README.md)** (Quick Start & Features)
+> 2. **[SETUP.md](SETUP.md)** (Complete Installation & Troubleshooting)
+> 3. **[TECHNICAL.md](TECHNICAL.md)** (Architecture & API Reference)
 
-> Status: Ready to implement
-> 
-> 
-> **Last Updated:** 2026-01-21
-> 
-> **Estimated Timeline:** 2-3 weeks for Phase 1 MVP
-> 
-> **Philosophy:** Test, validate, iterate - don't build everything at once
+---
 > 
 
 ---

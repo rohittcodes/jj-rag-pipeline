@@ -7,12 +7,8 @@ def test_streaming_api():
     url = "http://localhost:8000/stream-rag"
     
     payload = {
-        "budget": "value",
-        "use_case": ["gaming"],
-        "profession": ["student"],
-        "portability": "somewhat",
-        "screen_size": ["15-16 inch"],
-        "other_requirements": "I need to play Cyberpunk 2077"
+        "prompt": "I am a computer science student looking for a laptop for coding and some light gaming like Cyberpunk 2077. My budget is around $1200.",
+        "top_k": 5
     }
     
     print(f"[*] Testing Streaming API: {url}")
