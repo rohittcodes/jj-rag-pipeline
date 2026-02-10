@@ -49,4 +49,3 @@ models/
 # Data (if you want to keep raw data out of git)
 # Uncomment if needed:
 data/
-raw/
