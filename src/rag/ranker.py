@@ -93,6 +93,7 @@ class RAGRanker:
         self.spec_weight = spec_weight
         self.test_data_weight = test_data_weight
         self.manual_tag_weight = 0.5  # Boost for manual tag match
+        self.similarity_weight = 0.4  # Weight for retrieval similarity (query relevance)
         
         self.use_ec2_db = use_ec2_db
         self.ec2_db_config = ec2_db_config
@@ -132,6 +133,7 @@ class RAGRanker:
             print(f"    - Josh weight: {self.josh_weight}")
             print(f"    - Spec weight: {self.spec_weight}")
             print(f"    - Test data weight: {self.test_data_weight}")
+            print(f"    - Similarity weight: {self.similarity_weight}")
             print(f"    - Config database: Local (synced)")
             config_count = self.config_client.get_config_count()
             print(f"    - Available configs: {config_count}")
@@ -228,11 +230,15 @@ class RAGRanker:
             if config_id and config_id in use_case_map:
                 manual_score = self._calculate_manual_use_case_score(use_case_map[config_id], quiz_response)
             
-            # Final combined score
+            # Final combined score - NOW INCLUDING SIMILARITY (query relevance)
+            # This ensures query-specific results instead of always showing the same products
+            similarity_score = candidate['max_similarity']  # Highest similarity from retrieved chunks
+            
             confidence_score = (scored['josh_score'] * self.josh_weight) + \
                              (spec_score * self.spec_weight) + \
                              (scored['test_data_score'] * self.test_data_weight) + \
-                             (manual_score * self.manual_tag_weight)
+                             (manual_score * self.manual_tag_weight) + \
+                             (similarity_score * self.similarity_weight)
             
             # Normalize to max 1.0
             confidence_score = min(1.0, confidence_score)
@@ -295,7 +301,13 @@ class RAGRanker:
                 print(f"    - Top recommendation: {unique_recommendations[0].product_name}")
                 print(f"    - Confidence: {unique_recommendations[0].confidence_score:.3f}")
         
-        return unique_recommendations[:top_k]
+        # Step 8: Filter by brand preferences/exclusions
+        filtered_recommendations = self._filter_by_brand_preferences(unique_recommendations, quiz_response)
+        
+        if self.verbose and len(filtered_recommendations) < len(unique_recommendations):
+            print(f"[*] Filtered out {len(unique_recommendations) - len(filtered_recommendations)} products based on brand preferences")
+        
+        return filtered_recommendations[:top_k]
     
     def _group_chunks_by_config(
         self,
@@ -765,6 +777,358 @@ class RAGRanker:
                 multiplier = 0.2  # Mostly negative
         
         return multiplier
+    
+    
+    def _calculate_test_data_score_from_chunks(self, candidate: Dict, quiz_response: Dict) -> float:
+        """
+        TRUE RAG-BASED test data scoring using vector similarity search.
+        
+        Instead of keyword matching, this:
+        1. Constructs a semantic query based on user's use case
+        2. Performs vector search on test_data_chunks embeddings
+        3. Retrieves relevant benchmarks based on similarity
+        4. Scores based on retrieved benchmark data
+        
+        Args:
+            candidate: Product candidate with config_id
+            quiz_response: User's quiz response with use cases
+            
+        Returns:
+            Score between 0.0 and 1.0
+        """
+        config_id = candidate.get('config_id')
+        if not config_id:
+            return 0.0
+        
+        # Extract user requirements
+        use_cases = quiz_response.get('use_case', [])
+        extracted_reqs = quiz_response.get('extracted_requirements', {})
+        needs_long_battery = extracted_reqs.get('needs_long_battery', False)
+        
+        if not use_cases and not needs_long_battery:
+            return 0.0
+        
+        # 1. Build semantic query based on use case
+        query_text = self._build_test_data_query(use_cases, quiz_response)
+        
+        if not query_text:
+            return 0.0
+        
+        # 2. Retrieve relevant test data using vector search
+        try:
+            relevant_benchmarks = self._retrieve_relevant_test_data(
+                config_id=config_id,
+                query_text=query_text,
+                top_k=5
+            )
+            
+            if not relevant_benchmarks:
+                return 0.0
+            
+            # 3. Score based on retrieved benchmarks
+            score = self._score_from_retrieved_benchmarks(
+                relevant_benchmarks,
+                use_cases,
+                quiz_response
+            )
+            
+            return score
+            
+        except Exception as e:
+            if self.verbose:
+                print(f"[!] Error in RAG test data scoring for config {config_id}: {e}")
+            return 0.0
+    
+    def _build_test_data_query(self, use_cases: List[str], quiz_response: Dict) -> str:
+        """
+        Build a semantic query for test data retrieval based on user's use case.
+        
+        This query will be embedded and used for vector similarity search.
+        """
+        query_parts = []
+        
+        # Gaming use case
+        if 'gaming' in use_cases:
+            query_parts.append("gaming performance FPS frame rate graphics benchmark 3DMark")
+        
+        # Video editing use case
+        if 'video_editing' in use_cases:
+            query_parts.append("video editing rendering export encoding performance Premiere Blender")
+        
+        # Programming/data science use case
+        if 'programming' in use_cases or 'data_science' in use_cases:
+            query_parts.append("CPU performance multi-core Geekbench Cinebench compile time")
+        
+        # Battery life
+        extracted_reqs = quiz_response.get('extracted_requirements', {})
+        if extracted_reqs.get('needs_long_battery') or quiz_response.get('portability') in ['light', 'somewhat']:
+            query_parts.append("battery life runtime hours endurance")
+        
+        # Portability (weight)
+        if quiz_response.get('portability') == 'light':
+            query_parts.append("weight portability lightweight")
+        
+        return " ".join(query_parts)
+    
+    def _retrieve_relevant_test_data(
+        self,
+        config_id: int,
+        query_text: str,
+        top_k: int = 5
+    ) -> List[Dict]:
+        """
+        Retrieve relevant test data chunks using vector similarity search.
+        
+        This is TRUE RAG - using embeddings and cosine similarity!
+        """
+        # Import embedding generator (lazy import to avoid circular dependency)
+        from src.data_pipeline.embedding_generator import EmbeddingGenerator
+        
+        # Generate query embedding
+        embedding_gen = EmbeddingGenerator(verbose=False)
+        query_embedding = embedding_gen.generate_embedding(query_text)
+        
+        # Vector search on test_data_chunks
+        conn = psycopg2.connect(**self.db_config)
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        
+        # Use pgvector's cosine similarity operator (<=>)
+        cursor.execute("""
+            SELECT 
+                test_type,
+                test_description,
+                benchmark_results,
+                chunk_text,
+                1 - (embedding <=> %s::vector) as similarity
+            FROM test_data_chunks
+            WHERE config_id = %s
+                AND embedding IS NOT NULL
+            ORDER BY embedding <=> %s::vector
+            LIMIT %s
+        """, (query_embedding, config_id, query_embedding, top_k))
+        
+        results = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        
+        if self.verbose and results:
+            print(f"[*] Retrieved {len(results)} relevant test data chunks via vector search")
+            print(f"    Top similarity: {results[0]['similarity']:.3f}")
+        
+        return results
+    
+    def _score_from_retrieved_benchmarks(
+        self,
+        benchmarks: List[Dict],
+        use_cases: List[str],
+        quiz_response: Dict
+    ) -> float:
+        """
+        Score product based on retrieved benchmark data.
+        
+        Uses the actual benchmark_results JSON data from vector-retrieved chunks.
+        """
+        if not benchmarks:
+            return 0.0
+        
+        scores = []
+        
+        for benchmark in benchmarks:
+            similarity = benchmark.get('similarity', 0.0)
+            benchmark_data = benchmark.get('benchmark_results') or {}
+            chunk_text = benchmark.get('chunk_text', '').lower()
+            
+            # Weight by retrieval similarity (RAG confidence)
+            similarity_weight = similarity
+            
+            # Gaming performance
+            if 'gaming' in use_cases:
+                gaming_score = self._extract_gaming_score(benchmark_data, chunk_text)
+                if gaming_score > 0:
+                    scores.append(gaming_score * similarity_weight)
+            
+            # Video editing performance
+            if 'video_editing' in use_cases:
+                video_score = self._extract_video_score(benchmark_data, chunk_text)
+                if video_score > 0:
+                    scores.append(video_score * similarity_weight)
+            
+            # CPU performance
+            if 'programming' in use_cases or 'data_science' in use_cases:
+                cpu_score = self._extract_cpu_score(benchmark_data, chunk_text)
+                if cpu_score > 0:
+                    scores.append(cpu_score * similarity_weight)
+            
+            # Battery life
+            extracted_reqs = quiz_response.get('extracted_requirements', {})
+            if extracted_reqs.get('needs_long_battery') or quiz_response.get('portability') in ['light', 'somewhat']:
+                battery_score = self._extract_battery_score(benchmark_data, chunk_text)
+                if battery_score > 0:
+                    scores.append(battery_score * similarity_weight)
+        
+        # Return average weighted score
+        return sum(scores) / len(scores) if scores else 0.0
+    
+    def _extract_gaming_score(self, benchmark_data: Dict, chunk_text: str) -> float:
+        """Extract gaming performance score from benchmark data."""
+        # Check structured benchmark_results JSON first
+        if benchmark_data:
+            # Look for FPS values in benchmark data
+            fps_values = []
+            
+            # Check for 3DMark scores
+            if '3dmark' in benchmark_data:
+                scores = benchmark_data['3dmark'].get('scores', {})
+                # 3DMark scores: normalize to 0-1 scale
+                # Timespy: 2000-8000 range
+                if 'timespy' in scores:
+                    timespy = scores['timespy']
+                    if timespy >= 6000:
+                        return 1.0
+                    elif timespy >= 4000:
+                        return 0.8
+                    elif timespy >= 2500:
+                        return 0.6
+                    else:
+                        return 0.4
+            
+            # Check for direct FPS values
+            for key, value in benchmark_data.items():
+                if 'fps' in key.lower() and isinstance(value, (int, float)):
+                    fps_values.append(float(value))
+            
+            if fps_values:
+                avg_fps = sum(fps_values) / len(fps_values)
+                if avg_fps >= 60:
+                    return 1.0
+                elif avg_fps >= 45:
+                    return 0.8
+                elif avg_fps >= 30:
+                    return 0.6
+                else:
+                    return 0.4
+        
+        # Fallback: semantic understanding from chunk text
+        # (This is where RAG shines - understanding context!)
+        if any(term in chunk_text for term in ['excellent gaming', 'high fps', 'smooth gameplay', '60+ fps']):
+            return 0.9
+        elif any(term in chunk_text for term in ['good gaming', 'playable', 'decent fps']):
+            return 0.7
+        elif any(term in chunk_text for term in ['poor gaming', 'low fps', 'stuttering']):
+            return 0.3
+        
+        return 0.5
+    
+    def _extract_video_score(self, benchmark_data: Dict, chunk_text: str) -> float:
+        """Extract video editing performance score from benchmark data."""
+        if benchmark_data:
+            # Check for rendering/export times
+            for key, value in benchmark_data.items():
+                key_lower = key.lower()
+                if any(term in key_lower for term in ['render', 'export', 'encode']):
+                    if isinstance(value, (int, float)):
+                        # Lower time = better (assume minutes)
+                        if value <= 5:
+                            return 1.0
+                        elif value <= 10:
+                            return 0.8
+                        elif value <= 20:
+                            return 0.6
+                        else:
+                            return 0.4
+        
+        # Semantic understanding
+        if any(term in chunk_text for term in ['fast render', 'quick export', 'excellent for editing']):
+            return 0.9
+        elif any(term in chunk_text for term in ['slow render', 'long export', 'struggles with editing']):
+            return 0.3
+        
+        return 0.5
+    
+    def _extract_cpu_score(self, benchmark_data: Dict, chunk_text: str) -> float:
+        """Extract CPU performance score from benchmark data."""
+        if benchmark_data:
+            # Check for Geekbench scores
+            if 'geekbench' in benchmark_data:
+                scores = benchmark_data['geekbench'].get('scores', {})
+                if 'multi_core' in scores:
+                    multi_score = scores['multi_core']
+                    # Geekbench multi-core: 5000-15000 range
+                    if multi_score >= 10000:
+                        return 1.0
+                    elif multi_score >= 7000:
+                        return 0.8
+                    elif multi_score >= 5000:
+                        return 0.6
+                    else:
+                        return 0.4
+            
+            # Check for Cinebench scores
+            if 'cinebench' in benchmark_data:
+                scores = benchmark_data['cinebench'].get('scores', {})
+                if 'multi_core' in scores:
+                    cinebench = scores['multi_core']
+                    # Cinebench: 1000-3000 range
+                    if cinebench >= 2000:
+                        return 1.0
+                    elif cinebench >= 1500:
+                        return 0.8
+                    elif cinebench >= 1000:
+                        return 0.6
+                    else:
+                        return 0.4
+        
+        # Semantic understanding
+        if any(term in chunk_text for term in ['excellent cpu', 'fast processor', 'high performance']):
+            return 0.9
+        elif any(term in chunk_text for term in ['slow cpu', 'weak processor', 'poor performance']):
+            return 0.3
+        
+        return 0.5
+    
+    def _extract_battery_score(self, benchmark_data: Dict, chunk_text: str) -> float:
+        """Extract battery life score from benchmark data."""
+        import re
+        
+        if benchmark_data:
+            # Check for battery hours in structured data
+            if 'battery' in benchmark_data:
+                battery_info = benchmark_data['battery'].get('scores', {})
+                hours = battery_info.get('hours') or battery_info.get('minutes', 0) / 60
+                
+                if hours >= 12:
+                    return 1.0
+                elif hours >= 10:
+                    return 0.9
+                elif hours >= 8:
+                    return 0.7
+                elif hours >= 6:
+                    return 0.5
+                else:
+                    return 0.3
+        
+        # Parse from text (fallback)
+        battery_matches = re.findall(r'(\d+(?:\.\d+)?)\s*hours?', chunk_text, re.IGNORECASE)
+        if battery_matches:
+            hours = max([float(h) for h in battery_matches])
+            if hours >= 12:
+                return 1.0
+            elif hours >= 10:
+                return 0.9
+            elif hours >= 8:
+                return 0.7
+            elif hours >= 6:
+                return 0.5
+            else:
+                return 0.3
+        
+        # Semantic understanding
+        if any(term in chunk_text for term in ['excellent battery', 'long battery life', 'all-day battery']):
+            return 0.9
+        elif any(term in chunk_text for term in ['poor battery', 'short battery life', 'needs charging']):
+            return 0.3
+        
+        return 0.5
     
     def _calculate_josh_score(self, product_data: Dict) -> float:
         """
@@ -1431,6 +1795,62 @@ class RAGRanker:
             return f"${int(price)}"
         
         return None
+
+    def _filter_by_brand_preferences(
+        self,
+        recommendations: List[ProductRecommendation],
+        quiz_response: Dict
+    ) -> List[ProductRecommendation]:
+        """
+        Filter recommendations based on brand preferences and exclusions.
+        
+        Args:
+            recommendations: List of product recommendations
+            quiz_response: User's quiz response with brand preferences
+            
+        Returns:
+            Filtered list of recommendations
+        """
+        excluded_brands = quiz_response.get('excluded_brands', [])
+        preferred_brands = quiz_response.get('preferred_brands', [])
+        
+        # If no brand preferences, return all
+        if not excluded_brands and not preferred_brands:
+            return recommendations
+        
+        filtered = []
+        
+        for rec in recommendations:
+            product_name = rec.product_name.lower()
+            
+            # Check if product is from an excluded brand
+            is_excluded = False
+            for brand in excluded_brands:
+                brand_lower = brand.lower()
+                # Check if brand name appears in product name
+                if brand_lower in product_name:
+                    is_excluded = True
+                    if self.verbose:
+                        print(f"[*] Filtering out {rec.product_name} (excluded brand: {brand})")
+                    break
+            
+            if not is_excluded:
+                filtered.append(rec)
+        
+        # If there are preferred brands, boost their scores
+        if preferred_brands:
+            for rec in filtered:
+                product_name = rec.product_name.lower()
+                for brand in preferred_brands:
+                    if brand.lower() in product_name:
+                        # Boost confidence score by 10%
+                        rec.confidence_score = min(1.0, rec.confidence_score * 1.1)
+                        break
+            
+            # Re-sort after boosting
+            filtered.sort(key=lambda x: x.confidence_score, reverse=True)
+        
+        return filtered
 
 
 if __name__ == "__main__":

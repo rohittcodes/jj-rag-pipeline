@@ -262,6 +262,28 @@ class RAGRetriever:
         """
         params.append(query_embedding)
 
+        # Add product spec chunks
+        sql += """
+            UNION ALL
+            SELECT 
+                ps.id as chunk_id,
+                ps.config_id as content_id,
+                ps.chunk_text,
+                'Technical Specifications' as section_title,
+                NULL as metadata,
+                c.product_name as content_title,
+                'product_spec' as content_type,
+                NULL as url,
+                c.last_synced::date as publish_date,
+                ARRAY['specs', 'technical', 'hardware'] as use_case_tags,
+                1 - (ps.embedding <=> %s::vector) as similarity,
+                'product_spec' as source_type
+            FROM product_spec_chunks ps
+            JOIN configs c ON ps.config_id = c.config_id
+            WHERE ps.embedding IS NOT NULL
+        """
+        params.append(query_embedding)
+
         # Order by similarity and limit (applies to UNION result)
         sql += """
             ORDER BY similarity DESC

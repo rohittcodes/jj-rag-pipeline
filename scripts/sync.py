@@ -174,6 +174,9 @@ def sync_products():
         return False
     
     try:
+        # Initialize embedding generator
+        embedding_gen = EmbeddingGenerator()
+        
         # Connect to production DB (read-only)
         prod_conn = psycopg2.connect(**PROD_DB_CONFIG)
         prod_cursor = prod_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
@@ -234,7 +237,39 @@ def sync_products():
         for config in configs:
             config_id = config['config_id']
             test_data = test_data_map.get(config_id, {})
+            brand = config['brand'] or ''
+            model = config['model'] or ''
+            product_name = config['product_name'] or f"{brand} {model}"
+            price = config['price']
+            specs = config['specs'] or {}
+            josh_context = config['josh_context'] or ''
             
+            # --- Generate Product spec Story ---
+            # Extract key specs for the story
+            cpu = specs.get('Processor', specs.get('CPU', 'N/A'))
+            gpu = specs.get('Graphics', specs.get('GPU', 'N/A'))
+            ram = specs.get('Memory', specs.get('RAM', 'N/A'))
+            display = specs.get('Display', 'N/A')
+            storage = specs.get('Storage', specs.get('SSD', 'N/A'))
+            
+            story = f"Product: {product_name}. "
+            if price:
+                story += f"Price: ${price}. "
+            story += f"Key Specs: CPU: {cpu}, GPU: {gpu}, RAM: {ram}, Display: {display}, Storage: {storage}. "
+            
+            # Add all specs naturally
+            other_specs = []
+            for k, v in specs.items():
+                if k not in ['Processor', 'CPU', 'Graphics', 'GPU', 'Memory', 'RAM', 'Display', 'Storage', 'SSD']:
+                    other_specs.append(f"{k}: {v}")
+            
+            if other_specs:
+                story += "Additional Details: " + ", ".join(other_specs) + ". "
+            
+            if josh_context:
+                story += f"Josh's Perspective: {josh_context}"
+            
+            # Insert/Update Config
             local_cursor.execute("""
                 INSERT INTO configs (
                     config_id, product_id, product_name, brand, model,
@@ -255,22 +290,34 @@ def sync_products():
             """, (
                 config_id,
                 config['product_id'],
-                config['product_name'],
-                config['brand'],
-                config['model'],
-                config['price'],
-                json.dumps(config['specs']) if config['specs'] else None,
+                product_name,
+                brand,
+                model,
+                price,
+                json.dumps(specs) if specs else None,
                 json.dumps(test_data) if test_data else None,
                 config['rating'],
-                config['josh_context']
+                josh_context
             ))
             
+            # Insert Product Spec Chunk (Searchable)
+            # Delete old chunks for this config first
+            local_cursor.execute("DELETE FROM product_spec_chunks WHERE config_id = %s;", (config_id,))
+            
+            # Generate embedding for the story
+            embedding = embedding_gen.generate_embeddings([story], show_progress=False)[0]
+            
+            local_cursor.execute("""
+                INSERT INTO product_spec_chunks (config_id, chunk_text, embedding)
+                VALUES (%s, %s, %s);
+            """, (config_id, story, embedding))
+            
             synced += 1
-            if synced % 100 == 0:
-                print(f"[*] Synced {synced}/{len(configs)} configs...")
+            if synced % 50 == 0:
+                print(f"[*] Synced and embedded {synced}/{len(configs)} configs...")
         
         local_conn.commit()
-        print(f"\n[+] Successfully synced {synced} product configs")
+        print(f"\n[+] Successfully synced {synced} product configs and generated searchable embeddings")
         
         prod_cursor.close()
         prod_conn.close()

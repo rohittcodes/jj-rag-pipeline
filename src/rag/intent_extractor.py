@@ -159,6 +159,30 @@ CRITICAL RULES:
    - programming: min_ram=8-16
    - trading: min_ram=16+ (multiple apps, fast processing)
    - school/basic_use/corporate: min_ram=8
+9. **BRAND PREFERENCES**:
+   - Extract any brand preferences (e.g., "I love Lenovo", "only Dell", "prefer ThinkPads") into "preferred_brands" array
+   - Extract any brand EXCLUSIONS (e.g., "no Macs", "not Apple", "no MacBooks", "avoid HP") into "excluded_brands" array
+   - Use lowercase brand names: "apple", "dell", "lenovo", "hp", "asus", "acer", "microsoft", "razer", "msi", "lg", "samsung", etc.
+   - For "no Macs" or "no MacBooks" → excluded_brands: ["apple"]
+   - For "only Lenovo" → preferred_brands: ["lenovo"]
+
+EXAMPLE OUTPUT (CS student, no Macs, prefers Lenovo):
+{
+  "profession": ["student"],
+  "use_case": ["school", "programming"],
+  "budget": ["value"],
+  "portability": "light",
+  "screen_size": ["14 inches"],
+  "preferred_brands": ["lenovo"],
+  "excluded_brands": ["apple"],
+  "extracted_requirements": {
+    "min_ram": 16,
+    "min_storage": 512,
+    "needs_gpu": false,
+    "needs_long_battery": true,
+    "other_notes": "Computer science student who prefers Lenovo ThinkPads, no Macs"
+  }
+}
 """
         
         try:

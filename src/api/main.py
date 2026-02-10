@@ -251,8 +251,7 @@ async def stream_rag_recommendations(
     # Get components
     retriever_inst = get_retriever()
     ranker_inst = get_ranker()
-    # spec_fallback_inst = get_spec_fallback()
-    # inte_extractor_inst = get_intent_extractor()
+    spec_fallback_inst = get_spec_fallback()
     rag_generator = RAGGenerator(verbose=True)
     
     async def response_stream():
@@ -262,9 +261,10 @@ async def stream_rag_recommendations(
             extractor_inst = get_intent_extractor()
             quiz_response = extractor_inst.extract_intent(request.prompt)
             
-            # 2. Retrieve Content
+            # 2. Retrieve Content using the ACTUAL user query (not constructed from quiz)
+            # This ensures query-specific retrieval instead of generic intent-based retrieval
             retrieval_results = retriever_inst.retrieve(
-                quiz_response=quiz_response,
+                query=request.prompt,  # Use original prompt for better specificity
                 top_k=15
             )
             
@@ -275,12 +275,55 @@ async def stream_rag_recommendations(
                 top_k=request.top_k or 5
             )
             
-            # 4. Stream Answer Generation
+            # 4. Check if we need spec-based fallback
+            # Use fallback if: (a) we have fewer than requested, or (b) average confidence is low
+            top_k_requested = request.top_k or 5
+            avg_confidence = sum(r.confidence_score for r in recommendations) / len(recommendations) if recommendations else 0
+            
+            if len(recommendations) < top_k_requested or avg_confidence < 0.4:
+                # Supplement with spec-based recommendations
+                spec_recs = spec_fallback_inst.recommend(quiz_response, top_k=top_k_requested)
+                
+                # Convert spec recommendations to ProductRecommendation format
+                from src.rag.ranker import ProductRecommendation
+                for spec_rec in spec_recs:
+                    # Only add if not already in recommendations
+                    if not any(r.config_id == spec_rec.config_id for r in recommendations):
+                        recommendations.append(ProductRecommendation(
+                            product_name=spec_rec.product_name,
+                            config_id=spec_rec.config_id,
+                            confidence_score=spec_rec.confidence_score * 0.8,  # Slightly lower than RAG-based
+                            josh_score=0.0,
+                            spec_score=spec_rec.spec_score,
+                            test_data_score=0.0,
+                            ranking=None,
+                            recommendation_type='spec_based',
+                            josh_quote=None,
+                            source_article='Spec-based recommendation',
+                            source_url='',
+                            section_title=None,
+                            explanation=spec_rec.explanation,
+                            pros=[],
+                            cons=[],
+                            who_is_this_for=None,
+                            similarity=0.0,
+                            chunk_ids=[]
+                        ))
+                
+                # Re-sort and limit
+                recommendations.sort(key=lambda x: x.confidence_score, reverse=True)
+                recommendations = recommendations[:top_k_requested]
+            
+            # 5. Stream Answer Generation with product context
             # Use original prompt
             query = request.prompt
-                
-            # Stream tokens
-            for token in rag_generator.generate_stream(query, retrieval_results):
+            
+            # Pass recommendations to generator so it knows which products to reference
+            for token in rag_generator.generate_stream_with_products(
+                query, 
+                retrieval_results, 
+                recommendations
+            ):
                 yield token
             
             # 5. Append JSON Data Chunk
@@ -299,6 +342,7 @@ async def stream_rag_recommendations(
                         c = configs[cid]
                         prod['image_url'] = c.get('product_image') or c.get('image')
                         prod['price'] = c.get('price')
+                        prod['specs'] = c.get('specs') or {}
                         prod['product_link'] = f"https://justjosh.tech/product/{c.get('product_slug')}" if c.get('product_slug') else None
             
             # Yield final JSON block
@@ -307,9 +351,10 @@ async def stream_rag_recommendations(
                 "recommendations": products_data,
                 "sources": [
                     {
-                        "title": r.metadata.get('title', 'Unknown'),
+                        "title": r.metadata.get('content_title', 'Unknown'),
                         "url": r.metadata.get('url', ''),
-                        "type": r.metadata.get('source_type', 'unknown')
+                        "type": r.metadata.get('source_type', 'unknown'),
+                        "text": r.chunk_text
                     }
                     for r in retrieval_results[:5]
                 ],

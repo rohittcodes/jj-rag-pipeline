@@ -124,6 +124,18 @@ def setup_main_database():
             );
         """)
         
+        # Create product_spec_chunks table
+        print("[*] Creating product_spec_chunks table...")
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS product_spec_chunks (
+                id SERIAL PRIMARY KEY,
+                config_id INTEGER NOT NULL REFERENCES configs(config_id) ON DELETE CASCADE,
+                chunk_text TEXT NOT NULL,
+                embedding vector(768),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+        
         # Create indexes
         print("[*] Creating indexes...")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_josh_content_publish_date ON josh_content(publish_date);")
@@ -134,6 +146,7 @@ def setup_main_database():
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_rag_query_logs_created_at ON rag_query_logs(created_at);")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_test_data_chunks_config_id ON test_data_chunks(config_id);")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_test_data_chunks_test_type ON test_data_chunks(test_type);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_product_spec_chunks_config_id ON product_spec_chunks(config_id);")
         
         conn.commit()
         print("[+] Main database schema created successfully!")
@@ -241,6 +254,14 @@ def create_vector_indexes():
         cursor.execute("""
             CREATE INDEX IF NOT EXISTS idx_test_data_chunks_embedding 
             ON test_data_chunks 
+            USING hnsw (embedding vector_cosine_ops);
+        """)
+
+        # Create HNSW index for product spec chunks
+        print("[*] Creating HNSW index for product_spec_chunks...")
+        cursor.execute("""
+            CREATE INDEX IF NOT EXISTS idx_product_spec_chunks_embedding 
+            ON product_spec_chunks 
             USING hnsw (embedding vector_cosine_ops);
         """)
         
