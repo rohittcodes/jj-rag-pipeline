@@ -6,11 +6,20 @@ import { Thread } from "@/components/assistant-ui/thread";
 const MyModelAdapter: ChatModelAdapter = {
   async *run({ messages }) {
     const lastMessage = messages[messages.length - 1];
-    const query = lastMessage.content.find((p) => p.type === "text")?.text || "";
+    const query = lastMessage?.role === "user" 
+      ? lastMessage.content.find((p) => p.type === "text")?.text || ""
+      : "";
+
+    if (!query) return;
 
     const response = await fetch("/api/chat", {
       method: "POST",
-      body: JSON.stringify({ messages: [{ role: "user", content: query }] }),
+      body: JSON.stringify({ 
+        messages: messages.map(m => ({
+          role: m.role,
+          content: m.content
+        })) 
+      }),
       headers: { "Content-Type": "application/json" },
     });
 

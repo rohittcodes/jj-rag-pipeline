@@ -33,11 +33,17 @@ import type { FC } from "react";
 export const Thread: FC = () => {
   return (
     <ThreadPrimitive.Root
-      className="aui-root aui-thread-root @container flex h-full flex-col bg-background"
+      className="aui-root aui-thread-root @container flex h-full flex-col bg-white"
       style={{
-        ["--thread-max-width" as string]: "44rem",
+        ["--thread-max-width" as string]: "52rem",
       }}
     >
+      {/* <div className="flex flex-col items-center w-full pt-8 pb-4 border-b bg-white sticky top-0 z-20">
+        <div className="flex flex-col items-center gap-2">
+          <h1 className="text-2xl font-bold text-gray-900 font-montserrat">Just Josh AI</h1>
+          <p className="text-sm text-gray-500">Your most trusted laptop reviewer</p>
+        </div>
+      </div> */}
       <ThreadPrimitive.Viewport
         turnAnchor="top"
         className="aui-thread-viewport relative flex flex-1 flex-col overflow-x-auto overflow-y-scroll scroll-smooth px-4 pt-4"
@@ -86,7 +92,7 @@ const ThreadWelcome: FC = () => {
             Hey there! Josh here.
           </h1>
           <p className="aui-thread-welcome-message-inner fade-in slide-in-from-bottom-1 animate-in text-muted-foreground text-xl delay-75 duration-200">
-            Ready to find the absolute best gear for you?
+            Ready to find the absolute best laptop configuration for you?
           </p>
         </div>
       </div>
@@ -102,7 +108,7 @@ const SUGGESTIONS = [
     prompt: "Which is better for me: Razer Blade 14 or MacBook Pro 14?",
   },
   {
-    title: "Best Gear Advice",
+    title: "Best Laptop Configuration Advice",
     label: "Editing laptop under $1500",
     prompt: "What's the best laptop for video editing under $1500?",
   },
@@ -140,10 +146,10 @@ const ThreadSuggestions: FC = () => {
 const Composer: FC = () => {
   return (
     <ComposerPrimitive.Root className="aui-composer-root relative flex w-full flex-col">
-      <div className="aui-composer-container flex w-full bg-black flex-col rounded-2xl border border-input px-1 pt-2 outline-none transition-shadow has-[textarea:focus-visible]:border-ring has-[textarea:focus-visible]:ring-2 has-[textarea:focus-visible]:ring-ring/20">
+      <div className="aui-composer-container flex w-full bg-white flex-col rounded-2xl border border-input px-1 pt-2 outline-none transition-shadow has-[textarea:focus-visible]:border-ring has-[textarea:focus-visible]:ring-2 has-[textarea:focus-visible]:ring-ring/20 shadow-sm">
         <ComposerPrimitive.Input
-          placeholder="Send a message..."
-          className="aui-composer-input mb-1 max-h-32 min-h-14 w-full resize-none bg-transparent px-4 pt-2 pb-3 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-0"
+          placeholder="Ask Josh anything about laptops..."
+          className="aui-composer-input mb-1 max-h-32 min-h-14 w-full resize-none bg-transparent px-4 pt-2 pb-3 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-0 text-foreground"
           rows={1}
           autoFocus
           aria-label="Message input"
@@ -205,7 +211,7 @@ const AssistantMessage: FC = () => {
       className="aui-assistant-message-root fade-in slide-in-from-bottom-1 relative mx-auto w-full max-w-(--thread-max-width) animate-in py-3 duration-150"
       data-role="assistant"
     >
-      <div className="aui-assistant-message-content wrap-break-word px-2 text-foreground leading-relaxed">
+      <div className="aui-assistant-message-content wrap-break-word px-2 text-gray-900 leading-relaxed font-medium">
         <MessagePrimitive.Parts
           components={{
             Text: MarkdownText,
@@ -241,7 +247,7 @@ const AssistantRecommendations: FC = () => {
     if (!data.recommendations || data.recommendations.length === 0) return null;
 
     return (
-      <div className="mt-4 flex gap-4 overflow-x-auto pb-2 bg-black z-1000 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
+      <div className="mt-6 flex flex-col gap-4 w-full z-10">
         {data.recommendations.map((rec: any, i: number) => (
           <ProductCard key={i} recommendation={rec} />
         ))}
@@ -309,7 +315,7 @@ const UserMessage: FC = () => {
     >
 
       <div className="aui-user-message-content-wrapper relative col-start-2 min-w-0">
-        <div className="aui-user-message-content wrap-break-word rounded-2xl bg-muted px-4 py-2.5 text-foreground">
+        <div className="aui-user-message-content wrap-break-word rounded-2xl bg-gray-100 px-4 py-2.5 text-gray-900 font-medium border border-gray-200 shadow-sm">
           <MessagePrimitive.Parts />
         </div>
         <div className="aui-user-action-bar-wrapper absolute top-1/2 left-0 -translate-x-full -translate-y-1/2 pr-2">

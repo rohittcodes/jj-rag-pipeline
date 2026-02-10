@@ -225,13 +225,15 @@ class ConfigDatabaseClient:
         """Alias for get_config_by_id for backward compatibility."""
         return self.get_config_by_id(config_id)
     
-    def get_configs_by_ids(self, config_ids: List[int], include_properties: bool = False) -> Dict[int, Dict[str, Any]]:
+    def get_configs_by_ids(self, config_ids: List[int], include_properties: bool = False, include_links: bool = False, location_id: Optional[int] = None) -> Dict[int, Dict[str, Any]]:
         """
         Fetch multiple configs by config_ids (batch query) from PRODUCTION database.
         
         Args:
             config_ids: List of configuration IDs
             include_properties: If True, includes property groups and values
+            include_links: If True, includes affiliate links and store info
+            location_id: Optional location ID to filter affiliate links
             
         Returns:
             Dictionary mapping config_id -> config data
@@ -252,7 +254,7 @@ class ConfigDatabaseClient:
                     c.fallback_msrp as price,
                     c.final_rating,
                     c.model_year,
-                    c.image,
+                    c.image as config_image,
                     c.sku,
                     c.upc,
                     c.testing_status,
@@ -262,8 +264,6 @@ class ConfigDatabaseClient:
                     p.slug as product_slug,
                     p.description as product_description,
                     p.image as product_image,
-                    p.yt_review_video_id,
-                    p.test_data_pdf_url,
                     p.yt_review_video_id,
                     p.test_data_pdf_url,
                     p.test_data_pdf_key
@@ -280,6 +280,11 @@ class ConfigDatabaseClient:
                 for config_id in result.keys():
                     result[config_id]['property_groups'] = self._fetch_config_properties(cursor, config_id)
             
+            # Fetch affiliate links for all configs if requested
+            if include_links:
+                for config_id in result.keys():
+                    result[config_id]['affiliate_links'] = self._fetch_affiliate_links(cursor, config_id, location_id)
+            
             cursor.close()
             conn.close()
             
@@ -288,6 +293,35 @@ class ConfigDatabaseClient:
         except Exception as e:
             print(f"[!] Error fetching configs: {e}")
             return {}
+
+    def _fetch_affiliate_links(self, cursor, config_id: int, location_id: Optional[int] = None) -> List[Dict[str, Any]]:
+        """Fetch affiliate links and store info for a config."""
+        query = """
+            SELECT 
+                al.id,
+                al.url,
+                al.current_price,
+                al.msrp,
+                al.out_of_stock,
+                s.name as store_name,
+                s.logo as store_logo
+            FROM affiliate_links_v2 al
+            JOIN affiliate_programs ap ON al.affiliate_program_id = ap.id
+            JOIN stores s ON ap.store_id = s.id
+            WHERE al.config_id = %s 
+              AND al.is_archived = false 
+              AND (al.out_of_stock = false OR al.out_of_stock IS NULL)
+        """
+        params = [config_id]
+        
+        if location_id is not None:
+            query += " AND ap.location_id = %s"
+            params.append(location_id)
+            
+        query += " ORDER BY al.current_price ASC;"
+        
+        cursor.execute(query, params)
+        return [dict(row) for row in cursor.fetchall()]
     
     # Alias for backward compatibility
     def get_products_by_config_ids(self, config_ids: List[int]) -> Dict[int, Dict[str, Any]]:

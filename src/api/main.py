@@ -205,6 +205,7 @@ async def root():
 class RAGRequest(BaseModel):
     """User input for RAG recommendations."""
     prompt: str = Field(..., description="Natural language query (e.g., 'I need a gaming laptop for college under $1500')")
+    messages: Optional[List[Dict[str, Any]]] = Field(None, description="Optional chat history")
     top_k: Optional[int] = Field(5, description="Number of recommendations to return")
 
 
@@ -256,10 +257,32 @@ async def stream_rag_recommendations(
     
     async def response_stream():
         try:
-            # 1. Extract Intent from Prompt
+            # 1. Extract Intent from Prompt (considering history if available)
             start_time = time.time()
             extractor_inst = get_intent_extractor()
-            quiz_response = extractor_inst.extract_intent(request.prompt)
+            
+            # Better Context Management: Extract structured intent from history
+            existing_intent = None
+            if request.messages:
+                # Look for the most recent structured intent in previous assistant messages
+                for msg in reversed(request.messages):
+                    if msg.get('role') == 'assistant':
+                        content = msg.get('content', '')
+                        if isinstance(content, list):
+                            content = next((p.get('text', '') for p in content if p.get('type') == 'text'), '')
+                        
+                        if "__JSON_DATA__" in content:
+                            try:
+                                json_str = content.split("__JSON_DATA__")[1]
+                                data = json.loads(json_str)
+                                if "quiz_response" in data:
+                                    existing_intent = data["quiz_response"]
+                                    break
+                            except:
+                                continue
+            
+            # Extract/Refine intent using the structural dictionary as state
+            quiz_response = extractor_inst.extract_intent(request.prompt, existing_intent=existing_intent)
             
             # 2. Retrieve Content using the ACTUAL user query (not constructed from quiz)
             # This ensures query-specific retrieval instead of generic intent-based retrieval
@@ -334,21 +357,37 @@ async def stream_rag_recommendations(
             config_ids = [r.config_id for r in recommendations if r.config_id]
             if config_ids:
                 # Use client directly to get full display data
-                configs = ranker_inst.config_client.get_configs_by_ids(config_ids)
+                configs = ranker_inst.config_client.get_configs_by_ids(
+                    config_ids, 
+                    include_properties=True, 
+                    include_links=True,
+                    location_id=1 # US based only for now
+                )
                 for prod in products_data:
                     cid = prod.get('config_id')
                     if cid and cid in configs:
                         # Enrich with display data
                         c = configs[cid]
-                        prod['image_url'] = c.get('product_image') or c.get('image')
+                        prod['image_url'] = c.get('config_image') or c.get('product_image')
                         prod['price'] = c.get('price')
-                        prod['specs'] = c.get('specs') or {}
+                        prod['brand'] = c.get('brand')
+                        prod['public_config_id'] = c.get('public_config_id')
+                        prod['property_groups'] = c.get('property_groups') or {} # new specs
+                        
+                        legacy_specs = {}
+                        if 'property_groups' in c:
+                            for group in c['property_groups'].values():
+                                for prop in group:
+                                    legacy_specs[prop['property']] = prop['value']
+                        prod['specs_raw'] = legacy_specs
+                        
                         prod['product_link'] = f"https://justjosh.tech/product/{c.get('product_slug')}" if c.get('product_slug') else None
             
             # Yield final JSON block
             data_chunk = {
                 "type": "data",
                 "recommendations": products_data,
+                "quiz_response": quiz_response,
                 "sources": [
                     {
                         "title": r.metadata.get('content_title', 'Unknown'),

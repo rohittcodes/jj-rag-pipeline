@@ -1,91 +1,121 @@
 "use client";
 
 import React from "react";
-import { ExternalLink } from "lucide-react";
+import { RiShoppingCartLine } from "react-icons/ri";
 import { Recommendation } from "@/lib/rag-types";
 import Image from "next/image";
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-montserrat",
+});
 
 interface ProductCardProps {
   recommendation: Recommendation;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ recommendation }) => {
-  // Format specs into a readable string (first 3-4 key specs)
-  const formatSpecs = () => {
-    if (!recommendation.specs) return null;
-
-    const specEntries = Object.entries(recommendation.specs);
-    if (specEntries.length === 0) return null;
-
-    const importantSpecs = specEntries.slice(0, 4);
-    return importantSpecs.map(([_, value]) => value).join(" | ");
+  const formatPrice = (price: number): string => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(price);
   };
 
-  const specsText = formatSpecs();
+  const getSpecsText = () => {
+    if (recommendation.property_groups) {
+      const featured: string[] = [];
+      const groups = ["Performance", "Display", "Memory", "Storage"];
+      for (const groupName of groups) {
+        const props = recommendation.property_groups[groupName];
+        if (props) {
+          for (const prop of props) {
+            const name = prop.property.toLowerCase();
+            const value = prop.value;
+            if (name.includes("processor") || name.includes("ram") || name.includes("gpu") || name.includes("screen size")) {
+              featured.push(value);
+            }
+          }
+        }
+      }
+      if (featured.length > 0) return featured.slice(0, 4).join(" | ");
+    }
+    if (recommendation.specs_raw && Object.keys(recommendation.specs_raw).length > 0) {
+      return Object.values(recommendation.specs_raw).slice(0, 4).join(" | ");
+    }
+    return null;
+  };
+
+  const specsText = getSpecsText();
+  const goUrl = recommendation.public_config_id 
+    ? `https://go.bestlaptop.deals/c/${recommendation.public_config_id}`
+    : recommendation.product_link;
 
   return (
-    <div className="flex flex-col items-center w-full min-w-[220px] max-w-[220px] flex-shrink-0 border border-[#E5E5E5] rounded-lg p-3 gap-3 bg-white hover:shadow-md transition-shadow">
-      {/* Product Image */}
-      {recommendation.image_url && (
-        <div className="w-full max-w-[140px] h-[100px] flex items-center justify-center">
-          <Image
-            src={recommendation.image_url}
-            alt={recommendation.product_name}
-            width={140}
-            height={100}
-            className="w-full h-full object-contain"
-            unoptimized
-          />
+    <div className={`flex flex-col md:flex-row items-center w-full border border-[#E5E5E5] rounded-xl overflow-hidden bg-white hover:shadow-md transition-all p-4 gap-6 ${montserrat.variable} font-sans`}>
+      {/* Left: Product Image */}
+      <div className="w-full md:w-[180px] h-[130px] flex-shrink-0 flex items-center justify-center bg-white rounded-lg">
+        <Image
+          src={recommendation.image_url || "/placeholder.png"}
+          alt={recommendation.product_name}
+          width={160}
+          height={110}
+          className="w-full h-full object-contain"
+          unoptimized
+        />
+      </div>
+
+      {/* Center: Product Details */}
+      <div className="flex flex-col flex-grow gap-2 min-w-0">
+        <div className="flex items-center gap-3 flex-wrap">
+          <h3 className="text-[#0A0A0A] text-lg font-bold leading-tight truncate">
+            {recommendation.product_name}
+          </h3>
+          {recommendation.ranking && (
+            <span className="text-[10px] text-amber-600 font-black bg-amber-50 px-2 py-0.5 rounded border border-amber-100 uppercase tracking-widest">
+              Josh's #{recommendation.ranking} Pick
+            </span>
+          )}
         </div>
-      )}
 
-      {/* Product Info */}
-      <div className="flex flex-col items-center gap-1.5 w-full">
-        {/* Product Name */}
-        <h3 className="text-center text-[#0A0A0A] text-sm font-bold leading-5">
-          {recommendation.product_name}
-        </h3>
-
-        {/* Specs */}
         {specsText && (
-          <p className="text-center text-[#262626] text-[11px] font-normal leading-4 line-clamp-2">
+          <p className="text-[#262626] text-sm font-semibold leading-snug">
             {specsText}
           </p>
         )}
 
-        {/* Explanation/Recommendation */}
         {recommendation.explanation && (
-          <p className="text-center text-[#737373] text-[10px] italic leading-4 line-clamp-2">
+          <p className="text-[#737373] text-sm italic leading-relaxed line-clamp-2 pl-3 border-l-2 border-gray-100">
             "{recommendation.explanation}"
           </p>
         )}
-
-        {/* Price */}
-        {recommendation.price && (
-          <div className="text-[#1F1F1F] font-bold text-base leading-5">
-            ${Math.floor(recommendation.price)}
-          </div>
-        )}
       </div>
 
-      {/* CTA Button */}
-      {/* {recommendation.product_link && (
+      {/* Right: Price + Single CTA */}
+      <div className="flex flex-col items-center md:items-end justify-center gap-3 flex-shrink-0 min-w-[140px]">
+        {recommendation.price && (
+          <div className="flex flex-col items-center md:items-end">
+            <span className="text-gray-400 text-[10px] font-bold uppercase tracking-widest leading-none">Starting at</span>
+            <span className="text-[#1F1F1F] font-bold text-2xl leading-tight">
+              {formatPrice(Math.floor(recommendation.price))}
+            </span>
+          </div>
+        )}
+
         <a
-          href={recommendation.product_link}
+          href={goUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full bg-[#231F20] hover:bg-[#3a3637] text-[#FAFAFA] flex items-center justify-center transition-colors font-semibold text-xs leading-4 h-[28px] py-1.5 px-3 gap-1.5 rounded"
+          className="w-full md:w-auto flex cursor-pointer items-center justify-center transition-colors font-bold text-sm h-[40px] px-6 gap-2 rounded-lg bg-[#231F20] hover:bg-[#3a3637] text-[#FAFAFA] shadow-sm whitespace-nowrap"
         >
-          <span>EXPLORE GEAR</span>
-          <ExternalLink className="w-3 h-3" />
+          <RiShoppingCartLine className="w-4 h-4" />
+          <span>View Configuration</span>
         </a>
-      )} */}
-
-      {recommendation.ranking && (
-        <div className="text-[10px] text-[#737373] font-medium">
-          Ranked #{recommendation.ranking} by Josh
-        </div>
-      )}
+      </div>
     </div>
   );
 };

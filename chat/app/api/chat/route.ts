@@ -1,8 +1,19 @@
 export async function POST(req: Request) {
   try {
     const { messages }: { messages: any[] } = await req.json();
-    const lastUserMessage = messages.findLast((m) => m.role === "user");
-    const query = lastUserMessage?.content || "";
+    
+    // Find the last user message to use as the primary prompt
+    const lastUserMessage = [...messages].reverse().find((m) => m.role === "user");
+    
+    // Extract the text from the content parts if it's an array
+    let query = "";
+    if (lastUserMessage) {
+      if (Array.isArray(lastUserMessage.content)) {
+        query = lastUserMessage.content.find((p: any) => p.type === "text")?.text || "";
+      } else {
+        query = lastUserMessage.content || "";
+      }
+    }
 
     const ragResponse = await fetch(process.env.RAG_API_URL || 'http://localhost:8000/stream-rag', {
       method: 'POST',
@@ -10,7 +21,11 @@ export async function POST(req: Request) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.RAG_API_KEY}`
       },
-      body: JSON.stringify({ prompt: query, top_k: 5 }),
+      body: JSON.stringify({ 
+        prompt: query, 
+        messages: messages, // Send full history for context
+        top_k: 5 
+      }),
     });
 
     if (!ragResponse.ok) {

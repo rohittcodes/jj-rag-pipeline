@@ -36,12 +36,13 @@ class IntentExtractor:
         if verbose:
             print(f"[*] Intent Extractor initialized with model: {model}")
     
-    def extract_intent(self, user_prompt: str) -> Dict:
+    def extract_intent(self, user_prompt: str, existing_intent: Optional[Dict] = None) -> Dict:
         """
-        Extract structured intent from natural language prompt.
+        Extract structured intent from natural language prompt, optionally refining existing intent.
         
         Args:
             user_prompt: Natural language query from user
+            existing_intent: Optional previously extracted intent to refine
             
         Returns:
             Structured quiz response dictionary
@@ -49,6 +50,8 @@ class IntentExtractor:
         if self.verbose:
             print(f"\n[*] Extracting intent from prompt:")
             print(f"    '{user_prompt[:100]}...'")
+            if existing_intent:
+                print(f"    Refining existing intent: {json.dumps(existing_intent)}")
         
         # System prompt for intent extraction
         system_prompt = """You are an expert at understanding laptop requirements from natural language.
@@ -116,84 +119,81 @@ CONTEXT-AWARE MAPPING (understand the USER):
 - "Interior designer + SketchUp" → ["interior_design"] (design professional)
 - "Just browsing and Netflix" → ["basic_use"] (everyday user)
 
-Return ONLY valid JSON (example for CS student using AutoCAD):
-{
-  "profession": ["student"],
-  "use_case": ["school", "engineering"],
-  "budget": ["value"],
-  "portability": "light",
-  "screen_size": ["14 inches"],
-  "extracted_requirements": {
-    "min_ram": 16,
-    "min_storage": 512,
-    "needs_gpu": true,
-    "needs_long_battery": false,
-    "other_notes": "needs to run AutoCAD for computer science coursework"
-  }
-}
+Return ONLY valid JSON.
+
+STATEFUL REFINEMENT RULES:
+If an 'existing_intent' is provided, your goal is to UPDATE it with NEW information from the 'latest_message'.
+1. If the user changes their mind (e.g., "Actually, my budget is higher"), OVERWRITE the relevant field.
+2. If the user adds new needs (e.g., "I also want to do video editing"), APPEND to the lists.
+3. If the user clarifies (e.g., "I'm a college student"), refine the 'profession' field.
+4. If the latest message is just a thank you or unrelated, return the 'existing_intent' UNCHANGED.
 
 CRITICAL RULES:
 1. ONLY use use_case values from the list above - NEVER create new ones
 2. Think about WHO the user is and WHAT they want to accomplish
 3. For students: always include "school" + any specialized use case (engineering, programming, data_science, etc.)
 4. List use cases in order of importance (most critical first)
-5. Match profession to use_case logically:
-   - Student → school (+ specialized if mentioned)
-   - Programmer → programming
-   - Engineer → engineering
-   - Graphic designer → graphic_design
-   - Photographer → photography
-   - Data scientist → data_science
-   - Trader → trading
-   - etc.
+5. Match profession to use_case logically
 6. Omit fields if not mentioned
 7. Always include at least profession and use_case
-8. Infer hardware needs based on use case:
-   - engineering/interior_design: needs_gpu=true, min_ram=16+, min_storage=512+
-   - video_editing: needs_gpu=true, min_ram=16+, min_storage=512+
-   - gaming: needs_gpu=true, min_ram=16+
-   - data_science: needs_gpu=true (for ML), min_ram=16+
-   - photography: min_ram=16+, min_storage=512+
-   - graphic_design: min_ram=16+
-   - music_production: min_ram=16+, min_storage=512+
-   - programming: min_ram=8-16
-   - trading: min_ram=16+ (multiple apps, fast processing)
-   - school/basic_use/corporate: min_ram=8
+8. Infer hardware needs based on use case
 9. **BRAND PREFERENCES**:
-   - Extract any brand preferences (e.g., "I love Lenovo", "only Dell", "prefer ThinkPads") into "preferred_brands" array
-   - Extract any brand EXCLUSIONS (e.g., "no Macs", "not Apple", "no MacBooks", "avoid HP") into "excluded_brands" array
+   - Extract any brand preferences into "preferred_brands" array
+   - Extract any brand EXCLUSIONS into "excluded_brands" array
    - Use lowercase brand names: "apple", "dell", "lenovo", "hp", "asus", "acer", "microsoft", "razer", "msi", "lg", "samsung", etc.
    - For "no Macs" or "no MacBooks" → excluded_brands: ["apple"]
    - For "only Lenovo" → preferred_brands: ["lenovo"]
 
-EXAMPLE OUTPUT (CS student, no Macs, prefers Lenovo):
+EXAMPLE 1 (Initial Extraction - CS student, no Macs, prefers Lenovo):
+USER: "I'm a computer science student. I need something for coding and maybe some light gaming. My budget is around $1200. I don't want a Mac, I prefer Lenovo."
+OUTPUT:
 {
   "profession": ["student"],
-  "use_case": ["school", "programming"],
+  "use_case": ["school", "programming", "gaming"],
   "budget": ["value"],
-  "portability": "light",
-  "screen_size": ["14 inches"],
+  "portability": "balanced",
+  "screen_size": ["14 inches", "15-16 inches"],
   "preferred_brands": ["lenovo"],
   "excluded_brands": ["apple"],
   "extracted_requirements": {
     "min_ram": 16,
     "min_storage": 512,
-    "needs_gpu": false,
+    "needs_gpu": true,
     "needs_long_battery": true,
-    "other_notes": "Computer science student who prefers Lenovo ThinkPads, no Macs"
+    "other_notes": "CS student who prefers Lenovo ThinkPads or Legions, explicitly excluded Apple"
+  }
+}
+
+EXAMPLE 2 (Refinement - User changes mind):
+EXISTING PROFILE: {"profession": ["student"], "use_case": ["school"], "budget": ["budget"]}
+LATEST MESSAGE: "Actually, I decided to start video editing, so I can go up to $2000 for something powerful."
+OUTPUT:
+{
+  "profession": ["student", "video_editor"],
+  "use_case": ["school", "video_editing"],
+  "budget": ["premium"],
+  "portability": "performance",
+  "extracted_requirements": {
+    "needs_gpu": true,
+    "min_ram": 16,
+    "other_notes": "User pivoted from budget student needs to premium video editing requirements"
   }
 }
 """
         
+        user_content = user_prompt
+        if existing_intent:
+            user_content = f"Existing User Profile: {json.dumps(existing_intent)}\n\nLatest User Message: {user_prompt}\n\nPlease update the profile based on this message."
+
         try:
             # Call OpenAI API (v1.0+ syntax)
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt}
+                    {"role": "user", "content": user_content}
                 ],
-                temperature=0.3,  # Lower temperature for more consistent extraction
+                temperature=0.2,  # Even lower for refinement
                 max_tokens=500
             )
             
